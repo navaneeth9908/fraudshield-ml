@@ -1,9 +1,10 @@
 # Product Roadmap
 
 ## Data foundation
-- Reproducible Kaggle dataset acquisition with checksum verification
-- Strict transaction schema validation and data-quality reporting
-- Leakage-safe train, validation, and test partitions
+- Implemented: reproducible Kaggle dataset preparation with ZIP/CSV SHA-256 verification
+- Implemented: strict transaction schema validation for empty data, missing/null targets, invalid targets, null/non-finite values, and nonnumeric model features
+- Implemented: leakage-safe chronological train/holdout partition for the baseline
+- Next: add versioned data-quality reports for repeatable profiling evidence
 
 ## Modeling and decision intelligence
 - Reproducible logistic-regression baseline

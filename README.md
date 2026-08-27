@@ -26,7 +26,7 @@ The low default-threshold precision is expected and motivates the planned cost-a
 
 ## Target architecture
 
-The baseline currently implements schema validation, chronological evaluation, and imbalance-aware logistic regression. The remaining components in this diagram are planned capabilities tracked in the roadmap.
+The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, and imbalance-aware logistic regression. The remaining components in this diagram are planned capabilities tracked in the roadmap.
 
 ```text
 Kaggle transactions
@@ -59,20 +59,22 @@ Drift and performance monitoring
 uv sync --group dev
 ```
 
-### 2. Download the source dataset
+### 2. Prepare the source dataset
 
 ```bash
-curl -L "https://www.kaggle.com/api/v1/datasets/download/mlg-ulb/creditcardfraud" -o data/raw/creditcardfraud.zip
-unzip data/raw/creditcardfraud.zip -d data/raw
+uv run fraudshield prepare-data
 ```
 
-The dataset is intentionally excluded from Git. Verify its source and checksums in [`docs/dataset.md`](docs/dataset.md).
+This downloads or reuses `data/raw/creditcardfraud.zip`, verifies the known Kaggle ZIP and extracted CSV SHA-256 checksums, extracts `creditcard.csv`, and runs the transaction schema contract. The dataset is intentionally excluded from Git; source, license, and checksum details are in [`docs/dataset.md`](docs/dataset.md).
 
 ### 3. Validate the dataset
 
 ```bash
-uv run fraudshield verify-data data/raw/creditcard.csv
+uv run fraudshield verify-data data/raw/creditcard.csv \
+  --csv-sha256 76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89
 ```
+
+The validator rejects empty files, missing or null `Class` targets, invalid target values, null or non-finite numeric values, and nonnumeric model features before training.
 
 Expected class balance:
 
@@ -80,6 +82,7 @@ Expected class balance:
 Transactions: 284,807
 Fraud cases: 492
 Fraud rate: 0.1727%
+CSV SHA-256: 76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89
 ```
 
 ### 4. Train the baseline

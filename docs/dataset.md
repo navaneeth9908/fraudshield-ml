@@ -33,6 +33,26 @@ creditcardfraud.zip  SHA-256 a0360ce715992212e9ac72d8ccdca97f4be87dc1fdf2bed0113
 creditcard.csv       SHA-256 76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89
 ```
 
+Use the executable preparation workflow to materialize the ignored raw files and verify both digests before modeling:
+
+```bash
+uv run fraudshield prepare-data
+```
+
+When the ZIP has already been downloaded outside the project, verify and extract that exact archive with:
+
+```bash
+uv run fraudshield prepare-data --archive-path /path/to/creditcardfraud.zip
+```
+
+The preparation step extracts only `creditcard.csv`, checks the extracted CSV digest, then applies the transaction schema contract. The same contract is available independently:
+
+```bash
+uv run fraudshield verify-data data/raw/creditcard.csv
+```
+
+Validation fails closed for empty data, missing required columns, missing or null `Class`, invalid target values outside `0` and `1`, null or non-finite numeric values, and nonnumeric model features.
+
 ## Modeling constraints
 
 - Severe class imbalance makes accuracy unsuitable as a primary metric.
