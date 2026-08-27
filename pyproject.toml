@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fraudshield-ml"
+version = "0.1.0"
+description = "Production-style credit card fraud detection and risk-scoring system."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Sai Navaneeth Thota" }]
+dependencies = [
+  "joblib>=1.4",
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "scikit-learn>=1.6",
+  "typer>=0.16",
+]
+
+[project.scripts]
+fraudshield = "fraudshield.cli:app"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.15",
+  "pandas-stubs>=2.2",
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.11",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fraudshield"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["fraudshield"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+branch = true
+source = ["fraudshield"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 85
