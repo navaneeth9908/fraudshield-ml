@@ -22,11 +22,30 @@ The first reproducible model is a class-weighted logistic-regression pipeline ev
 | Precision at 0.50 threshold | 0.0707 |
 | F1 at 0.50 threshold | 0.1311 |
 
-The low default-threshold precision is expected and motivates the planned cost-aware threshold and review-capacity optimization. Machine-readable evidence is stored in [`reports/baseline_metrics.json`](reports/baseline_metrics.json).
+The low default-threshold precision is expected, so FraudShield now evaluates holdout probabilities with a cost-sensitive decision layer. Machine-readable baseline evidence is stored in [`reports/baseline_metrics.json`](reports/baseline_metrics.json).
+
+## Decision economics evidence
+
+The decision layer sweeps deterministic probability thresholds, prices false negatives and false positives, chooses the minimum expected-loss threshold, and reports precision/recall/F1 at that operating point. It also reports recall and precision for a fixed analyst alert budget.
+
+Current holdout decision evidence uses a missed-fraud cost of `500`, a false-alert review cost of `25`, and an analyst budget of `1,000` alerts:
+
+| Decision metric | Value |
+|---|---:|
+| Chosen threshold | 0.9810 |
+| Expected loss | 8,400.00 |
+| Alerts at chosen threshold | 117 |
+| Precision at chosen threshold | 0.5214 |
+| Recall at chosen threshold | 0.8133 |
+| F1 at chosen threshold | 0.6354 |
+| Recall at 1,000-alert budget | 0.8933 |
+| Precision at 1,000-alert budget | 0.0670 |
+
+Machine-readable decision evidence is stored in [`reports/decision_evidence.json`](reports/decision_evidence.json). The report records split boundaries and aggregate probability evidence, but it does not track source data or model binaries.
 
 ## Target architecture
 
-The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, and imbalance-aware logistic regression. The remaining components in this diagram are planned capabilities tracked in the roadmap.
+The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, and cost-sensitive decision evidence. The remaining components in this diagram are planned capabilities tracked in the roadmap.
 
 ```text
 Kaggle transactions
@@ -41,7 +60,7 @@ Chronological train/holdout split
 Imbalance-aware model pipeline
         │
         ├── probability calibration
-        ├── cost-sensitive thresholding
+        ├── cost-sensitive thresholding and analyst-budget evidence
         └── explainability
         │
         ▼
@@ -93,7 +112,20 @@ uv run fraudshield train-baseline data/raw/creditcard.csv --output-dir artifacts
 
 Model artifacts are generated locally and excluded from version control.
 
-### 5. Run quality gates
+### 5. Evaluate decision economics
+
+```bash
+uv run fraudshield evaluate-decisions data/raw/creditcard.csv \
+  --model-path artifacts/baseline.joblib \
+  --report-path reports/decision_evidence.json \
+  --false-negative-cost 500 \
+  --false-positive-cost 25 \
+  --analyst-alert-budget 1000
+```
+
+The command reuses the chronological holdout split, verifies split metadata on bundled model artifacts, scores holdout probabilities, and writes aggregate JSON decision evidence.
+
+### 6. Run quality gates
 
 ```bash
 uv run ruff format --check .

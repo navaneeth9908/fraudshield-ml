@@ -7,9 +7,10 @@
 - Next: add versioned data-quality reports for repeatable profiling evidence
 
 ## Modeling and decision intelligence
-- Reproducible logistic-regression baseline
+- Implemented: reproducible logistic-regression baseline
+- Implemented: typed cost-sensitive decision layer with deterministic threshold sweep, expected-loss minimization, threshold precision/recall/F1, and analyst-budget precision/recall evidence
 - Imbalance-aware gradient-boosting models
-- Probability calibration and cost-sensitive threshold optimization
+- Probability calibration
 - Model comparison with precision-recall, recall-at-review-capacity, and expected-loss metrics
 
 ## Explainability and reliability

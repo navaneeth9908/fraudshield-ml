@@ -30,10 +30,47 @@ class BaselineResult:
     metrics: MetricMap
     train_rows: int
     test_rows: int
+    test_fraction: float
+    train_max_time: float
+    holdout_min_time: float
+    holdout_probabilities: tuple[float, ...]
+    holdout_labels: tuple[int, ...]
 
 
-def train_baseline(frame: pd.DataFrame, *, test_fraction: float = 0.2) -> BaselineResult:
-    """Train a class-weighted logistic baseline using a chronological holdout."""
+@dataclass(frozen=True)
+class ChronologicalSplit:
+    """Leakage-safe chronological train/holdout partition."""
+
+    train: pd.DataFrame
+    holdout: pd.DataFrame
+    test_fraction: float
+
+    @property
+    def train_max_time(self) -> float:
+        """Latest timestamp made available to model training."""
+        return float(self.train["Time"].max())
+
+    @property
+    def holdout_min_time(self) -> float:
+        """Earliest timestamp reserved for holdout evaluation."""
+        return float(self.holdout["Time"].min())
+
+    def to_report(self) -> dict[str, float | int | str]:
+        """Return JSON-serializable split evidence."""
+        return {
+            "strategy": "chronological",
+            "train_rows": len(self.train),
+            "test_rows": len(self.holdout),
+            "test_fraction": self.test_fraction,
+            "train_max_time": self.train_max_time,
+            "holdout_min_time": self.holdout_min_time,
+        }
+
+
+def chronological_train_holdout(
+    frame: pd.DataFrame, *, test_fraction: float = 0.2
+) -> ChronologicalSplit:
+    """Validate transactions and split newest observations into the holdout set."""
     validate_transactions(frame)
     if not 0.0 < test_fraction < 1.0:
         raise ValueError("test_fraction must be between 0 and 1")
@@ -42,9 +79,18 @@ def train_baseline(frame: pd.DataFrame, *, test_fraction: float = 0.2) -> Baseli
     split_index = int(len(ordered) * (1.0 - test_fraction))
     if split_index == 0 or split_index == len(ordered):
         raise ValueError("dataset is too small for the requested holdout")
+    return ChronologicalSplit(
+        train=ordered.iloc[:split_index],
+        holdout=ordered.iloc[split_index:],
+        test_fraction=test_fraction,
+    )
 
-    train = ordered.iloc[:split_index]
-    test = ordered.iloc[split_index:]
+
+def train_baseline(frame: pd.DataFrame, *, test_fraction: float = 0.2) -> BaselineResult:
+    """Train a class-weighted logistic baseline using a chronological holdout."""
+    split = chronological_train_holdout(frame, test_fraction=test_fraction)
+    train = split.train
+    test = split.holdout
     if train[TARGET_COLUMN].nunique() < 2 or test[TARGET_COLUMN].nunique() < 2:
         raise ValueError("both chronological partitions must contain fraud and genuine rows")
 
@@ -82,4 +128,9 @@ def train_baseline(frame: pd.DataFrame, *, test_fraction: float = 0.2) -> Baseli
         metrics=metrics,
         train_rows=len(train),
         test_rows=len(test),
+        test_fraction=test_fraction,
+        train_max_time=split.train_max_time,
+        holdout_min_time=split.holdout_min_time,
+        holdout_probabilities=tuple(float(value) for value in probabilities.tolist()),
+        holdout_labels=tuple(int(value) for value in test_y.tolist()),
     )

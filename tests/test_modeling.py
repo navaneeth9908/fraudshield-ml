@@ -34,3 +34,15 @@ def test_baseline_training_returns_leakage_safe_holdout_metrics() -> None:
     }
     assert all(0.0 <= value <= 1.0 for value in result.metrics.values())
     assert result.model.classes_.tolist() == [0, 1]
+
+
+def test_baseline_exposes_chronological_holdout_probabilities_without_target_leakage() -> None:
+    from fraudshield.modeling import train_baseline
+
+    frame = _training_frame()
+    result = train_baseline(frame, test_fraction=0.25)
+
+    assert len(result.holdout_probabilities) == result.test_rows
+    assert len(result.holdout_labels) == result.test_rows
+    assert all(0.0 <= probability <= 1.0 for probability in result.holdout_probabilities)
+    assert result.holdout_labels == tuple(frame.sort_values("Time").tail(60)["Class"].astype(int))

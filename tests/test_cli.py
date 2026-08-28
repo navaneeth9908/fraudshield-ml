@@ -95,3 +95,69 @@ def test_train_baseline_persists_model_and_metrics(tmp_path) -> None:
     assert (output_dir / "baseline.joblib").is_file()
     assert (output_dir / "baseline_metrics.json").is_file()
     assert "Average precision:" in result.stdout
+
+
+def test_evaluate_decisions_writes_holdout_decision_evidence(tmp_path: Path) -> None:
+    from fraudshield.cli import app
+
+    rows = 240
+    rng = np.random.default_rng(17)
+    fraud = np.zeros(rows, dtype=int)
+    fraud[::20] = 1
+    frame = pd.DataFrame(
+        {
+            "Time": np.arange(rows, dtype=float),
+            **{f"V{index}": rng.normal(size=rows) for index in range(1, 29)},
+            "Amount": rng.lognormal(mean=3.0, sigma=1.0, size=rows),
+            "Class": fraud,
+        }
+    )
+    dataset_path = tmp_path / "transactions.csv"
+    output_dir = tmp_path / "artifacts"
+    report_path = tmp_path / "decision_evidence.json"
+    frame.to_csv(dataset_path, index=False)
+    train = CliRunner().invoke(
+        app,
+        [
+            "train-baseline",
+            str(dataset_path),
+            "--output-dir",
+            str(output_dir),
+            "--test-fraction",
+            "0.25",
+        ],
+    )
+    assert train.exit_code == 0
+
+    result = CliRunner().invoke(
+        app,
+        [
+            "evaluate-decisions",
+            str(dataset_path),
+            "--model-path",
+            str(output_dir / "baseline.joblib"),
+            "--report-path",
+            str(report_path),
+            "--test-fraction",
+            "0.25",
+            "--false-negative-cost",
+            "500",
+            "--false-positive-cost",
+            "25",
+            "--analyst-alert-budget",
+            "10",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    assert "Decision report:" in result.stdout
+    payload = pd.read_json(report_path, typ="series")
+    assert payload["split"]["strategy"] == "chronological"
+    assert payload["split"]["train_rows"] == 180
+    assert payload["split"]["test_rows"] == 60
+    assert payload["split"]["train_max_time"] < payload["split"]["holdout_min_time"]
+    assert payload["costs"] == {"false_negative": 500.0, "false_positive": 25.0}
+    assert payload["decision"]["analyst_budget"]["alert_count"] == 10
+    assert payload["decision"]["thresholds_evaluated"] > 0
+    assert "threshold_sweep" not in payload["decision"]
+    assert payload["holdout_probability_count"] == 60
