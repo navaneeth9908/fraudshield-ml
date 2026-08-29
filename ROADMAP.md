@@ -9,9 +9,8 @@
 ## Modeling and decision intelligence
 - Implemented: reproducible logistic-regression baseline
 - Implemented: typed cost-sensitive decision layer with deterministic threshold sweep, expected-loss minimization, threshold precision/recall/F1, and analyst-budget precision/recall evidence
-- Imbalance-aware gradient-boosting models
-- Probability calibration
-- Model comparison with precision-recall, recall-at-review-capacity, and expected-loss metrics
+- Implemented: leakage-safe calibrated comparison of class-weighted logistic regression and histogram gradient boosting with deterministic selection evidence
+- Next: add slice-aware model diagnostics for fraud-rate, amount, and time windows
 
 ## Explainability and reliability
 - Global and transaction-level explanations

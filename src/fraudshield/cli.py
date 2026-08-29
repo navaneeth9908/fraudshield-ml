@@ -25,7 +25,11 @@ from fraudshield.data import (
     verify_dataset_file,
 )
 from fraudshield.decision import DecisionCosts, DecisionResult, optimize_decisions
-from fraudshield.modeling import chronological_train_holdout, train_baseline
+from fraudshield.modeling import (
+    chronological_train_holdout,
+    compare_model_candidates,
+    train_baseline,
+)
 
 app = typer.Typer(no_args_is_help=True, help="FraudShield model-development commands.")
 
@@ -213,6 +217,55 @@ def evaluate_decisions(
     typer.echo(f"Chosen threshold: {decision.chosen_threshold:.6f}")
     typer.echo(f"Expected loss: {decision.expected_loss:.2f}")
     typer.echo(f"Holdout recall: {decision.recall:.6f}")
+
+
+@app.command("compare-models")
+def compare_models(
+    dataset: Path,
+    report_path: Annotated[
+        Path,
+        typer.Option(help="Versioned JSON model-comparison evidence path."),
+    ] = Path("reports/model_comparison.json"),
+    holdout_fraction: Annotated[
+        float,
+        typer.Option(help="Newest chronological fraction reserved for final holdout."),
+    ] = 0.2,
+    calibration_fraction: Annotated[
+        float,
+        typer.Option(help="Newest pre-holdout training fraction reserved for calibration."),
+    ] = 0.2,
+    false_negative_cost: Annotated[
+        float,
+        typer.Option(help="Cost of missing a fraudulent transaction."),
+    ] = 500.0,
+    false_positive_cost: Annotated[
+        float,
+        typer.Option(help="Cost of sending a genuine transaction to analyst review."),
+    ] = 25.0,
+    analyst_alert_budget: Annotated[
+        int,
+        typer.Option(help="Maximum number of holdout transactions analysts can review."),
+    ] = 1_000,
+) -> None:
+    """Compare calibrated logistic and gradient-boosting candidates on a final holdout."""
+    frame = pd.read_csv(dataset)
+    result = compare_model_candidates(
+        frame,
+        holdout_fraction=holdout_fraction,
+        calibration_fraction=calibration_fraction,
+        false_negative_cost=false_negative_cost,
+        false_positive_cost=false_positive_cost,
+        analyst_alert_budget=analyst_alert_budget,
+    )
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(result.to_report(), indent=2), encoding="utf-8")
+
+    selected = result.evaluation_by_name(result.selected_model)
+    typer.echo(f"Model comparison: {report_path}")
+    typer.echo(f"Model comparison report: {report_path}")
+    typer.echo(f"Selected model: {result.selected_model}")
+    typer.echo(f"Selected PR-AUC: {selected.metrics['average_precision']:.6f}")
+    typer.echo(f"Selected expected loss: {selected.decision.expected_loss:.2f}")
 
 
 def _decision_report(decision: DecisionResult) -> dict[str, object]:

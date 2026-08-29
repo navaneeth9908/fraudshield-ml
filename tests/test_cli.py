@@ -161,3 +161,120 @@ def test_evaluate_decisions_writes_holdout_decision_evidence(tmp_path: Path) -> 
     assert payload["decision"]["thresholds_evaluated"] > 0
     assert "threshold_sweep" not in payload["decision"]
     assert payload["holdout_probability_count"] == 60
+
+
+def test_compare_models_cli_writes_versioned_model_selection_report(tmp_path: Path) -> None:
+    from fraudshield.cli import app
+
+    rows = 300
+    rng = np.random.default_rng(23)
+    fraud = (np.arange(rows) % 15 == 0).astype(int)
+    frame = pd.DataFrame(
+        {
+            "Time": np.arange(rows, dtype=float),
+            "V1": fraud * 3.0 + rng.normal(scale=0.35, size=rows),
+            **{f"V{index}": rng.normal(size=rows) for index in range(2, 29)},
+            "Amount": 25.0 + fraud * 90.0 + rng.normal(scale=2.0, size=rows),
+            "Class": fraud,
+        }
+    )
+    dataset_path = tmp_path / "transactions.csv"
+    report_path = tmp_path / "model_comparison.json"
+    frame.to_csv(dataset_path, index=False)
+
+    result = CliRunner().invoke(
+        app,
+        [
+            "compare-models",
+            str(dataset_path),
+            "--report-path",
+            str(report_path),
+            "--analyst-alert-budget",
+            "20",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    assert "Model comparison:" in result.stdout
+    assert "Selected model:" in result.stdout
+    payload = pd.read_json(report_path, typ="series")
+    assert payload["schema_version"] == 1
+    assert payload["split"]["strategy"] == "chronological_model_calibration_holdout"
+    assert payload["split"]["calibration_max_time"] < payload["split"]["holdout_min_time"]
+    assert payload["selection_rule"] == [
+        "maximize_average_precision",
+        "minimize_expected_loss",
+        "maximize_recall",
+        "maximize_precision",
+        "lexicographic_model_name",
+    ]
+    assert payload["selected_model"] in {"logistic_regression", "hist_gradient_boosting"}
+    assert {candidate["name"] for candidate in payload["candidates"]} == {
+        "logistic_regression",
+        "hist_gradient_boosting",
+    }
+
+
+def test_compare_models_writes_versioned_candidate_report(tmp_path: Path) -> None:
+    from fraudshield.cli import app
+
+    rows = 300
+    rng = np.random.default_rng(23)
+    fraud = (np.arange(rows) % 15 == 0).astype(int)
+    frame = pd.DataFrame(
+        {
+            "Time": np.arange(rows, dtype=float),
+            "V1": fraud * 3.0 + rng.normal(scale=0.35, size=rows),
+            **{f"V{index}": rng.normal(size=rows) for index in range(2, 29)},
+            "Amount": 20.0 + fraud * 80.0 + rng.normal(scale=2.0, size=rows),
+            "Class": fraud,
+        }
+    )
+    dataset_path = tmp_path / "transactions.csv"
+    report_path = tmp_path / "model_comparison.json"
+    frame.to_csv(dataset_path, index=False)
+
+    result = CliRunner().invoke(
+        app,
+        [
+            "compare-models",
+            str(dataset_path),
+            "--report-path",
+            str(report_path),
+            "--holdout-fraction",
+            "0.2",
+            "--calibration-fraction",
+            "0.2",
+            "--false-negative-cost",
+            "500",
+            "--false-positive-cost",
+            "25",
+            "--analyst-alert-budget",
+            "20",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    assert "Model comparison report:" in result.stdout
+    assert "Selected model:" in result.stdout
+    payload = pd.read_json(report_path, typ="series")
+    assert payload["schema_version"] == 1
+    assert payload["split"]["model_train_rows"] == 192
+    assert payload["split"]["calibration_rows"] == 48
+    assert payload["split"]["holdout_rows"] == 60
+    assert payload["selection_rule"] == [
+        "maximize_average_precision",
+        "minimize_expected_loss",
+        "maximize_recall",
+        "maximize_precision",
+        "lexicographic_model_name",
+    ]
+    assert {candidate["name"] for candidate in payload["candidates"]} == {
+        "logistic_regression",
+        "hist_gradient_boosting",
+    }
+    for candidate in payload["candidates"]:
+        assert candidate["calibration"]["fit_on"] == "calibration"
+        assert candidate["calibration"]["holdout_used"] is False
+        assert candidate["threshold"]["selected_on"] == "holdout_probabilities"
+        assert candidate["holdout_probability_count"] == 60

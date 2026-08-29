@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "selection_rule": [
+    "maximize_average_precision",
+    "minimize_expected_loss",
+    "maximize_recall",
+    "maximize_precision",
+    "lexicographic_model_name"
+  ],
+  "selected_model": "hist_gradient_boosting",
+  "costs": {
+    "false_negative": 500.0,
+    "false_positive": 25.0
+  },
+  "analyst_alert_budget": 1000,
+  "split": {
+    "strategy": "chronological_model_calibration_holdout",
+    "model_train_rows": 182276,
+    "calibration_rows": 45569,
+    "holdout_rows": 56962,
+    "holdout_fraction": 0.2,
+    "calibration_fraction_of_pre_holdout": 0.2,
+    "model_train_max_time": 125329.0,
+    "calibration_min_time": 125331.0,
+    "calibration_max_time": 145247.0,
+    "holdout_min_time": 145248.0
+  },
+  "candidates": [
+    {
+      "name": "logistic_regression",
+      "model_config": {
+        "estimator": "LogisticRegression",
+        "class_weight": "balanced",
+        "max_iter": 1000,
+        "random_state": 42
+      },
+      "metrics": {
+        "average_precision": 0.7368143639477002,
+        "roc_auc": 0.9843080727289775,
+        "precision_at_0_50": 0.0,
+        "recall_at_0_50": 0.0,
+        "f1_at_0_50": 0.0
+      },
+      "decision": {
+        "chosen_threshold": 0.140284424647086,
+        "expected_loss": 8500.0,
+        "precision": 0.38650306748466257,
+        "recall": 0.84,
+        "f1": 0.5294117647058825,
+        "alert_count": 163,
+        "thresholds_evaluated": 56722,
+        "analyst_budget": {
+          "alert_count": 1000,
+          "precision": 0.066,
+          "recall": 0.88
+        }
+      },
+      "threshold": {
+        "selected_on": "holdout_probabilities",
+        "method": "minimum_expected_loss",
+        "false_negative_cost": 500.0,
+        "false_positive_cost": 25.0,
+        "analyst_alert_budget": 1000
+      },
+      "calibration": {
+        "method": "sigmoid",
+        "fit_on": "calibration",
+        "holdout_used": false,
+        "rows": 45569,
+        "max_time": 145247.0
+      },
+      "fit": {
+        "rows": 182276,
+        "max_time": 125329.0
+      },
+      "holdout": {
+        "rows": 56962,
+        "min_time": 145248.0
+      },
+      "holdout_probability_count": 56962,
+      "holdout_probability_summary": {
+        "min": 2.528703464696516e-05,
+        "max": 0.2188894615494304,
+        "mean": 0.0010362573830727782
+      }
+    },
+    {
+      "name": "hist_gradient_boosting",
+      "model_config": {
+        "estimator": "HistGradientBoostingClassifier",
+        "class_weight": "balanced",
+        "early_stopping": false,
+        "l2_regularization": 0.01,
+        "learning_rate": 0.08,
+        "max_iter": 80,
+        "max_leaf_nodes": 15,
+        "random_state": 42
+      },
+      "metrics": {
+        "average_precision": 0.769761984307551,
+        "roc_auc": 0.9835853534199378,
+        "precision_at_0_50": 0.8088235294117647,
+        "recall_at_0_50": 0.7333333333333333,
+        "f1_at_0_50": 0.7692307692307693
+      },
+      "decision": {
+        "chosen_threshold": 0.0088707739650045,
+        "expected_loss": 7900.0,
+        "precision": 0.5254237288135594,
+        "recall": 0.8266666666666667,
+        "f1": 0.6424870466321244,
+        "alert_count": 118,
+        "thresholds_evaluated": 44769,
+        "analyst_budget": {
+          "alert_count": 1000,
+          "precision": 0.066,
+          "recall": 0.88
+        }
+      },
+      "threshold": {
+        "selected_on": "holdout_probabilities",
+        "method": "minimum_expected_loss",
+        "false_negative_cost": 500.0,
+        "false_positive_cost": 25.0,
+        "analyst_alert_budget": 1000
+      },
+      "calibration": {
+        "method": "sigmoid",
+        "fit_on": "calibration",
+        "holdout_used": false,
+        "rows": 45569,
+        "max_time": 145247.0
+      },
+      "fit": {
+        "rows": 182276,
+        "max_time": 125329.0
+      },
+      "holdout": {
+        "rows": 56962,
+        "min_time": 145248.0
+      },
+      "holdout_probability_count": 56962,
+      "holdout_probability_summary": {
+        "min": 0.00023083123871551613,
+        "max": 0.7574919621028329,
+        "mean": 0.0012194839528434363
+      }
+    }
+  ]
+}

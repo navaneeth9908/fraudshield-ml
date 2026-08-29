@@ -43,9 +43,24 @@ Current holdout decision evidence uses a missed-fraud cost of `500`, a false-ale
 
 Machine-readable decision evidence is stored in [`reports/decision_evidence.json`](reports/decision_evidence.json). The report records split boundaries and aggregate probability evidence, but it does not track source data or model binaries.
 
+## Advanced model comparison
+
+FraudShield now compares two imbalance-aware candidates with a leakage-safe nested chronological split: base estimators and preprocessing fit on the oldest training window, sigmoid probability calibration fits on a later calibration window, and the newest holdout is reserved for final PR-AUC, threshold, and business-metric evidence.
+
+The implemented candidates are a class-weighted logistic-regression baseline and a deterministic class-weighted histogram gradient-boosting model. Selection uses the versioned rule recorded in the report: maximize holdout average precision, then minimize expected loss, then maximize recall, then maximize precision, with a stable model-name tie break.
+
+Current full-dataset comparison evidence uses the Kaggle CSV, a 20% final holdout, a 20% calibration slice from the pre-holdout rows, missed-fraud cost `500`, false-alert review cost `25`, and a `1,000` alert budget:
+
+| Candidate | PR-AUC | ROC-AUC | Expected loss | Threshold | Precision | Recall | Budget recall |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Logistic regression | 0.7368 | 0.9843 | 8,500.00 | 0.1403 | 0.3865 | 0.8400 | 0.8800 |
+| Histogram gradient boosting | 0.7698 | 0.9836 | 7,900.00 | 0.0089 | 0.5254 | 0.8267 | 0.8800 |
+
+The selected candidate is `hist_gradient_boosting`. Machine-readable comparison evidence is stored in [`reports/model_comparison.json`](reports/model_comparison.json), including deterministic model configuration, split boundaries, calibration provenance, threshold settings, PR-AUC/ROC-AUC, holdout probability summaries, and cost-sensitive decision metrics. The report does not track source data or model binaries.
+
 ## Target architecture
 
-The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, and cost-sensitive decision evidence. The remaining components in this diagram are planned capabilities tracked in the roadmap.
+The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, and cost-sensitive decision evidence. The remaining components in this diagram are planned capabilities tracked in the roadmap.
 
 ```text
 Kaggle transactions
@@ -125,7 +140,21 @@ uv run fraudshield evaluate-decisions data/raw/creditcard.csv \
 
 The command reuses the chronological holdout split, verifies split metadata on bundled model artifacts, scores holdout probabilities, and writes aggregate JSON decision evidence.
 
-### 6. Run quality gates
+### 6. Compare calibrated model candidates
+
+```bash
+uv run fraudshield compare-models data/raw/creditcard.csv \
+  --report-path reports/model_comparison.json \
+  --holdout-fraction 0.2 \
+  --calibration-fraction 0.2 \
+  --false-negative-cost 500 \
+  --false-positive-cost 25 \
+  --analyst-alert-budget 1000
+```
+
+The comparison command trains the logistic and gradient-boosting candidates with fixed seeds, calibrates probabilities on pre-holdout calibration rows only, scores the final chronological holdout, and writes a versioned JSON report with model-selection evidence.
+
+### 7. Run quality gates
 
 ```bash
 uv run ruff format --check .
