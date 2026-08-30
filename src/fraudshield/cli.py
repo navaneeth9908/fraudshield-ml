@@ -25,6 +25,7 @@ from fraudshield.data import (
     verify_dataset_file,
 )
 from fraudshield.decision import DecisionCosts, DecisionResult, optimize_decisions
+from fraudshield.explainability import generate_explainability_report, render_model_card
 from fraudshield.modeling import (
     chronological_train_holdout,
     compare_model_candidates,
@@ -266,6 +267,63 @@ def compare_models(
     typer.echo(f"Selected model: {result.selected_model}")
     typer.echo(f"Selected PR-AUC: {selected.metrics['average_precision']:.6f}")
     typer.echo(f"Selected expected loss: {selected.decision.expected_loss:.2f}")
+
+
+@app.command("explain-model")
+def explain_model(
+    dataset: Path,
+    report_path: Annotated[
+        Path,
+        typer.Option(help="Machine-readable JSON explainability and error-analysis report path."),
+    ] = Path("reports/explainability_report.json"),
+    model_card_path: Annotated[
+        Path,
+        typer.Option(help="Human-readable model card Markdown path."),
+    ] = Path("docs/model_card.md"),
+    explanation_sample_size: Annotated[
+        int,
+        typer.Option(help="Highest-risk holdout rows to explain with feature perturbations."),
+    ] = 25,
+    analyst_alert_budget: Annotated[
+        int,
+        typer.Option(help="Maximum number of holdout transactions analysts can review."),
+    ] = 1_000,
+    holdout_fraction: Annotated[
+        float,
+        typer.Option(help="Newest chronological fraction reserved for final holdout."),
+    ] = 0.2,
+    calibration_fraction: Annotated[
+        float,
+        typer.Option(help="Newest pre-holdout training fraction reserved for calibration."),
+    ] = 0.2,
+    false_negative_cost: Annotated[
+        float,
+        typer.Option(help="Cost of missing a fraudulent transaction."),
+    ] = 500.0,
+    false_positive_cost: Annotated[
+        float,
+        typer.Option(help="Cost of sending a genuine transaction to analyst review."),
+    ] = 25.0,
+) -> None:
+    """Write selected-model explainability, slice errors, and a model card."""
+    frame = pd.read_csv(dataset)
+    report = generate_explainability_report(
+        frame,
+        explanation_sample_size=explanation_sample_size,
+        analyst_alert_budget=analyst_alert_budget,
+        holdout_fraction=holdout_fraction,
+        calibration_fraction=calibration_fraction,
+        false_negative_cost=false_negative_cost,
+        false_positive_cost=false_positive_cost,
+    )
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    model_card_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    model_card_path.write_text(render_model_card(report), encoding="utf-8")
+
+    typer.echo(f"Explainability report: {report_path}")
+    typer.echo(f"Model card: {model_card_path}")
+    typer.echo(f"Selected model: {report['selected_model']}")
 
 
 def _decision_report(decision: DecisionResult) -> dict[str, object]:

@@ -58,9 +58,25 @@ Current full-dataset comparison evidence uses the Kaggle CSV, a 20% final holdou
 
 The selected candidate is `hist_gradient_boosting`. Machine-readable comparison evidence is stored in [`reports/model_comparison.json`](reports/model_comparison.json), including deterministic model configuration, split boundaries, calibration provenance, threshold settings, PR-AUC/ROC-AUC, holdout probability summaries, and cost-sensitive decision metrics. The report does not track source data or model binaries.
 
+## Explainability and error analysis
+
+FraudShield now explains the selected calibrated model with a deterministic model-agnostic perturbation workflow. The command samples representative holdout rows by calibrated-risk quantiles, replaces one feature at a time with its model-train median, and records how each perturbation changes the fraud probability. This avoids a hard dependency on model-specific SHAP internals while producing reproducible global and transaction-level explanation evidence for either supported candidate model.
+
+The current full-dataset report uses a 25-row holdout sample for runtime safety and selected `hist_gradient_boosting`:
+
+| Global rank | Feature | Mean absolute probability delta | Mean signed probability delta |
+|---:|---|---:|---:|
+| 1 | `V14` | 0.002860 | 0.002858 |
+| 2 | `V17` | 0.001013 | 0.001011 |
+| 3 | `V10` | 0.000377 | 0.000376 |
+| 4 | `V12` | 0.000065 | 0.000065 |
+| 5 | `Time` | 0.000004 | -0.000004 |
+
+The report also aggregates false positives, false negatives, precision, recall, alerts, and fraud rate by amount bands (`[0,25)`, `[25,100)`, `[100,500)`, `[500,∞)`) and early/middle/late holdout time windows. Machine-readable evidence is stored in [`reports/explainability_report.json`](reports/explainability_report.json), and the human-readable model card is stored in [`docs/model_card.md`](docs/model_card.md). Both documents explicitly distinguish raw `Time`/`Amount` from anonymized PCA features `V1`-`V28` and describe interpretability limitations.
+
 ## Target architecture
 
-The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, and cost-sensitive decision evidence. The remaining components in this diagram are planned capabilities tracked in the roadmap.
+The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, cost-sensitive decision evidence, model-agnostic explanations, and slice-based error analysis. The remaining components in this diagram are planned capabilities tracked in the roadmap.
 
 ```text
 Kaggle transactions
@@ -154,7 +170,19 @@ uv run fraudshield compare-models data/raw/creditcard.csv \
 
 The comparison command trains the logistic and gradient-boosting candidates with fixed seeds, calibrates probabilities on pre-holdout calibration rows only, scores the final chronological holdout, and writes a versioned JSON report with model-selection evidence.
 
-### 7. Run quality gates
+### 7. Generate explainability evidence and the model card
+
+```bash
+uv run fraudshield explain-model data/raw/creditcard.csv \
+  --report-path reports/explainability_report.json \
+  --model-card-path docs/model_card.md \
+  --explanation-sample-size 25 \
+  --analyst-alert-budget 1000
+```
+
+The command retrains the deterministic calibrated candidates, selects the best holdout model under the recorded selection rule, generates global and transaction-level perturbation explanations for a representative holdout sample, and writes amount/time slice error analysis. It does not write source data or model binaries.
+
+### 8. Run quality gates
 
 ```bash
 uv run ruff format --check .

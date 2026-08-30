@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import zipfile
 from pathlib import Path
 
@@ -278,3 +279,53 @@ def test_compare_models_writes_versioned_candidate_report(tmp_path: Path) -> Non
         assert candidate["calibration"]["holdout_used"] is False
         assert candidate["threshold"]["selected_on"] == "holdout_probabilities"
         assert candidate["holdout_probability_count"] == 60
+
+
+def test_explain_model_cli_writes_json_report_and_markdown_model_card(tmp_path: Path) -> None:
+    from fraudshield.cli import app
+
+    rows = 360
+    rng = np.random.default_rng(29)
+    fraud = (np.arange(rows) % 18 == 0).astype(int)
+    frame = pd.DataFrame(
+        {
+            "Time": np.arange(rows, dtype=float),
+            "V1": fraud * 3.0 + rng.normal(scale=0.25, size=rows),
+            "V2": -fraud * 2.0 + rng.normal(scale=0.30, size=rows),
+            **{f"V{index}": rng.normal(size=rows) for index in range(3, 29)},
+            "Amount": 20.0 + fraud * 140.0 + (np.arange(rows) % 5) * 30.0,
+            "Class": fraud,
+        }
+    )
+    dataset_path = tmp_path / "transactions.csv"
+    report_path = tmp_path / "explainability.json"
+    model_card_path = tmp_path / "model-card.md"
+    frame.to_csv(dataset_path, index=False)
+
+    result = CliRunner().invoke(
+        app,
+        [
+            "explain-model",
+            str(dataset_path),
+            "--report-path",
+            str(report_path),
+            "--model-card-path",
+            str(model_card_path),
+            "--explanation-sample-size",
+            "6",
+            "--analyst-alert-budget",
+            "20",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    assert "Explainability report:" in result.stdout
+    assert "Model card:" in result.stdout
+    payload = json.loads(report_path.read_text(encoding="utf-8"))
+    assert payload["schema_version"] == 1
+    assert payload["explanation"]["sample"]["actual_rows"] == 6
+    assert payload["feature_metadata"]["target_column_excluded_from_model_inputs"] is True
+    model_card = model_card_path.read_text(encoding="utf-8")
+    assert "# FraudShield model card" in model_card
+    assert "anonymized PCA" in model_card
+    assert "not a live payment authorization system" in model_card

@@ -10,13 +10,14 @@
 - Implemented: reproducible logistic-regression baseline
 - Implemented: typed cost-sensitive decision layer with deterministic threshold sweep, expected-loss minimization, threshold precision/recall/F1, and analyst-budget precision/recall evidence
 - Implemented: leakage-safe calibrated comparison of class-weighted logistic regression and histogram gradient boosting with deterministic selection evidence
-- Next: add slice-aware model diagnostics for fraud-rate, amount, and time windows
+- Implemented: slice-aware model diagnostics for amount bands and chronological holdout windows
+- Next: add drift monitoring for score distributions and feature-quality changes
 
 ## Explainability and reliability
-- Global and transaction-level explanations
-- Slice-based error analysis
+- Implemented: deterministic global and transaction-level explanations with model-agnostic feature perturbations
+- Implemented: versioned model card with anonymized PCA feature limitations and holdout error-analysis evidence
 - Data-drift and prediction-drift monitoring
-- Versioned model cards and evaluation reports
+- Batch reliability checks for scoring outputs
 
 ## Serving and operations
 - Typed batch-scoring interface

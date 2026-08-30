@@ -1,0 +1,1396 @@
+{
+  "schema_version": 1,
+  "selected_model": "hist_gradient_boosting",
+  "model_config": {
+    "estimator": "HistGradientBoostingClassifier",
+    "class_weight": "balanced",
+    "early_stopping": false,
+    "l2_regularization": 0.01,
+    "learning_rate": 0.08,
+    "max_iter": 80,
+    "max_leaf_nodes": 15,
+    "random_state": 42
+  },
+  "selection_rule": [
+    "maximize_average_precision",
+    "minimize_expected_loss",
+    "maximize_recall",
+    "maximize_precision",
+    "lexicographic_model_name"
+  ],
+  "split": {
+    "strategy": "chronological_model_calibration_holdout",
+    "model_train_rows": 182276,
+    "calibration_rows": 45569,
+    "holdout_rows": 56962,
+    "holdout_fraction": 0.2,
+    "calibration_fraction_of_pre_holdout": 0.2,
+    "model_train_max_time": 125329.0,
+    "calibration_min_time": 125331.0,
+    "calibration_max_time": 145247.0,
+    "holdout_min_time": 145248.0
+  },
+  "decision": {
+    "chosen_threshold": 0.008870773965,
+    "expected_loss": 7900.0,
+    "precision": 0.525423728814,
+    "recall": 0.826666666667,
+    "f1": 0.642487046632,
+    "alert_count": 118,
+    "thresholds_evaluated": 44769,
+    "analyst_budget": {
+      "alert_count": 1000,
+      "precision": 0.066,
+      "recall": 0.88
+    }
+  },
+  "feature_metadata": {
+    "input_features": [
+      "Time",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28",
+      "Amount"
+    ],
+    "target_column": "Class",
+    "target_column_excluded_from_model_inputs": true,
+    "raw_features": [
+      "Time",
+      "Amount"
+    ],
+    "pca_anonymized_features": [
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28"
+    ],
+    "pca_anonymized_feature_count": 28,
+    "limitations": [
+      "V1-V28 are anonymized PCA components, so business-causal feature names are unavailable.",
+      "Perturbation deltas are local association evidence, not proof of causal drivers.",
+      "Slice error analysis uses labeled holdout data and should not be used as model input."
+    ]
+  },
+  "leakage_controls": {
+    "model_input_columns": [
+      "Time",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28",
+      "Amount"
+    ],
+    "target_column": "Class",
+    "target_available_only_for_holdout_evaluation": true,
+    "explanation_baseline_source": "model_train_feature_medians",
+    "explanation_baseline_columns": [
+      "Time",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28",
+      "Amount"
+    ],
+    "model_fit_max_time": 125329.0,
+    "calibration_max_time": 145247.0,
+    "holdout_min_time": 145248.0
+  },
+  "explanation": {
+    "method": "model_agnostic_feature_perturbation",
+    "baseline": {
+      "source": "model_train_feature_medians",
+      "feature_count": 30,
+      "target_included": false
+    },
+    "sample": {
+      "strategy": "deterministic_probability_quantiles_from_holdout",
+      "requested_rows": 25,
+      "actual_rows": 25,
+      "candidate_rows": 56962,
+      "model_prediction_calls": 775
+    }
+  },
+  "global_importance": [
+    {
+      "rank": 1,
+      "feature": "V14",
+      "mean_probability_delta": 0.002857591685,
+      "mean_absolute_probability_delta": 0.002860331244,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 2,
+      "feature": "V17",
+      "mean_probability_delta": 0.001010668417,
+      "mean_absolute_probability_delta": 0.001013180999,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 3,
+      "feature": "V10",
+      "mean_probability_delta": 0.000376325327,
+      "mean_absolute_probability_delta": 0.000377201502,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 4,
+      "feature": "V12",
+      "mean_probability_delta": 6.4741099e-05,
+      "mean_absolute_probability_delta": 6.4946884e-05,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 5,
+      "feature": "Time",
+      "mean_probability_delta": -4.335664e-06,
+      "mean_absolute_probability_delta": 4.341233e-06,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 6,
+      "feature": "V4",
+      "mean_probability_delta": -4.1151e-08,
+      "mean_absolute_probability_delta": 3.154762e-06,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 7,
+      "feature": "V26",
+      "mean_probability_delta": 1.578495e-06,
+      "mean_absolute_probability_delta": 1.590826e-06,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 8,
+      "feature": "V20",
+      "mean_probability_delta": 7.49824e-07,
+      "mean_absolute_probability_delta": 1.121873e-06,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 9,
+      "feature": "V5",
+      "mean_probability_delta": -1.43151e-07,
+      "mean_absolute_probability_delta": 9.8675e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 10,
+      "feature": "V8",
+      "mean_probability_delta": -1.18773e-07,
+      "mean_absolute_probability_delta": 7.81635e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 11,
+      "feature": "Amount",
+      "mean_probability_delta": 7.73785e-07,
+      "mean_absolute_probability_delta": 7.74419e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 12,
+      "feature": "V1",
+      "mean_probability_delta": -6.82396e-07,
+      "mean_absolute_probability_delta": 7.2661e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 13,
+      "feature": "V19",
+      "mean_probability_delta": 2.04761e-07,
+      "mean_absolute_probability_delta": 6.46071e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 14,
+      "feature": "V11",
+      "mean_probability_delta": 3.93818e-07,
+      "mean_absolute_probability_delta": 5.52539e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 15,
+      "feature": "V21",
+      "mean_probability_delta": 4.07579e-07,
+      "mean_absolute_probability_delta": 4.73053e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 16,
+      "feature": "V13",
+      "mean_probability_delta": 4.69344e-07,
+      "mean_absolute_probability_delta": 4.69873e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 17,
+      "feature": "V25",
+      "mean_probability_delta": -4.09339e-07,
+      "mean_absolute_probability_delta": 4.12721e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 18,
+      "feature": "V18",
+      "mean_probability_delta": -2.9937e-07,
+      "mean_absolute_probability_delta": 4.04257e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 19,
+      "feature": "V6",
+      "mean_probability_delta": -3.84686e-07,
+      "mean_absolute_probability_delta": 3.84686e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 20,
+      "feature": "V15",
+      "mean_probability_delta": -2.11296e-07,
+      "mean_absolute_probability_delta": 3.56285e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 21,
+      "feature": "V24",
+      "mean_probability_delta": -2.54611e-07,
+      "mean_absolute_probability_delta": 3.26076e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 22,
+      "feature": "V7",
+      "mean_probability_delta": 1.93963e-07,
+      "mean_absolute_probability_delta": 3.25904e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 23,
+      "feature": "V28",
+      "mean_probability_delta": -2.70674e-07,
+      "mean_absolute_probability_delta": 3.18986e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 24,
+      "feature": "V27",
+      "mean_probability_delta": -1.26902e-07,
+      "mean_absolute_probability_delta": 2.50182e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 25,
+      "feature": "V22",
+      "mean_probability_delta": 1.00244e-07,
+      "mean_absolute_probability_delta": 2.37389e-07,
+      "direction": "increases_risk"
+    },
+    {
+      "rank": 26,
+      "feature": "V2",
+      "mean_probability_delta": -1.96291e-07,
+      "mean_absolute_probability_delta": 2.07739e-07,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 27,
+      "feature": "V23",
+      "mean_probability_delta": -3.5401e-08,
+      "mean_absolute_probability_delta": 8.3156e-08,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 28,
+      "feature": "V3",
+      "mean_probability_delta": -3.0708e-08,
+      "mean_absolute_probability_delta": 6.5433e-08,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 29,
+      "feature": "V16",
+      "mean_probability_delta": -5.4553e-08,
+      "mean_absolute_probability_delta": 5.4553e-08,
+      "direction": "decreases_risk"
+    },
+    {
+      "rank": 30,
+      "feature": "V9",
+      "mean_probability_delta": 4.8023e-08,
+      "mean_absolute_probability_delta": 4.8023e-08,
+      "direction": "increases_risk"
+    }
+  ],
+  "transaction_explanations": [
+    {
+      "rank": 1,
+      "holdout_row_index": 6729,
+      "fraud_probability": 0.757491962103,
+      "predicted_label": 1,
+      "actual_label": 1,
+      "error_type": "true_positive",
+      "top_contributions": [
+        {
+          "feature": "V14",
+          "probability_delta": 0.071463577417,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V17",
+          "probability_delta": 0.025297486414,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V10",
+          "probability_delta": 0.009417212719,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V12",
+          "probability_delta": 0.001596291611,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "Amount",
+          "probability_delta": 0.0,
+          "direction": "neutral"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "holdout_row_index": 31969,
+      "fraud_probability": 0.000263227928,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V14",
+          "probability_delta": -3.0948193e-05,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": 2.3156013e-05,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V20",
+          "probability_delta": 1.8455772e-05,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "Amount",
+          "probability_delta": 1.7882739e-05,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -1.7615494e-05,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "holdout_row_index": 24635,
+      "fraud_probability": 0.000248054172,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V4",
+          "probability_delta": 1.4494484e-05,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V19",
+          "probability_delta": 8.581206e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V8",
+          "probability_delta": 5.354439e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V12",
+          "probability_delta": 4.075629e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V5",
+          "probability_delta": 3.699083e-06,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "holdout_row_index": 13535,
+      "fraud_probability": 0.00024275343,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V26",
+          "probability_delta": 8.949485e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -7.323086e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V13",
+          "probability_delta": 6.301502e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V17",
+          "probability_delta": -4.635149e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V21",
+          "probability_delta": 3.893649e-06,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "holdout_row_index": 54454,
+      "fraud_probability": 0.000239866882,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "Time",
+          "probability_delta": -1.6658404e-05,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V26",
+          "probability_delta": 6.849928e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V1",
+          "probability_delta": -6.758022e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V11",
+          "probability_delta": 5.953081e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": -2.739863e-06,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "holdout_row_index": 53831,
+      "fraud_probability": 0.000238181885,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V4",
+          "probability_delta": -2.5369924e-05,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V25",
+          "probability_delta": -5.433161e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V14",
+          "probability_delta": 4.737693e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V21",
+          "probability_delta": 3.991406e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V20",
+          "probability_delta": 3.289544e-06,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "holdout_row_index": 31426,
+      "fraud_probability": 0.000236988549,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V4",
+          "probability_delta": -2.53864e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -2.412439e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V26",
+          "probability_delta": 1.896406e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V22",
+          "probability_delta": 1.786942e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V1",
+          "probability_delta": -1.585743e-06,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "holdout_row_index": 39760,
+      "fraud_probability": 0.000236185056,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "Time",
+          "probability_delta": -4.213784e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V5",
+          "probability_delta": -2.438065e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V26",
+          "probability_delta": 1.319741e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V10",
+          "probability_delta": -9.64484e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V11",
+          "probability_delta": 9.2435e-07,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "holdout_row_index": 899,
+      "fraud_probability": 0.000235585994,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V15",
+          "probability_delta": -4.306422e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V7",
+          "probability_delta": 3.425054e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V17",
+          "probability_delta": -3.363914e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V13",
+          "probability_delta": 2.495196e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V6",
+          "probability_delta": -1.161756e-06,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "holdout_row_index": 8233,
+      "fraud_probability": 0.000235089171,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V2",
+          "probability_delta": -4.620103e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V1",
+          "probability_delta": -2.943057e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V27",
+          "probability_delta": 1.435943e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V18",
+          "probability_delta": -7.86073e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V12",
+          "probability_delta": -7.77404e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "holdout_row_index": 5612,
+      "fraud_probability": 0.000234693624,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V5",
+          "probability_delta": -2.079652e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V11",
+          "probability_delta": -1.555484e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V14",
+          "probability_delta": 1.326167e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V26",
+          "probability_delta": 1.178073e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -1.087643e-06,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "holdout_row_index": 10113,
+      "fraud_probability": 0.000234306608,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "Time",
+          "probability_delta": -3.6629899e-05,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V14",
+          "probability_delta": 1.479516e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V27",
+          "probability_delta": -1.044739e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V20",
+          "probability_delta": -9.36879e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V10",
+          "probability_delta": 6.42339e-07,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "holdout_row_index": 8144,
+      "fraud_probability": 0.000234005864,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V8",
+          "probability_delta": -3.733124e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": -3.082502e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V18",
+          "probability_delta": -1.324758e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V5",
+          "probability_delta": -1.230269e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -1.194309e-06,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "holdout_row_index": 8376,
+      "fraud_probability": 0.000233709091,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V17",
+          "probability_delta": -2.374939e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -2.183338e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V12",
+          "probability_delta": 1.067906e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V18",
+          "probability_delta": -6.63853e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": -6.13317e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "holdout_row_index": 48538,
+      "fraud_probability": 0.000233458667,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "Time",
+          "probability_delta": -3.958242e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V1",
+          "probability_delta": -5.69585e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V20",
+          "probability_delta": -5.55349e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V10",
+          "probability_delta": -4.40854e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V19",
+          "probability_delta": 4.2189e-07,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "holdout_row_index": 19197,
+      "fraud_probability": 0.000233223173,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V8",
+          "probability_delta": -4.178387e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V14",
+          "probability_delta": 1.564114e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V10",
+          "probability_delta": 1.127176e-06,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V5",
+          "probability_delta": -9.53506e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -9.14703e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "holdout_row_index": 37891,
+      "fraud_probability": 0.000233021881,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V5",
+          "probability_delta": -3.421432e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V27",
+          "probability_delta": -1.640661e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V17",
+          "probability_delta": -1.191604e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V8",
+          "probability_delta": -1.116473e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V15",
+          "probability_delta": 6.38333e-07,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "holdout_row_index": 11082,
+      "fraud_probability": 0.00023280702,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V1",
+          "probability_delta": -2.183238e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -1.992833e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V5",
+          "probability_delta": -9.11744e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": -6.56524e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V6",
+          "probability_delta": -4.75388e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "holdout_row_index": 15806,
+      "fraud_probability": 0.000232616826,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V17",
+          "probability_delta": -1.528516e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V7",
+          "probability_delta": -1.045049e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -7.04067e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V21",
+          "probability_delta": 6.67602e-07,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": 4.84043e-07,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "holdout_row_index": 641,
+      "fraud_probability": 0.000232414931,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V1",
+          "probability_delta": -1.129289e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -1.075972e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V16",
+          "probability_delta": -9.62019e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V14",
+          "probability_delta": -4.77421e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V21",
+          "probability_delta": 4.39284e-07,
+          "direction": "increases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "holdout_row_index": 12253,
+      "fraud_probability": 0.0002322583,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V4",
+          "probability_delta": -1.966759e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V17",
+          "probability_delta": -1.919541e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -5.51859e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V6",
+          "probability_delta": -3.99697e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V27",
+          "probability_delta": -3.37769e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "holdout_row_index": 4217,
+      "fraud_probability": 0.000232062619,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V18",
+          "probability_delta": -1.20749e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V8",
+          "probability_delta": -5.61184e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V20",
+          "probability_delta": -3.66065e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V24",
+          "probability_delta": 2.80202e-07,
+          "direction": "increases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -1.64371e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "holdout_row_index": 19940,
+      "fraud_probability": 0.00023187287,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V8",
+          "probability_delta": -1.562528e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V18",
+          "probability_delta": -7.14676e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V3",
+          "probability_delta": -4.58304e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -3.66292e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V16",
+          "probability_delta": -3.54734e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "holdout_row_index": 56187,
+      "fraud_probability": 0.000231623215,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "V18",
+          "probability_delta": -1.050533e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V27",
+          "probability_delta": -1.013703e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V5",
+          "probability_delta": -7.27812e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "Time",
+          "probability_delta": -4.36084e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V26",
+          "probability_delta": -1.54135e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "holdout_row_index": 8429,
+      "fraud_probability": 0.000230831239,
+      "predicted_label": 0,
+      "actual_label": 0,
+      "error_type": "true_negative",
+      "top_contributions": [
+        {
+          "feature": "Time",
+          "probability_delta": -2.574003e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V25",
+          "probability_delta": -1.376703e-06,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V4",
+          "probability_delta": -7.83906e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V14",
+          "probability_delta": -6.4412e-07,
+          "direction": "decreases_risk"
+        },
+        {
+          "feature": "V7",
+          "probability_delta": -5.71633e-07,
+          "direction": "decreases_risk"
+        }
+      ]
+    }
+  ],
+  "error_analysis": {
+    "threshold_source": "selected_model_minimum_expected_loss",
+    "threshold": 0.008870773965,
+    "amount_bands": [
+      {
+        "name": "amount:[0, 25)",
+        "rows": 32053,
+        "fraud_cases": 49,
+        "alerts": 73,
+        "true_positives": 40,
+        "false_positives": 33,
+        "false_negatives": 9,
+        "precision": 0.547945205479,
+        "recall": 0.816326530612,
+        "fraud_rate": 0.001528718061
+      },
+      {
+        "name": "amount:[25, 100)",
+        "rows": 14814,
+        "fraud_cases": 11,
+        "alerts": 19,
+        "true_positives": 10,
+        "false_positives": 9,
+        "false_negatives": 1,
+        "precision": 0.526315789474,
+        "recall": 0.909090909091,
+        "fraud_rate": 0.00074254084
+      },
+      {
+        "name": "amount:[100, 500)",
+        "rows": 8480,
+        "fraud_cases": 11,
+        "alerts": 16,
+        "true_positives": 9,
+        "false_positives": 7,
+        "false_negatives": 2,
+        "precision": 0.5625,
+        "recall": 0.818181818182,
+        "fraud_rate": 0.001297169811
+      },
+      {
+        "name": "amount:[500, inf)",
+        "rows": 1615,
+        "fraud_cases": 4,
+        "alerts": 10,
+        "true_positives": 3,
+        "false_positives": 7,
+        "false_negatives": 1,
+        "precision": 0.3,
+        "recall": 0.75,
+        "fraud_rate": 0.002476780186
+      }
+    ],
+    "time_windows": [
+      {
+        "name": "time:early_holdout",
+        "rows": 18987,
+        "fraud_cases": 32,
+        "alerts": 48,
+        "true_positives": 28,
+        "false_positives": 20,
+        "false_negatives": 4,
+        "precision": 0.583333333333,
+        "recall": 0.875,
+        "fraud_rate": 0.00168536367
+      },
+      {
+        "name": "time:middle_holdout",
+        "rows": 18988,
+        "fraud_cases": 31,
+        "alerts": 42,
+        "true_positives": 26,
+        "false_positives": 16,
+        "false_negatives": 5,
+        "precision": 0.619047619048,
+        "recall": 0.838709677419,
+        "fraud_rate": 0.00163261007
+      },
+      {
+        "name": "time:late_holdout",
+        "rows": 18987,
+        "fraud_cases": 12,
+        "alerts": 28,
+        "true_positives": 8,
+        "false_positives": 20,
+        "false_negatives": 4,
+        "precision": 0.285714285714,
+        "recall": 0.666666666667,
+        "fraud_rate": 0.000632011376
+      }
+    ],
+    "probability_summary": {
+      "min": 0.000230831239,
+      "max": 0.757491962103,
+      "mean": 0.001219483953
+    }
+  }
+}
