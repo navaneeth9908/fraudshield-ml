@@ -53,6 +53,15 @@ uv run fraudshield verify-data data/raw/creditcard.csv
 
 Validation fails closed for empty data, missing required columns, missing or null `Class`, invalid target values outside `0` and `1`, null or non-finite numeric values, and nonnumeric model features.
 
+Generate the checked-in, versioned profiling contract from the verified snapshot with:
+
+```bash
+uv run fraudshield profile-data data/raw/creditcard.csv \
+  --report-path reports/data_quality_report.json
+```
+
+The report records the Kaggle source slug, expected and observed CSV SHA-256, row and class balance, schema/missing/non-finite check outcomes, and deterministic min/mean/median/p95/max summaries for every model feature. It contains aggregate evidence only; the raw CSV remains ignored.
+
 ## Modeling constraints
 
 - Severe class imbalance makes accuracy unsuitable as a primary metric.

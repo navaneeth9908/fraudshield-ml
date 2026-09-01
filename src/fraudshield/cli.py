@@ -39,6 +39,7 @@ from fraudshield.monitoring import (
     generate_monitoring_report,
     write_monitoring_report,
 )
+from fraudshield.profiling import generate_data_quality_report
 from fraudshield.serving import load_model_bundle
 
 app = typer.Typer(no_args_is_help=True, help="FraudShield model-development commands.")
@@ -117,6 +118,38 @@ def verify_data(
     typer.echo(f"Fraud cases: {result.fraud_cases:,}")
     typer.echo(f"Fraud rate: {result.fraud_rate:.4f}%")
     typer.echo(f"CSV SHA-256: {result.csv_sha256}")
+
+
+@app.command("profile-data")
+def profile_data(
+    dataset: Path,
+    report_path: Annotated[
+        Path,
+        typer.Option(help="Versioned JSON data-quality evidence path."),
+    ] = Path("reports/data_quality_report.json"),
+    csv_sha256: Annotated[
+        str,
+        typer.Option(help="Expected SHA-256 verified before profiling."),
+    ] = DEFAULT_CSV_SHA256,
+) -> None:
+    """Verify and profile a transaction CSV as deterministic JSON evidence."""
+    verified = verify_dataset_file(dataset, expected_csv_sha256=csv_sha256)
+    frame = pd.read_csv(dataset)
+    report = generate_data_quality_report(
+        frame,
+        dataset_path=dataset,
+        csv_sha256=verified.csv_sha256,
+        expected_csv_sha256=csv_sha256,
+        dataset_slug=DEFAULT_DATASET_SOURCE.slug,
+    )
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(f"{json.dumps(report, indent=2)}\n", encoding="utf-8")
+
+    typer.echo(f"Data quality report: {report_path}")
+    typer.echo("Quality status: pass")
+    typer.echo(f"Transactions: {verified.rows:,}")
+    typer.echo(f"Fraud cases: {verified.fraud_cases:,}")
+    typer.echo(f"CSV SHA-256: {verified.csv_sha256}")
 
 
 @app.command("train-baseline")

@@ -10,6 +10,22 @@ FraudShield is a production-oriented credit-card fraud risk-scoring system built
 
 Only **492 of 284,807 transactions (0.1727%)** are fraudulent. Accuracy is therefore misleading—a model that predicts every transaction as genuine is more than 99.8% accurate. FraudShield emphasizes precision-recall performance, recall at operational review capacity, calibrated probabilities, and cost-sensitive thresholds.
 
+## Data-quality evidence
+
+FraudShield profiles the exact checksum-verified Kaggle snapshot before modeling. The versioned report is deterministic—there is no wall-clock metadata—and records the source slug, expected and observed CSV SHA-256, schema/missing/non-finite checks, class balance, and min/mean/median/p95/max summaries for all 30 model features.
+
+| Profiling evidence | Observed value |
+|---|---:|
+| Schema version | 1 |
+| Rows | 284,807 |
+| Required / observed columns | 31 / 31 |
+| Missing / non-finite values | 0 / 0 |
+| Genuine / fraud rows | 284,315 / 492 |
+| Genuine-to-fraud ratio | 577.8760:1 |
+| Amount median / p95 / maximum | 22.00 / 365.00 / 25,691.16 |
+
+Machine-readable evidence is stored in [`reports/data_quality_report.json`](reports/data_quality_report.json). The report contains aggregate statistics and checksum provenance only; the 150 MB raw CSV and source archive remain ignored.
+
 ## Current baseline
 
 The first reproducible model is a class-weighted logistic-regression pipeline evaluated on the newest 20% of transactions by `Time`, keeping future observations out of training.
@@ -170,7 +186,16 @@ Fraud rate: 0.1727%
 CSV SHA-256: 76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89
 ```
 
-### 4. Train the baseline
+### 4. Generate repeatable data-quality evidence
+
+```bash
+uv run fraudshield profile-data data/raw/creditcard.csv \
+  --report-path reports/data_quality_report.json
+```
+
+The command verifies the known Kaggle CSV checksum before profiling and writes the versioned aggregate report described above. Repeating it against the same snapshot produces identical JSON.
+
+### 5. Train the baseline
 
 ```bash
 uv run fraudshield train-baseline data/raw/creditcard.csv --output-dir artifacts
@@ -178,7 +203,7 @@ uv run fraudshield train-baseline data/raw/creditcard.csv --output-dir artifacts
 
 Model artifacts are generated locally and excluded from version control.
 
-### 5. Evaluate decision economics
+### 6. Evaluate decision economics
 
 ```bash
 uv run fraudshield evaluate-decisions data/raw/creditcard.csv \
@@ -191,7 +216,7 @@ uv run fraudshield evaluate-decisions data/raw/creditcard.csv \
 
 The command reuses the chronological holdout split, verifies split metadata on bundled model artifacts, scores holdout probabilities, and writes aggregate JSON decision evidence.
 
-### 6. Compare calibrated model candidates
+### 7. Compare calibrated model candidates
 
 ```bash
 uv run fraudshield compare-models data/raw/creditcard.csv \
@@ -205,7 +230,7 @@ uv run fraudshield compare-models data/raw/creditcard.csv \
 
 The comparison command trains the logistic and gradient-boosting candidates with fixed seeds, calibrates probabilities on pre-holdout calibration rows only, scores the final chronological holdout, and writes a versioned JSON report with model-selection evidence.
 
-### 7. Generate explainability evidence and the model card
+### 8. Generate explainability evidence and the model card
 
 ```bash
 uv run fraudshield explain-model data/raw/creditcard.csv \
@@ -217,7 +242,7 @@ uv run fraudshield explain-model data/raw/creditcard.csv \
 
 The command retrains the deterministic calibrated candidates, selects the best holdout model under the recorded selection rule, generates global and transaction-level perturbation explanations for a representative holdout sample, and writes amount/time slice error analysis. It does not write source data or model binaries.
 
-### 8. Score transactions with a local model bundle
+### 9. Score transactions with a local model bundle
 
 Generated bundles contain an ignored `model.joblib` plus a versioned `model-bundle.json` contract. They can be mounted into the API container or used by the offline CLI without committing trained binaries.
 
@@ -242,7 +267,7 @@ The API provides `/health`, `/ready`, `/model-info`, `/score`, and `/score-batch
 docker build -t fraudshield-ml:local .
 ```
 
-### 9. Monitor reference/current drift
+### 10. Monitor reference/current drift
 
 `monitor-drift` compares two scored windows. Each CSV needs the monitored feature columns plus a prediction score column:
 
@@ -258,7 +283,7 @@ uv run fraudshield monitor-drift reference_window.csv current_window.csv \
 
 The resulting JSON records reference/current row counts, per-bucket PSI components, alert statuses, thresholds, and limitations.
 
-### 10. Run quality gates
+### 11. Run quality gates
 
 ```bash
 uv run ruff format --check .

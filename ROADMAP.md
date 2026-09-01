@@ -4,7 +4,7 @@
 - Implemented: reproducible Kaggle dataset preparation with ZIP/CSV SHA-256 verification
 - Implemented: strict transaction schema validation for empty data, missing/null targets, invalid targets, null/non-finite values, and nonnumeric model features
 - Implemented: leakage-safe chronological train/holdout partition for the baseline
-- Next: add versioned data-quality reports for repeatable profiling evidence
+- Implemented: versioned, checksum-bound data-quality reports with deterministic class balance, schema, missing/non-finite, and feature-summary evidence
 
 ## Modeling and decision intelligence
 - Implemented: reproducible logistic-regression baseline
