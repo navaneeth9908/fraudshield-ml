@@ -27,6 +27,7 @@ fraudshield = "fraudshield.cli:app"
 [dependency-groups]
 dev = [
   "httpx>=0.28",
+  "httpx2>=2.12.0",
   "mypy>=1.15",
   "pandas-stubs>=2.2",
   "pytest>=8.3",
