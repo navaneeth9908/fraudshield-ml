@@ -9,7 +9,7 @@
 
 ## Intended use
 
-FraudShield is an educational portfolio fraud-risk scoring system for offline analysis of the Kaggle credit-card fraud dataset. It demonstrates leakage-safe model comparison, calibrated probabilities, cost-sensitive thresholding, model-agnostic explanations, and holdout slice diagnostics. It is not a live payment authorization system.
+FraudShield is an educational portfolio fraud-risk scoring system for offline analysis of the Kaggle credit-card fraud dataset. It demonstrates leakage-safe model comparison, calibrated probabilities, cost-sensitive thresholding, model-agnostic explanations, holdout slice diagnostics, local serving contracts, and PSI-based monitoring evidence. It is not a live payment authorization system.
 
 ## Features and privacy context
 
@@ -51,10 +51,15 @@ Time windows:
 | `time:middle_holdout` | 18988 | 31 | 42 | 16 | 5 | 0.6190 | 0.8387 | 0.0016 |
 | `time:late_holdout` | 18987 | 12 | 28 | 20 | 4 | 0.2857 | 0.6667 | 0.0006 |
 
+## Monitoring evidence
+
+The current monitoring report compares the calibration window with the final chronological holdout using PSI warning threshold `0.10` and critical threshold `0.25`. The score distribution is stable in that smoke report (`prediction:fraud_probability` PSI `0.0223`, status `ok`), while `feature:Time` is critical (`22.1672`) because the current window is intentionally later than the reference window. This is distribution-shift evidence only; labeled current outcomes are still required to measure live precision, recall, calibration, and fairness.
+
 ## Limitations and responsible use
 
 - The data represents two days of European cardholder transactions from September 2013 and is not current production traffic.
 - The PCA-anonymized `V1`-`V28` features limit human interpretability and fairness analysis.
 - Perturbation explanations are practical, deterministic model-agnostic diagnostics, not causal claims.
 - Error-analysis slices use labeled holdout data and should remain evaluation evidence, not features for fitting or calibration.
-- A production deployment would require current labels, drift monitoring, review workflows, security controls, governance, and fairness evaluation.
+- PSI monitoring now covers reference/current feature and prediction-score drift, but it does not measure model quality without current labels.
+- A production deployment would require current labels, review workflows, security controls, governance, fairness evaluation, and an approved process for refreshing monitoring reference windows.

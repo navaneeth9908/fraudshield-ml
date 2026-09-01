@@ -31,6 +31,15 @@ from fraudshield.modeling import (
     compare_model_candidates,
     train_baseline,
 )
+from fraudshield.monitoring import (
+    DEFAULT_MONITORING_BINS,
+    DEFAULT_PSI_CRITICAL_THRESHOLD,
+    DEFAULT_PSI_WARNING_THRESHOLD,
+    AlertThresholds,
+    generate_monitoring_report,
+    write_monitoring_report,
+)
+from fraudshield.serving import load_model_bundle
 
 app = typer.Typer(no_args_is_help=True, help="FraudShield model-development commands.")
 
@@ -324,6 +333,118 @@ def explain_model(
     typer.echo(f"Explainability report: {report_path}")
     typer.echo(f"Model card: {model_card_path}")
     typer.echo(f"Selected model: {report['selected_model']}")
+
+
+@app.command("score-batch")
+def score_batch_command(
+    transactions_csv: Path,
+    model_bundle: Annotated[
+        Path,
+        typer.Option(help="Local directory containing model-bundle.json and model.joblib."),
+    ],
+    output_json: Annotated[
+        Path,
+        typer.Option(help="JSON output file for ordered fraud predictions."),
+    ],
+) -> None:
+    """Score a CSV of transaction features with a validated local model bundle."""
+    bundle = load_model_bundle(model_bundle)
+    frame = pd.read_csv(transactions_csv)
+    transactions = [
+        {column: float(row[column]) for column in FEATURE_COLUMNS}
+        for row in frame.to_dict(orient="records")
+    ]
+    try:
+        predictions = bundle.score_batch(transactions)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    payload = {
+        "schema_version": 1,
+        "model_version": bundle.metadata.model_version,
+        "predictions": [prediction.to_dict() for prediction in predictions],
+    }
+    output_json.parent.mkdir(parents=True, exist_ok=True)
+    output_json.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    typer.echo(f"Scored transactions: {len(predictions)}")
+    typer.echo(f"Predictions: {output_json}")
+
+
+@app.command("monitor-drift")
+def monitor_drift(
+    reference_csv: Path,
+    current_csv: Path,
+    feature_column: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--feature-column",
+            "--feature",
+            help="Numeric feature column to monitor; repeat for multiple columns.",
+        ),
+    ] = None,
+    score_column: Annotated[
+        str,
+        typer.Option(
+            "--score-column", "--prediction-column", help="Prediction score column to monitor."
+        ),
+    ] = "fraud_probability",
+    report_path: Annotated[
+        Path,
+        typer.Option(help="Versioned JSON monitoring report path."),
+    ] = Path("reports/monitoring_report.json"),
+    warning_threshold: Annotated[
+        float, typer.Option(help="PSI value that raises a warning alert.")
+    ] = DEFAULT_PSI_WARNING_THRESHOLD,
+    critical_threshold: Annotated[
+        float,
+        typer.Option(
+            "--critical-threshold",
+            "--alert-threshold",
+            help="PSI value that raises a critical alert.",
+        ),
+    ] = DEFAULT_PSI_CRITICAL_THRESHOLD,
+    bins: Annotated[
+        int,
+        typer.Option("--bins", "--bin-count", help="Number of reference-defined PSI buckets."),
+    ] = DEFAULT_MONITORING_BINS,
+) -> None:
+    """Compare reference and current windows for feature and prediction drift."""
+    reference_frame = pd.read_csv(reference_csv)
+    current_frame = pd.read_csv(current_csv)
+    feature_columns = (
+        tuple(feature_column)
+        if feature_column
+        else _default_monitoring_features(reference_frame, current_frame)
+    )
+    if not feature_columns:
+        raise typer.BadParameter("at least one feature column is required")
+    try:
+        report = generate_monitoring_report(
+            reference=reference_frame,
+            current=current_frame,
+            feature_columns=feature_columns,
+            score_column=score_column,
+            thresholds=AlertThresholds(warning=warning_threshold, critical=critical_threshold),
+            bins=bins,
+        )
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    write_monitoring_report(report, report_path)
+
+    typer.echo(f"Monitoring report: {report_path}")
+    typer.echo(f"Overall status: {report['status']}")
+    alerts = cast(list[object], report["alerts"])
+    typer.echo(f"Alerts: {len(alerts)}")
+
+
+def _default_monitoring_features(
+    reference_frame: pd.DataFrame, current_frame: pd.DataFrame
+) -> tuple[str, ...]:
+    return tuple(
+        column
+        for column in FEATURE_COLUMNS
+        if column in reference_frame.columns and column in current_frame.columns
+    )
 
 
 def _decision_report(decision: DecisionResult) -> dict[str, object]:

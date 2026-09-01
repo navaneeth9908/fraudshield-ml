@@ -74,9 +74,41 @@ The current full-dataset report uses a 25-row holdout sample for runtime safety 
 
 The report also aggregates false positives, false negatives, precision, recall, alerts, and fraud rate by amount bands (`[0,25)`, `[25,100)`, `[100,500)`, `[500,∞)`) and early/middle/late holdout time windows. Machine-readable evidence is stored in [`reports/explainability_report.json`](reports/explainability_report.json), and the human-readable model card is stored in [`docs/model_card.md`](docs/model_card.md). Both documents explicitly distinguish raw `Time`/`Amount` from anonymized PCA features `V1`-`V28` and describe interpretability limitations.
 
+## Production inference interface
+
+FraudShield now includes a production-style serving layer around locally generated model bundles. A bundle stores `model-bundle.json` beside an ignored `model.joblib` artifact, pins `schema_version: 1`, records the exact ordered `Time`, `V1`-`V28`, and `Amount` feature contract, verifies the model artifact SHA-256 before loading, and keeps trained binaries out of Git.
+
+The serving layer exposes:
+
+- `GET /health` for process liveness
+- `GET /ready` for loaded-model readiness
+- `GET /model-info` for public bundle metadata
+- `POST /score` for one transaction
+- `POST /score-batch` for bounded batch scoring
+
+Each prediction returns a calibrated fraud probability, the configured threshold, a `review` or `approve` decision, model version, and human-readable reason metadata. Malformed payloads, missing model features, unsupported extra features, and non-finite feature values fail closed with validation errors rather than tracebacks.
+
+The same contract is available offline through `fraudshield score-batch`, which reads a feature-only CSV and writes ordered JSON prediction evidence. Docker packaging runs the FastAPI app as a non-root user and expects `FRAUDSHIELD_MODEL_BUNDLE` to point at a mounted/generated bundle directory. See [`docs/architecture.md`](docs/architecture.md) for the serving-contract and runtime design.
+
+## Monitoring evidence
+
+FraudShield now includes a lightweight monitoring foundation for reference/current window checks. The first production-oriented report uses population stability index (PSI) with stable bins learned from the reference window, smoothing for zero-count buckets, and configurable warning/critical thresholds. It monitors both model features and calibrated prediction-score distributions without requiring labels in the current window.
+
+The checked-in monitoring evidence compares the calibration window with the final chronological holdout for all `Time`, `V1`-`V28`, `Amount`, and `fraud_probability` distributions:
+
+| Monitoring metric | Value |
+|---|---:|
+| Metrics evaluated | 31 |
+| Alert thresholds | warning `0.10`, critical `0.25` PSI |
+| Current status | `critical` |
+| Current alerts | 1 |
+| Highest PSI signal | `feature:Time` at 22.1672 |
+
+The critical `Time` drift is expected for this backtest because the reference and current windows are deliberately chronological and non-overlapping. The report is useful as an operational contract and alerting example, not as proof of live degradation. Machine-readable evidence is stored in [`reports/monitoring_report.json`](reports/monitoring_report.json).
+
 ## Target architecture
 
-The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, cost-sensitive decision evidence, model-agnostic explanations, and slice-based error analysis. The remaining components in this diagram are planned capabilities tracked in the roadmap.
+The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, cost-sensitive decision evidence, model-agnostic explanations, slice-based error analysis, versioned model bundles, offline batch scoring, FastAPI inference, a containerized API runtime, and PSI monitoring reports. The remaining analyst-dashboard component is tracked in the roadmap.
 
 ```text
 Kaggle transactions
@@ -95,10 +127,13 @@ Imbalance-aware model pipeline
         └── explainability
         │
         ▼
-Batch scoring / FastAPI / analyst dashboard
+Versioned model bundle
+        │
+        ├── offline batch scoring CLI
+        └── FastAPI scoring service
         │
         ▼
-Drift and performance monitoring
+PSI drift monitoring reports
 ```
 
 ## Quick start
@@ -182,13 +217,55 @@ uv run fraudshield explain-model data/raw/creditcard.csv \
 
 The command retrains the deterministic calibrated candidates, selects the best holdout model under the recorded selection rule, generates global and transaction-level perturbation explanations for a representative holdout sample, and writes amount/time slice error analysis. It does not write source data or model binaries.
 
-### 8. Run quality gates
+### 8. Score transactions with a local model bundle
+
+Generated bundles contain an ignored `model.joblib` plus a versioned `model-bundle.json` contract. They can be mounted into the API container or used by the offline CLI without committing trained binaries.
+
+```bash
+uv run fraudshield score-batch data/processed/scoring_sample.csv \
+  --model-bundle artifacts/model-bundle \
+  --output-json reports/scoring_sample_predictions.json
+```
+
+The output JSON includes `schema_version`, `model_version`, and one ordered prediction per input row with calibrated fraud probability, decision threshold, `review`/`approve` decision, and reason metadata.
+
+To serve the same bundle locally:
+
+```bash
+FRAUDSHIELD_MODEL_BUNDLE=artifacts/model-bundle \
+  uv run uvicorn fraudshield.api:app --host 127.0.0.1 --port 8000
+```
+
+The API provides `/health`, `/ready`, `/model-info`, `/score`, and `/score-batch`. Docker builds the same runtime with a non-root application user:
+
+```bash
+docker build -t fraudshield-ml:local .
+```
+
+### 9. Monitor reference/current drift
+
+`monitor-drift` compares two scored windows. Each CSV needs the monitored feature columns plus a prediction score column:
+
+```bash
+uv run fraudshield monitor-drift reference_window.csv current_window.csv \
+  --feature-column Time \
+  --feature-column Amount \
+  --score-column fraud_probability \
+  --warning-threshold 0.10 \
+  --critical-threshold 0.25 \
+  --report-path reports/monitoring_report.json
+```
+
+The resulting JSON records reference/current row counts, per-bucket PSI components, alert statuses, thresholds, and limitations.
+
+### 10. Run quality gates
 
 ```bash
 uv run ruff format --check .
 uv run ruff check .
 uv run mypy
 uv run pytest --cov=fraudshield --cov-branch -q
+uv build
 ```
 
 ## Repository layout
@@ -212,10 +289,10 @@ fraudshield-ml/
 - Test-first behavioral changes
 - Reproducible environments and deterministic seeds
 - Typed interfaces and automated quality gates
-- Explicit model limitations and monitoring expectations
+- Explicit model limitations and monitoring evidence
 
 ## Responsible-use limitations
 
-This repository is an educational portfolio system, not a production payment authorization service. The source features are PCA-anonymized, the data represents two days of European cardholder transactions from September 2013, and real deployment would require current labeled data, governance, security controls, human review, fairness analysis, and continuous monitoring.
+This repository is an educational portfolio system, not a production payment authorization service. The source features are PCA-anonymized, the data represents two days of European cardholder transactions from September 2013, and real deployment would require current labeled data, governance, security controls, human review, fairness analysis, and continuous monitoring tied to live operating procedures.
 
 See [ROADMAP.md](ROADMAP.md) for the technical direction.

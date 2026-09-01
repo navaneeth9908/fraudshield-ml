@@ -11,16 +11,17 @@
 - Implemented: typed cost-sensitive decision layer with deterministic threshold sweep, expected-loss minimization, threshold precision/recall/F1, and analyst-budget precision/recall evidence
 - Implemented: leakage-safe calibrated comparison of class-weighted logistic regression and histogram gradient boosting with deterministic selection evidence
 - Implemented: slice-aware model diagnostics for amount bands and chronological holdout windows
-- Next: add drift monitoring for score distributions and feature-quality changes
+- Implemented: PSI drift monitoring for score distributions and feature-quality changes with configurable warning/critical thresholds
 
 ## Explainability and reliability
 - Implemented: deterministic global and transaction-level explanations with model-agnostic feature perturbations
 - Implemented: versioned model card with anonymized PCA feature limitations and holdout error-analysis evidence
-- Data-drift and prediction-drift monitoring
+- Implemented: reference/current monitoring reports with stable bins, zero-count smoothing, and explicit alert evidence
 - Batch reliability checks for scoring outputs
 
 ## Serving and operations
-- Typed batch-scoring interface
-- FastAPI inference service with request validation
+- Implemented: versioned model-bundle contract with SHA-256 artifact verification and fixed feature ordering
+- Implemented: typed FastAPI health/readiness/model-info plus single and batch fraud scoring endpoints
+- Implemented: offline batch-scoring CLI with calibrated probability, decision, and reason metadata
+- Implemented: secure-default Docker API runtime with non-root execution
 - Interactive analyst dashboard
-- Containerized runtime, automated tests, linting, typing, and CI

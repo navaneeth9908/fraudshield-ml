@@ -11,11 +11,14 @@ requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Sai Navaneeth Thota" }]
 dependencies = [
+  "fastapi>=0.115",
   "joblib>=1.4",
   "numpy>=2.0",
   "pandas>=2.2",
+  "pydantic>=2.10",
   "scikit-learn>=1.6",
   "typer>=0.16",
+  "uvicorn[standard]>=0.32",
 ]
 
 [project.scripts]
@@ -23,6 +26,7 @@ fraudshield = "fraudshield.cli:app"
 
 [dependency-groups]
 dev = [
+  "httpx>=0.28",
   "mypy>=1.15",
   "pandas-stubs>=2.2",
   "pytest>=8.3",

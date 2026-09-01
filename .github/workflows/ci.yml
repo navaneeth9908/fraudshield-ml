@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
           enable-cache: true
 
@@ -38,3 +38,14 @@ jobs:
 
       - name: Test with branch coverage
         run: uv run pytest --cov=fraudshield --cov-branch -q
+
+      - name: Build package
+        run: uv build
+
+      - name: Build container
+        run: docker build -t fraudshield-ml:ci .
+
+      - name: Smoke-test container package
+        run: >-
+          docker run --rm --entrypoint python fraudshield-ml:ci
+          -c "from fraudshield.api import app; assert app.title == 'FraudShield ML Inference API'"

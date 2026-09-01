@@ -1,0 +1,3220 @@
+{
+  "alerts": [
+    {
+      "kind": "feature",
+      "name": "feature:Time",
+      "psi": 22.16719382235228,
+      "status": "critical"
+    }
+  ],
+  "limitations": [
+    "PSI compares distribution shift only; it does not prove model-performance degradation without current labels.",
+    "Reference-defined numeric bins should be refreshed only through a governed model-monitoring process."
+  ],
+  "metrics": [
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 125331.0,
+          "psi_component": 2.3040557989947437,
+          "reference_count": 4669,
+          "reference_proportion": 0.10246000570509338,
+          "upper_bound": 127322.6
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 127322.6,
+          "psi_component": 2.2757146024378594,
+          "reference_count": 4614,
+          "reference_proportion": 0.10125304483283525,
+          "upper_bound": 129314.2
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 129314.2,
+          "psi_component": 2.17534930949379,
+          "reference_count": 4419,
+          "reference_proportion": 0.09697381992210191,
+          "upper_bound": 131305.8
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 131305.8,
+          "psi_component": 2.037721319904219,
+          "reference_count": 4151,
+          "reference_proportion": 0.09109262876273505,
+          "upper_bound": 133297.4
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 133297.4,
+          "psi_component": 2.1270350466686354,
+          "reference_count": 4325,
+          "reference_proportion": 0.09491101406769711,
+          "upper_bound": 135289.0
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 135289.0,
+          "psi_component": 2.1398802480725405,
+          "reference_count": 4350,
+          "reference_proportion": 0.09545963264599626,
+          "upper_bound": 137280.6
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 137280.6,
+          "psi_component": 2.308179343279931,
+          "reference_count": 4677,
+          "reference_proportion": 0.1026355636501491,
+          "upper_bound": 139272.2
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 139272.2,
+          "psi_component": 2.3891640389939304,
+          "reference_count": 4834,
+          "reference_proportion": 0.10608088832186774,
+          "upper_bound": 141263.8
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 141263.8,
+          "psi_component": 2.377292955064912,
+          "reference_count": 4811,
+          "reference_proportion": 0.10557615922983253,
+          "upper_bound": 143255.4
+        },
+        {
+          "current_count": 56962,
+          "current_proportion": 0.9999999998419998,
+          "lower_bound": 143255.4,
+          "psi_component": 2.0328011594417217,
+          "reference_count": 4719,
+          "reference_proportion": 0.10355724286169167,
+          "upper_bound": 145247.0
+        }
+      ],
+      "current_count": 56962,
+      "feature": "Time",
+      "kind": "feature",
+      "name": "feature:Time",
+      "psi": 22.16719382235228,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "critical"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": -46.8550472007818,
+          "psi_component": 0.0006465718548390281,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -41.9240494815825
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -41.9240494815825,
+          "psi_component": 6.381321807335781e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": -36.993051762383196
+        },
+        {
+          "current_count": 5,
+          "current_proportion": 8.777783433029426e-05,
+          "lower_bound": -36.993051762383196,
+          "psi_component": 1.533327064603604e-14,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": -32.06205404318389
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": -32.06205404318389,
+          "psi_component": 7.238961953483714e-05,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": -27.131056323984595
+        },
+        {
+          "current_count": 13,
+          "current_proportion": 0.0002282223411698637,
+          "lower_bound": -27.131056323984595,
+          "psi_component": 7.38863743454243e-07,
+          "reference_count": 11,
+          "reference_proportion": 0.00024139219639636762,
+          "upper_bound": -22.200058604785294
+        },
+        {
+          "current_count": 12,
+          "current_proportion": 0.00021066677781491751,
+          "lower_bound": -22.200058604785294,
+          "psi_component": 0.000510102727875764,
+          "reference_count": 30,
+          "reference_proportion": 0.0006583423159037191,
+          "upper_bound": -17.269060885585994
+        },
+        {
+          "current_count": 49,
+          "current_proportion": 0.0008602226219479261,
+          "lower_bound": -17.269060885585994,
+          "psi_component": 0.0002863335202877195,
+          "reference_count": 65,
+          "reference_proportion": 0.0014264083255225242,
+          "upper_bound": -12.33806316638669
+        },
+        {
+          "current_count": 290,
+          "current_proportion": 0.005091113390489956,
+          "lower_bound": -12.33806316638669,
+          "psi_component": 0.00019029339464805449,
+          "reference_count": 279,
+          "reference_proportion": 0.006122583355763219,
+          "upper_bound": -7.407065447187392
+        },
+        {
+          "current_count": 3023,
+          "current_proportion": 0.053070468039557867,
+          "lower_bound": -7.407065447187392,
+          "psi_component": 0.0002702102896688795,
+          "reference_count": 2594,
+          "reference_proportion": 0.05692466370626419,
+          "upper_bound": -2.476067727988095
+        },
+        {
+          "current_count": 53566,
+          "current_proportion": 0.9403813066886026,
+          "lower_bound": -2.476067727988095,
+          "psi_component": 3.948791516336593e-05,
+          "reference_count": 42575,
+          "reference_proportion": 0.9342974388653914,
+          "upper_bound": 2.45492999121121
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V1",
+      "kind": "feature",
+      "name": "feature:V1",
+      "psi": 0.0020799414038497944,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": -45.6079725644236,
+          "psi_component": 1.6001556312852399e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -40.13460086257577
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -40.13460086257577,
+          "psi_component": 4.8259743308180604e-05,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": -34.661229160727956
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": -34.661229160727956,
+          "psi_component": 1.821633443666521e-05,
+          "reference_count": 7,
+          "reference_proportion": 0.0001536132238685042,
+          "upper_bound": -29.18785745888013
+        },
+        {
+          "current_count": 5,
+          "current_proportion": 8.777783433029426e-05,
+          "lower_bound": -29.18785745888013,
+          "psi_component": 0.00019287368141300844,
+          "reference_count": 12,
+          "reference_proportion": 0.00026333693952833347,
+          "upper_bound": -23.714485757032307
+        },
+        {
+          "current_count": 22,
+          "current_proportion": 0.00038622241136437933,
+          "lower_bound": -23.714485757032307,
+          "psi_component": 0.00018892626272535234,
+          "reference_count": 32,
+          "reference_proportion": 0.0007022318021676508,
+          "upper_bound": -18.241114055184482
+        },
+        {
+          "current_count": 29,
+          "current_proportion": 0.0005091113548490026,
+          "lower_bound": -18.241114055184482,
+          "psi_component": 0.0007673604940145746,
+          "reference_count": 60,
+          "reference_proportion": 0.0013166846098626949,
+          "upper_bound": -12.767742353336665
+        },
+        {
+          "current_count": 142,
+          "current_proportion": 0.002492890013957921,
+          "lower_bound": -12.767742353336665,
+          "psi_component": 0.0007834155691498972,
+          "reference_count": 186,
+          "reference_proportion": 0.0040817222444903935,
+          "upper_bound": -7.2943706514888405
+        },
+        {
+          "current_count": 2814,
+          "current_proportion": 0.04940135529837411,
+          "lower_bound": -7.2943706514888405,
+          "psi_component": 0.005740113885836347,
+          "reference_count": 3083,
+          "reference_proportion": 0.0676556430977955,
+          "upper_bound": -1.820998949641016
+        },
+        {
+          "current_count": 53252,
+          "current_proportion": 0.9348688597951496,
+          "lower_bound": -1.820998949641016,
+          "psi_component": 0.00036014200441621575,
+          "reference_count": 41769,
+          "reference_proportion": 0.916609975901027,
+          "upper_bound": 3.6523727522068086
+        },
+        {
+          "current_count": 687,
+          "current_proportion": 0.012060672042403589,
+          "lower_bound": 3.6523727522068086,
+          "psi_component": 0.0008430073660701074,
+          "reference_count": 414,
+          "reference_proportion": 0.00908512367857861,
+          "upper_bound": 9.12574445405463
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V2",
+      "kind": "feature",
+      "name": "feature:V2",
+      "psi": 0.008943915497001634,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -24.9623217802769,
+          "psi_component": 2.412986708152661e-05,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -22.078320266849293
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -22.078320266849293,
+          "psi_component": 2.412986708152661e-05,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -19.194318753421683
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": -19.194318753421683,
+          "psi_component": 1.6001556312852399e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -16.310317239994077
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": -16.310317239994077,
+          "psi_component": 1.8564215476866046e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": -13.426315726566472
+        },
+        {
+          "current_count": 14,
+          "current_proportion": 0.00024577790452480985,
+          "lower_bound": -13.426315726566472,
+          "psi_component": 1.2116796492840787e-06,
+          "reference_count": 12,
+          "reference_proportion": 0.00026333693952833347,
+          "upper_bound": -10.542314213138866
+        },
+        {
+          "current_count": 68,
+          "current_proportion": 0.0011937783256919035,
+          "lower_bound": -10.542314213138866,
+          "psi_component": 0.000129111587607906,
+          "reference_count": 38,
+          "reference_proportion": 0.0008339002609594459,
+          "upper_bound": -7.6583126997112565
+        },
+        {
+          "current_count": 338,
+          "current_proportion": 0.0059337804315273725,
+          "lower_bound": -7.6583126997112565,
+          "psi_component": 5.4786300028042314e-05,
+          "reference_count": 297,
+          "reference_proportion": 0.006517588732138605,
+          "upper_bound": -4.774311186283651
+        },
+        {
+          "current_count": 8616,
+          "current_proportion": 0.15125873388377187,
+          "lower_bound": -4.774311186283651,
+          "psi_component": 0.0016616816202649901,
+          "reference_count": 7634,
+          "reference_proportion": 0.16752616909137216,
+          "upper_bound": -1.890309672856045
+        },
+        {
+          "current_count": 42050,
+          "current_proportion": 0.7382114390930424,
+          "lower_bound": -1.890309672856045,
+          "psi_component": 0.0004425031984140639,
+          "reference_count": 32821,
+          "reference_proportion": 0.7202484143561964,
+          "upper_bound": 0.9936918405715609
+        },
+        {
+          "current_count": 5865,
+          "current_proportion": 0.10296337909431491,
+          "lower_bound": 0.9936918405715609,
+          "psi_component": 2.026931721294787e-05,
+          "reference_count": 4758,
+          "reference_proportion": 0.10441308784383833,
+          "upper_bound": 3.87769335399917
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V3",
+      "kind": "feature",
+      "name": "feature:V3",
+      "psi": 0.0023779878084484386,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 184,
+          "current_proportion": 0.0032302236748656603,
+          "lower_bound": -5.6006071412151,
+          "psi_component": 0.0003066499864368776,
+          "reference_count": 196,
+          "reference_proportion": 0.0043011696758100525,
+          "upper_bound": -3.7276320915811003
+        },
+        {
+          "current_count": 4441,
+          "current_proportion": 0.07796425687687156,
+          "lower_bound": -3.7276320915811003,
+          "psi_component": 0.0021361716862670424,
+          "reference_count": 4165,
+          "reference_proportion": 0.09139985516658258,
+          "upper_bound": -1.8546570419471005
+        },
+        {
+          "current_count": 28672,
+          "current_proportion": 0.5033531125305725,
+          "lower_bound": -1.8546570419471005,
+          "psi_component": 0.0008711707485154218,
+          "reference_count": 21993,
+          "reference_proportion": 0.48263073572327003,
+          "upper_bound": 0.01831800768689895
+        },
+        {
+          "current_count": 20255,
+          "current_proportion": 0.35558793577199044,
+          "lower_bound": 0.01831800768689895,
+          "psi_component": 3.218254166050332e-05,
+          "reference_count": 16050,
+          "reference_proportion": 0.3522131272899969,
+          "upper_bound": 1.8912930573208993
+        },
+        {
+          "current_count": 1823,
+          "current_proportion": 0.032003792013622454,
+          "lower_bound": 1.8912930573208993,
+          "psi_component": 0.0010763351121975487,
+          "reference_count": 1738,
+          "reference_proportion": 0.03813996358530142,
+          "upper_bound": 3.7642681069548996
+        },
+        {
+          "current_count": 1499,
+          "current_proportion": 0.02631578948661989,
+          "lower_bound": 3.7642681069548996,
+          "psi_component": 0.0004879291563828036,
+          "reference_count": 1368,
+          "reference_proportion": 0.030020408626474048,
+          "upper_bound": 5.637243156588898
+        },
+        {
+          "current_count": 55,
+          "current_proportion": 0.0009655560020776032,
+          "lower_bound": 5.637243156588898,
+          "psi_component": 5.039178149604464e-07,
+          "reference_count": 43,
+          "reference_proportion": 0.0009436239766192752,
+          "upper_bound": 7.510218206222898
+        },
+        {
+          "current_count": 20,
+          "current_proportion": 0.000351111284654487,
+          "lower_bound": 7.510218206222898,
+          "psi_component": 8.837883422217547e-05,
+          "reference_count": 9,
+          "reference_proportion": 0.0001975027101324359,
+          "upper_bound": 9.383193255856899
+        },
+        {
+          "current_count": 9,
+          "current_proportion": 0.00015800008775007895,
+          "lower_bound": 9.383193255856899,
+          "psi_component": 8.068707442591539e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": 11.256168305490899
+        },
+        {
+          "current_count": 4,
+          "current_proportion": 7.022227097534808e-05,
+          "lower_bound": 11.256168305490899,
+          "psi_component": 3.917900794999927e-06,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": 13.1291433551249
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V4",
+      "kind": "feature",
+      "name": "feature:V4",
+      "psi": 0.005083926958718248,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -35.1821203113785,
+          "psi_component": 1.9589508872374403e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -29.103500553090768
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": -29.103500553090768,
+          "psi_component": 0.0006465718548390281,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -23.02488079480304
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -23.02488079480304,
+          "psi_component": 0.00012762646253098334,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": -16.94626103651531
+        },
+        {
+          "current_count": 21,
+          "current_proportion": 0.00036866684800943315,
+          "lower_bound": -16.94626103651531,
+          "psi_component": 2.1381318319448265e-05,
+          "reference_count": 13,
+          "reference_proportion": 0.00028528168266029935,
+          "upper_bound": -10.86764127822758
+        },
+        {
+          "current_count": 138,
+          "current_proportion": 0.0024226677605381363,
+          "lower_bound": -10.86764127822758,
+          "psi_component": 1.4161759233697547e-05,
+          "reference_count": 119,
+          "reference_proportion": 0.002611424454648681,
+          "upper_bound": -4.789021519939851
+        },
+        {
+          "current_count": 48813,
+          "current_proportion": 0.8569397140625434,
+          "lower_bound": -4.789021519939851,
+          "psi_component": 0.0003148223862220926,
+          "reference_count": 38305,
+          "reference_proportion": 0.8405933856918972,
+          "upper_bound": 1.2895982383478781
+        },
+        {
+          "current_count": 7928,
+          "current_proportion": 0.13918050629556888,
+          "lower_bound": 1.2895982383478781,
+          "psi_component": 0.001620264073448472,
+          "reference_count": 7045,
+          "reference_proportion": 0.15460071538664427,
+          "upper_bound": 7.368217996635607
+        },
+        {
+          "current_count": 46,
+          "current_proportion": 0.0008075559318830876,
+          "lower_bound": 7.368217996635607,
+          "psi_component": 0.0002884817600116158,
+          "reference_count": 62,
+          "reference_proportion": 0.0013605740961266267,
+          "upper_bound": 13.446837754923337
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": 13.446837754923337,
+          "psi_component": 0.0001447792482148093,
+          "reference_count": 12,
+          "reference_proportion": 0.00026333693952833347,
+          "upper_bound": 19.525457513211066
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": 19.525457513211066,
+          "psi_component": 1.8564215476866046e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": 25.6040772714988
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V5",
+      "kind": "feature",
+      "name": "feature:V5",
+      "psi": 0.00319861202918425,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": -17.9272741163356,
+          "psi_component": 5.379137484267162e-05,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -13.97949708544408
+        },
+        {
+          "current_count": 7,
+          "current_proportion": 0.00012288896104018662,
+          "lower_bound": -13.97949708544408,
+          "psi_component": 3.540206869362772e-05,
+          "reference_count": 9,
+          "reference_proportion": 0.0001975027101324359,
+          "upper_bound": -10.03172005455256
+        },
+        {
+          "current_count": 20,
+          "current_proportion": 0.000351111284654487,
+          "lower_bound": -10.03172005455256,
+          "psi_component": 0.00016966553514249005,
+          "reference_count": 29,
+          "reference_proportion": 0.0006363975727717532,
+          "upper_bound": -6.083943023661039
+        },
+        {
+          "current_count": 524,
+          "current_proportion": 0.009199115215547362,
+          "lower_bound": -6.083943023661039,
+          "psi_component": 0.00012270526534008698,
+          "reference_count": 469,
+          "reference_proportion": 0.010292084550836734,
+          "upper_bound": -2.13616599276952
+        },
+        {
+          "current_count": 51722,
+          "current_proportion": 0.9080088478620819,
+          "lower_bound": -2.13616599276952,
+          "psi_component": 9.677167339139092e-05,
+          "reference_count": 40951,
+          "reference_proportion": 0.8986591760190789,
+          "upper_bound": 1.811611038121999
+        },
+        {
+          "current_count": 4602,
+          "current_proportion": 0.08079070257701788,
+          "lower_bound": 1.811611038121999,
+          "psi_component": 0.000763058309773146,
+          "reference_count": 4048,
+          "reference_proportion": 0.08883232022014256,
+          "upper_bound": 5.7593880690135215
+        },
+        {
+          "current_count": 71,
+          "current_proportion": 0.0012464450157567422,
+          "lower_bound": 5.7593880690135215,
+          "psi_component": 3.250255497769062e-05,
+          "reference_count": 48,
+          "reference_proportion": 0.0010533476922791045,
+          "upper_bound": 9.70716509990504
+        },
+        {
+          "current_count": 7,
+          "current_proportion": 0.00012288896104018662,
+          "lower_bound": 9.70716509990504,
+          "psi_component": 1.8786407285482043e-05,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": 13.65494213079656
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": 13.65494213079656,
+          "psi_component": 6.381321807335781e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": 17.602719161688082
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": 17.602719161688082,
+          "psi_component": 1.9589508872374403e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": 21.5504961925796
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V6",
+      "kind": "feature",
+      "name": "feature:V6",
+      "psi": 0.0013584553584071813,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 12,
+          "current_proportion": 0.00021066677781491751,
+          "lower_bound": -17.1381703067735,
+          "psi_component": 3.6432668366779856e-05,
+          "reference_count": 14,
+          "reference_proportion": 0.00030722642579226523,
+          "upper_bound": -11.73661644927017
+        },
+        {
+          "current_count": 77,
+          "current_proportion": 0.0013517783958864192,
+          "lower_bound": -11.73661644927017,
+          "psi_component": 5.7886014242082754e-05,
+          "reference_count": 75,
+          "reference_proportion": 0.001645855756842183,
+          "upper_bound": -6.335062591766839
+        },
+        {
+          "current_count": 7095,
+          "current_proportion": 0.12455672202089872,
+          "lower_bound": -6.335062591766839,
+          "psi_component": 9.409474304899122e-05,
+          "reference_count": 5833,
+          "reference_proportion": 0.12800368671070164,
+          "upper_bound": -0.9335087342635084
+        },
+        {
+          "current_count": 49579,
+          "current_proportion": 0.8703872755924322,
+          "lower_bound": -0.9335087342635084,
+          "psi_component": 3.2954734532542466e-05,
+          "reference_count": 39419,
+          "reference_proportion": 0.8650398295409072,
+          "upper_bound": 4.468045123239822
+        },
+        {
+          "current_count": 164,
+          "current_proportion": 0.0028791124077667367,
+          "lower_bound": 4.468045123239822,
+          "psi_component": 0.0004928648673887541,
+          "reference_count": 191,
+          "reference_proportion": 0.0041914459601502235,
+          "upper_bound": 9.869598980743152
+        },
+        {
+          "current_count": 22,
+          "current_proportion": 0.00038622241136437933,
+          "lower_bound": 9.869598980743152,
+          "psi_component": 2.352307634516064e-06,
+          "reference_count": 19,
+          "reference_proportion": 0.0004169501414520946,
+          "upper_bound": 15.271152838246483
+        },
+        {
+          "current_count": 10,
+          "current_proportion": 0.00017555565110502513,
+          "lower_bound": 15.271152838246483,
+          "psi_component": 2.585280450512528e-06,
+          "reference_count": 9,
+          "reference_proportion": 0.0001975027101324359,
+          "upper_bound": 20.672706695749813
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 20.672706695749813,
+          "psi_component": 0.001353987373435221,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": 26.074260553253144
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": 26.074260553253144,
+          "psi_component": 6.381321807335781e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": 31.475814410756474
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": 31.475814410756474,
+          "psi_component": 1.9589508872374403e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": 36.8773682682598
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V7",
+      "kind": "feature",
+      "name": "feature:V7",
+      "psi": 0.002138930158059995,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -39.6885710849014,
+          "psi_component": 6.188066061585411e-06,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": -34.96742721456737
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -34.96742721456737,
+          "psi_component": 0.0005015799912988107,
+          "reference_count": 0,
+          "reference_proportion": 2.1944743131965863e-11,
+          "upper_bound": -30.246283344233348
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": -30.246283344233348,
+          "psi_component": 2.689567525943333e-05,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": -25.52513947389932
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": -25.52513947389932,
+          "psi_component": 7.238961953483714e-05,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": -20.803995603565294
+        },
+        {
+          "current_count": 14,
+          "current_proportion": 0.00024577790452480985,
+          "lower_bound": -20.803995603565294,
+          "psi_component": 7.896607523926018e-08,
+          "reference_count": 11,
+          "reference_proportion": 0.00024139219639636762,
+          "upper_bound": -16.08285173323127
+        },
+        {
+          "current_count": 47,
+          "current_proportion": 0.0008251114952380338,
+          "lower_bound": -16.08285173323127,
+          "psi_component": 4.603532381189343e-05,
+          "reference_count": 47,
+          "reference_proportion": 0.0010314029491471388,
+          "upper_bound": -11.36170786289724
+        },
+        {
+          "current_count": 175,
+          "current_proportion": 0.003072223604671145,
+          "lower_bound": -11.36170786289724,
+          "psi_component": 0.0002103394522575747,
+          "reference_count": 179,
+          "reference_proportion": 0.0039281090425666325,
+          "upper_bound": -6.640563992563216
+        },
+        {
+          "current_count": 1136,
+          "current_proportion": 0.019943119988774426,
+          "lower_bound": -6.640563992563216,
+          "psi_component": 0.0012558651233635166,
+          "reference_count": 1151,
+          "reference_proportion": 0.025258399366837457,
+          "upper_bound": -1.919420122229191
+        },
+        {
+          "current_count": 55221,
+          "current_proportion": 0.9694357640410386,
+          "lower_bound": -1.919420122229191,
+          "psi_component": 1.7448602315834845e-05,
+          "reference_count": 43989,
+          "reference_proportion": 0.9653273056539912,
+          "upper_bound": 2.801723748104834
+        },
+        {
+          "current_count": 359,
+          "current_proportion": 0.006302447261981242,
+          "lower_bound": 2.801723748104834,
+          "psi_component": 0.0010082741121455092,
+          "reference_count": 184,
+          "reference_proportion": 0.004037832758226462,
+          "upper_bound": 7.52286761843886
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V8",
+      "kind": "feature",
+      "name": "feature:V8",
+      "psi": 0.0031450949321242348,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 79,
+          "current_proportion": 0.0013868895225963116,
+          "lower_bound": -4.34656053852786,
+          "psi_component": 6.785631057797409e-05,
+          "reference_count": 50,
+          "reference_proportion": 0.0010972371785430363,
+          "upper_bound": -3.129919158664415
+        },
+        {
+          "current_count": 1964,
+          "current_proportion": 0.03447912644666986,
+          "lower_bound": -3.129919158664415,
+          "psi_component": 0.0002400385829003102,
+          "reference_count": 1705,
+          "reference_proportion": 0.037415787061946544,
+          "upper_bound": -1.9132777788009698
+        },
+        {
+          "current_count": 9954,
+          "current_proportion": 0.17474807765268985,
+          "lower_bound": -1.9132777788009698,
+          "psi_component": 0.004448759237595928,
+          "reference_count": 9284,
+          "reference_proportion": 0.20373499525911584,
+          "upper_bound": -0.6966363989375246
+        },
+        {
+          "current_count": 29949,
+          "current_proportion": 0.5257715669348387,
+          "lower_bound": -0.6966363989375246,
+          "psi_component": 0.0017856941474183683,
+          "reference_count": 22583,
+          "reference_proportion": 0.4955781341711299,
+          "upper_bound": 0.5200049809259202
+        },
+        {
+          "current_count": 13452,
+          "current_proportion": 0.23615743826829158,
+          "lower_bound": 0.5200049809259202,
+          "psi_component": 9.20897042502307e-05,
+          "reference_count": 10550,
+          "reference_proportion": 0.23151704006418464,
+          "upper_bound": 1.736646360789365
+        },
+        {
+          "current_count": 1217,
+          "current_proportion": 0.021365120620525067,
+          "lower_bound": 1.736646360789365,
+          "psi_component": 0.00011711645377420373,
+          "reference_count": 1047,
+          "reference_proportion": 0.022976146081113005,
+          "upper_bound": 2.9532877406528106
+        },
+        {
+          "current_count": 176,
+          "current_proportion": 0.003089779168026091,
+          "lower_bound": 2.9532877406528106,
+          "psi_component": 0.0004847642670256553,
+          "reference_count": 202,
+          "reference_proportion": 0.004432838134601848,
+          "upper_bound": 4.169929120516255
+        },
+        {
+          "current_count": 98,
+          "current_proportion": 0.0017204452263402889,
+          "lower_bound": 4.169929120516255,
+          "psi_component": 8.453629411703768e-06,
+          "reference_count": 73,
+          "reference_proportion": 0.0016019662705782512,
+          "upper_bound": 5.3865705003797
+        },
+        {
+          "current_count": 51,
+          "current_proportion": 0.0008953337486578185,
+          "lower_bound": 5.3865705003797,
+          "psi_component": 0.00024733117618355824,
+          "reference_count": 65,
+          "reference_proportion": 0.0014264083255225242,
+          "upper_bound": 6.603211880243145
+        },
+        {
+          "current_count": 22,
+          "current_proportion": 0.00038622241136437933,
+          "lower_bound": 6.603211880243145,
+          "psi_component": 9.42779818424535e-05,
+          "reference_count": 10,
+          "reference_proportion": 0.00021944745326440176,
+          "upper_bound": 7.81985326010659
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V9",
+      "kind": "feature",
+      "name": "feature:V9",
+      "psi": 0.007586381490980385,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 16,
+          "current_proportion": 0.00028088903123470226,
+          "lower_bound": -7.29882936741038,
+          "psi_component": 1.5671600241574858e-05,
+          "reference_count": 16,
+          "reference_proportion": 0.000351115912056197,
+          "upper_bound": -5.366292664035122
+        },
+        {
+          "current_count": 53,
+          "current_proportion": 0.0009304448753677108,
+          "lower_bound": -5.366292664035122,
+          "psi_component": 1.5248038434814962e-05,
+          "reference_count": 48,
+          "reference_proportion": 0.0010533476922791045,
+          "upper_bound": -3.4337559606598638
+        },
+        {
+          "current_count": 1861,
+          "current_proportion": 0.032670903421110405,
+          "lower_bound": -3.4337559606598638,
+          "psi_component": 1.5048583569510004e-05,
+          "reference_count": 1457,
+          "reference_proportion": 0.03197349076521901,
+          "upper_bound": -1.501219257284606
+        },
+        {
+          "current_count": 40681,
+          "current_proportion": 0.7141778728601211,
+          "lower_bound": -1.501219257284606,
+          "psi_component": 0.001843397910982781,
+          "reference_count": 30912,
+          "reference_proportion": 0.6783558997172736,
+          "upper_bound": 0.43131744609065237
+        },
+        {
+          "current_count": 13415,
+          "current_proportion": 0.23550788242415857,
+          "lower_bound": 0.43131744609065237,
+          "psi_component": 0.005094723566222224,
+          "reference_count": 12368,
+          "reference_proportion": 0.27141258307809857,
+          "upper_bound": 2.3638541494659107
+        },
+        {
+          "current_count": 595,
+          "current_proportion": 0.010445560213748541,
+          "lower_bound": 2.3638541494659107,
+          "psi_component": 4.557450640833646e-08,
+          "reference_count": 475,
+          "reference_proportion": 0.010423753009628528,
+          "upper_bound": 4.296390852841168
+        },
+        {
+          "current_count": 169,
+          "current_proportion": 0.0029668902245414677,
+          "lower_bound": 4.296390852841168,
+          "psi_component": 2.5415976238728043e-05,
+          "reference_count": 148,
+          "reference_proportion": 0.003247822005475691,
+          "upper_bound": 6.228927556216427
+        },
+        {
+          "current_count": 83,
+          "current_proportion": 0.0014571117760160963,
+          "lower_bound": 6.228927556216427,
+          "psi_component": 1.918366319401121e-05,
+          "reference_count": 59,
+          "reference_proportion": 0.0012947398667307291,
+          "upper_bound": 8.161464259591686
+        },
+        {
+          "current_count": 57,
+          "current_proportion": 0.0010006671287874956,
+          "lower_bound": 8.161464259591686,
+          "psi_component": 6.545997019417725e-05,
+          "reference_count": 58,
+          "reference_proportion": 0.0012727951235987633,
+          "upper_bound": 10.094000962966941
+        },
+        {
+          "current_count": 32,
+          "current_proportion": 0.0005617780449138411,
+          "lower_bound": 10.094000962966941,
+          "psi_component": 4.720994956856296e-06,
+          "reference_count": 28,
+          "reference_proportion": 0.0006144528296397873,
+          "upper_bound": 12.0265376663422
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V10",
+      "kind": "feature",
+      "name": "feature:V10",
+      "psi": 0.007098915878541085,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 102,
+          "current_proportion": 0.0017906674797600736,
+          "lower_bound": -3.54883863818073,
+          "psi_component": 0.0005426295921011473,
+          "reference_count": 43,
+          "reference_proportion": 0.0009436239766192752,
+          "upper_bound": -2.716282741356033
+        },
+        {
+          "current_count": 1514,
+          "current_proportion": 0.02657912293694408,
+          "lower_bound": -2.716282741356033,
+          "psi_component": 1.9251838346387457e-05,
+          "reference_count": 1244,
+          "reference_proportion": 0.027299260478110283,
+          "upper_bound": -1.883726844531336
+        },
+        {
+          "current_count": 11723,
+          "current_proportion": 0.20580386922758964,
+          "lower_bound": -1.883726844531336,
+          "psi_component": 0.00017603937983085596,
+          "reference_count": 9106,
+          "reference_proportion": 0.1998288309816259,
+          "upper_bound": -1.0511709477066389
+        },
+        {
+          "current_count": 16981,
+          "current_proportion": 0.29811102134789663,
+          "lower_bound": -1.0511709477066389,
+          "psi_component": 0.0007563447510181632,
+          "reference_count": 12909,
+          "reference_proportion": 0.2832846891124921,
+          "upper_bound": -0.218615050881942
+        },
+        {
+          "current_count": 16334,
+          "current_proportion": 0.28675257185724645,
+          "lower_bound": -0.218615050881942,
+          "psi_component": 0.0009040392516393918,
+          "reference_count": 13811,
+          "reference_proportion": 0.30307884741752533,
+          "upper_bound": 0.6139408459427549
+        },
+        {
+          "current_count": 9626,
+          "current_proportion": 0.1689898528722675,
+          "lower_bound": 0.6139408459427549,
+          "psi_component": 7.519959486471422e-05,
+          "reference_count": 7864,
+          "reference_proportion": 0.1725734600117243,
+          "upper_bound": 1.4464967427674522
+        },
+        {
+          "current_count": 611,
+          "current_proportion": 0.01072644922742768,
+          "lower_bound": 1.4464967427674522,
+          "psi_component": 3.0035212983700707e-05,
+          "reference_count": 515,
+          "reference_proportion": 0.011301542734907164,
+          "upper_bound": 2.2790526395921487
+        },
+        {
+          "current_count": 38,
+          "current_proportion": 0.0006671114250435181,
+          "lower_bound": 2.2790526395921487,
+          "psi_component": 0.00017642174375388347,
+          "reference_count": 48,
+          "reference_proportion": 0.0010533476922791045,
+          "upper_bound": 3.111608536416846
+        },
+        {
+          "current_count": 17,
+          "current_proportion": 0.00029844459458964844,
+          "lower_bound": 3.111608536416846,
+          "psi_component": 7.055508806321616e-05,
+          "reference_count": 21,
+          "reference_proportion": 0.0004608396277160263,
+          "upper_bound": 3.9441644332415433
+        },
+        {
+          "current_count": 16,
+          "current_proportion": 0.00028088903123470226,
+          "lower_bound": 3.9441644332415433,
+          "psi_component": 4.950458901507809e-05,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": 4.77672033006624
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V11",
+      "kind": "feature",
+      "name": "feature:V11",
+      "psi": 0.0028000210416165385,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 31,
+          "current_proportion": 0.000544222481558895,
+          "lower_bound": -5.96148766039896,
+          "psi_component": 0.0002949754013589412,
+          "reference_count": 10,
+          "reference_proportion": 0.00021944745326440176,
+          "upper_bound": -4.957447375527147
+        },
+        {
+          "current_count": 9,
+          "current_proportion": 0.00015800008775007895,
+          "lower_bound": -4.957447375527147,
+          "psi_component": 3.534386002848388e-05,
+          "reference_count": 11,
+          "reference_proportion": 0.00024139219639636762,
+          "upper_bound": -3.9534070906553342
+        },
+        {
+          "current_count": 15,
+          "current_proportion": 0.000263333467879756,
+          "lower_bound": -3.9534070906553342,
+          "psi_component": 2.5254590906252676e-05,
+          "reference_count": 16,
+          "reference_proportion": 0.000351115912056197,
+          "upper_bound": -2.949366805783521
+        },
+        {
+          "current_count": 102,
+          "current_proportion": 0.0017906674797600736,
+          "lower_bound": -2.949366805783521,
+          "psi_component": 0.00014009265730991193,
+          "reference_count": 106,
+          "reference_proportion": 0.0023261427939331248,
+          "upper_bound": -1.945326520911708
+        },
+        {
+          "current_count": 2982,
+          "current_proportion": 0.05235068994200507,
+          "lower_bound": -1.945326520911708,
+          "psi_component": 0.003205315338405756,
+          "reference_count": 3012,
+          "reference_proportion": 0.06609756633542592,
+          "upper_bound": -0.941286236039895
+        },
+        {
+          "current_count": 20359,
+          "current_proportion": 0.35741371436090486,
+          "lower_bound": -0.941286236039895,
+          "psi_component": 0.0019714731937979834,
+          "reference_count": 17519,
+          "reference_proportion": 0.3844499549508547,
+          "upper_bound": 0.06275404883191804
+        },
+        {
+          "current_count": 28600,
+          "current_proportion": 0.5020891119690163,
+          "lower_bound": 0.06275404883191804,
+          "psi_component": 0.002325997656640742,
+          "reference_count": 21349,
+          "reference_proportion": 0.468498321146284,
+          "upper_bound": 1.0667943337037311
+        },
+        {
+          "current_count": 4683,
+          "current_proportion": 0.08221270320876853,
+          "lower_bound": 1.0667943337037311,
+          "psi_component": 0.0007286060787593321,
+          "reference_count": 3402,
+          "reference_proportion": 0.07465601615689262,
+          "upper_bound": 2.070834618575544
+        },
+        {
+          "current_count": 151,
+          "current_proportion": 0.0026508900841524367,
+          "lower_bound": 2.070834618575544,
+          "psi_component": 2.6099449059047884e-07,
+          "reference_count": 122,
+          "reference_proportion": 0.0026772586840445784,
+          "upper_bound": 3.0748749034473573
+        },
+        {
+          "current_count": 30,
+          "current_proportion": 0.0005266669182039488,
+          "lower_bound": 3.0748749034473573,
+          "psi_component": 3.817702550336752e-06,
+          "reference_count": 22,
+          "reference_proportion": 0.00048278437084799217,
+          "upper_bound": 4.07891518831917
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V12",
+      "kind": "feature",
+      "name": "feature:V12",
+      "psi": 0.008731137474248332,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 54,
+          "current_proportion": 0.000948000438722657,
+          "lower_bound": -3.88110624948029,
+          "psi_component": 0.00017941546416335626,
+          "reference_count": 64,
+          "reference_proportion": 0.0014044635823905584,
+          "upper_bound": -3.055995786634432
+        },
+        {
+          "current_count": 518,
+          "current_proportion": 0.009093781835417685,
+          "lower_bound": -3.055995786634432,
+          "psi_component": 0.000830867730977404,
+          "reference_count": 549,
+          "reference_proportion": 0.012047664001394003,
+          "upper_bound": -2.230885323788574
+        },
+        {
+          "current_count": 3569,
+          "current_proportion": 0.06265580563135847,
+          "lower_bound": -2.230885323788574,
+          "psi_component": 0.002763539349188242,
+          "reference_count": 3486,
+          "reference_proportion": 0.07649937457997774,
+          "upper_bound": -1.4057748609427159
+        },
+        {
+          "current_count": 11229,
+          "current_proportion": 0.19713142093024622,
+          "lower_bound": -1.4057748609427159,
+          "psi_component": 0.00032934114498500526,
+          "reference_count": 9354,
+          "reference_proportion": 0.20527112727835345,
+          "upper_bound": -0.5806643980968578
+        },
+        {
+          "current_count": 20476,
+          "current_proportion": 0.3594677152734336,
+          "lower_bound": -0.5806643980968578,
+          "psi_component": 0.00011100256660853677,
+          "reference_count": 16094,
+          "reference_proportion": 0.3531786959878034,
+          "upper_bound": 0.24444606474900032
+        },
+        {
+          "current_count": 15221,
+          "current_proportion": 0.2672132298431914,
+          "lower_bound": 0.24444606474900032,
+          "psi_component": 0.0006031802166696252,
+          "reference_count": 11605,
+          "reference_proportion": 0.2546687440684086,
+          "upper_bound": 1.0695565275948584
+        },
+        {
+          "current_count": 5603,
+          "current_proportion": 0.09836382149531901,
+          "lower_bound": 1.0695565275948584,
+          "psi_component": 0.00033654174803919053,
+          "reference_count": 4224,
+          "reference_proportion": 0.09269459501136856,
+          "upper_bound": 1.8946669904407165
+        },
+        {
+          "current_count": 287,
+          "current_proportion": 0.005038446700425117,
+          "lower_bound": 1.8946669904407165,
+          "psi_component": 0.00025363173103783344,
+          "reference_count": 181,
+          "reference_proportion": 0.003971998528830564,
+          "upper_bound": 2.7197774532865746
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": 2.7197774532865746,
+          "psi_component": 0.0001748995098581207,
+          "reference_count": 7,
+          "reference_proportion": 0.0001536132238685042,
+          "upper_bound": 3.5448879161324327
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": 3.5448879161324327,
+          "psi_component": 4.18788448760761e-05,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": 4.36999837897829
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V13",
+      "kind": "feature",
+      "name": "feature:V13",
+      "psi": 0.00562429830640339,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 20,
+          "current_proportion": 0.000351111284654487,
+          "lower_bound": -11.2218047709786,
+          "psi_component": 0.0002807669063388765,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": -9.443797079344721
+        },
+        {
+          "current_count": 13,
+          "current_proportion": 0.0002282223411698637,
+          "lower_bound": -9.443797079344721,
+          "psi_component": 7.38863743454243e-07,
+          "reference_count": 11,
+          "reference_proportion": 0.00024139219639636762,
+          "upper_bound": -7.6657893877108405
+        },
+        {
+          "current_count": 29,
+          "current_proportion": 0.0005091113548490026,
+          "lower_bound": -7.6657893877108405,
+          "psi_component": 2.952641874962771e-06,
+          "reference_count": 25,
+          "reference_proportion": 0.0005486186002438898,
+          "upper_bound": -5.88778169607696
+        },
+        {
+          "current_count": 49,
+          "current_proportion": 0.0008602226219479261,
+          "lower_bound": -5.88778169607696,
+          "psi_component": 0.00013150484724807197,
+          "reference_count": 56,
+          "reference_proportion": 0.0012289056373348316,
+          "upper_bound": -4.10977400444308
+        },
+        {
+          "current_count": 964,
+          "current_proportion": 0.01692356309172368,
+          "lower_bound": -4.10977400444308,
+          "psi_component": 9.803885403924214e-05,
+          "reference_count": 831,
+          "reference_proportion": 0.018236081564608375,
+          "upper_bound": -2.3317663128092008
+        },
+        {
+          "current_count": 14405,
+          "current_proportion": 0.2528878901455553,
+          "lower_bound": -2.3317663128092008,
+          "psi_component": 0.0014841133439706111,
+          "reference_count": 10658,
+          "reference_proportion": 0.23388707232243694,
+          "upper_bound": -0.5537586211753194
+        },
+        {
+          "current_count": 39614,
+          "current_proportion": 0.6954460867603935,
+          "lower_bound": -0.5537586211753194,
+          "psi_component": 0.0002801244037974022,
+          "reference_count": 32330,
+          "reference_proportion": 0.7094735454784011,
+          "upper_bound": 1.2242490704585602
+        },
+        {
+          "current_count": 1758,
+          "current_proportion": 0.03086268039555095,
+          "lower_bound": 1.2242490704585602,
+          "psi_component": 0.00038117468984515715,
+          "reference_count": 1567,
+          "reference_proportion": 0.03438741250973525,
+          "upper_bound": 3.00225676209244
+        },
+        {
+          "current_count": 87,
+          "current_proportion": 0.001527334029435881,
+          "lower_bound": 3.00225676209244,
+          "psi_component": 3.1788937733168285e-05,
+          "reference_count": 80,
+          "reference_proportion": 0.0017555794725020123,
+          "upper_bound": 4.780264453726321
+        },
+        {
+          "current_count": 23,
+          "current_proportion": 0.0004037779747193255,
+          "lower_bound": 4.780264453726321,
+          "psi_component": 0.00030491988682932066,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 6.5582721453602
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V14",
+      "kind": "feature",
+      "name": "feature:V14",
+      "psi": 0.0029961233754202676,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 107,
+          "current_proportion": 0.0018784452965348046,
+          "lower_bound": -3.88569353843161,
+          "psi_component": 2.5053833501460514e-05,
+          "reference_count": 76,
+          "reference_proportion": 0.0016678004999741488,
+          "upper_bound": -2.9145587527250836
+        },
+        {
+          "current_count": 1138,
+          "current_proportion": 0.01997823111548432,
+          "lower_bound": -2.9145587527250836,
+          "psi_component": 4.277563788671317e-05,
+          "reference_count": 953,
+          "reference_proportion": 0.020913340226708214,
+          "upper_bound": -1.9434239670185578
+        },
+        {
+          "current_count": 7499,
+          "current_proportion": 0.13164916961629697,
+          "lower_bound": -1.9434239670185578,
+          "psi_component": 0.0005662555353004252,
+          "reference_count": 6399,
+          "reference_proportion": 0.1404244113233943,
+          "upper_bound": -0.9722891813120316
+        },
+        {
+          "current_count": 25318,
+          "current_proportion": 0.44447175303808295,
+          "lower_bound": -0.9722891813120316,
+          "psi_component": 0.00024961039449316653,
+          "reference_count": 19777,
+          "reference_proportion": 0.4340011849428337,
+          "upper_bound": -0.001154395605505787
+        },
+        {
+          "current_count": 19013,
+          "current_proportion": 0.3337839260851473,
+          "lower_bound": -0.001154395605505787,
+          "psi_component": 4.00718898454007e-05,
+          "reference_count": 15044,
+          "reference_proportion": 0.33013671569923925,
+          "upper_bound": 0.96998039010102
+        },
+        {
+          "current_count": 3590,
+          "current_proportion": 0.06302447246181235,
+          "lower_bound": 0.96998039010102,
+          "psi_component": 0.00011326301170250243,
+          "reference_count": 2995,
+          "reference_proportion": 0.06572450570218251,
+          "upper_bound": 1.9411151758075467
+        },
+        {
+          "current_count": 276,
+          "current_proportion": 0.004845335503520709,
+          "lower_bound": 1.9411151758075467,
+          "psi_component": 0.0004958029999601999,
+          "reference_count": 297,
+          "reference_proportion": 0.006517588732138605,
+          "upper_bound": 2.9122499615140724
+        },
+        {
+          "current_count": 18,
+          "current_proportion": 0.0003160001579445946,
+          "lower_bound": 2.9122499615140724,
+          "psi_component": 9.47194596511813e-06,
+          "reference_count": 17,
+          "reference_proportion": 0.0003730606551881629,
+          "upper_bound": 3.8833847472205982
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 3.8833847472205982,
+          "psi_component": 0.002084367982987106,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 4.8545195329271245
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": 4.8545195329271245,
+          "psi_component": 4.18788448760761e-05,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": 5.82565431863365
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V15",
+      "kind": "feature",
+      "name": "feature:V15",
+      "psi": 0.0036685520765181684,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": -6.36649950945483,
+          "psi_component": 1.792803848294901e-07,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": -4.900860602554728
+        },
+        {
+          "current_count": 59,
+          "current_proportion": 0.001035778255497388,
+          "lower_bound": -4.900860602554728,
+          "psi_component": 1.3316622451293724e-05,
+          "reference_count": 42,
+          "reference_proportion": 0.0009216792334873094,
+          "upper_bound": -3.4352216956546258
+        },
+        {
+          "current_count": 1255,
+          "current_proportion": 0.02203223202801302,
+          "lower_bound": -3.4352216956546258,
+          "psi_component": 0.00045253788877871586,
+          "reference_count": 1153,
+          "reference_proportion": 0.025302288853101387,
+          "upper_bound": -1.9695827887545239
+        },
+        {
+          "current_count": 11210,
+          "current_proportion": 0.19679786522650225,
+          "lower_bound": -1.9695827887545239,
+          "psi_component": 0.0032121575922304155,
+          "reference_count": 10150,
+          "reference_proportion": 0.22273914281139828,
+          "upper_bound": -0.503943881854422
+        },
+        {
+          "current_count": 38407,
+          "current_proportion": 0.6742565217909735,
+          "lower_bound": -0.503943881854422,
+          "psi_component": 0.002659234507613241,
+          "reference_count": 28826,
+          "reference_proportion": 0.6325791655439927,
+          "upper_bound": 0.9616950250456799
+        },
+        {
+          "current_count": 5934,
+          "current_proportion": 0.1041747129658062,
+          "lower_bound": 0.9616950250456799,
+          "psi_component": 0.00136020034361,
+          "reference_count": 5305,
+          "reference_proportion": 0.11641686233702367,
+          "upper_bound": 2.427333931945782
+        },
+        {
+          "current_count": 78,
+          "current_proportion": 0.0013693339592413653,
+          "lower_bound": 2.427333931945782,
+          "psi_component": 1.4565640225655382e-05,
+          "reference_count": 69,
+          "reference_proportion": 0.0015141872980503877,
+          "upper_bound": 3.8929728388458837
+        },
+        {
+          "current_count": 10,
+          "current_proportion": 0.00017555565110502513,
+          "lower_bound": 3.8929728388458837,
+          "psi_component": 5.327428811407559e-05,
+          "reference_count": 13,
+          "reference_proportion": 0.00028528168266029935,
+          "upper_bound": 5.358611745745986
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": 5.358611745745986,
+          "psi_component": 0.00016890679532278804,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": 6.8242506526460875
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": 6.8242506526460875,
+          "psi_component": 6.188066061585411e-06,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": 8.28988955954619
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V16",
+      "kind": "feature",
+      "name": "feature:V16",
+      "psi": 0.0079405610247926,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -10.3405128633486,
+          "psi_component": 4.8259743308180604e-05,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": -8.652161713506505
+        },
+        {
+          "current_count": 4,
+          "current_proportion": 7.022227097534808e-05,
+          "lower_bound": -8.652161713506505,
+          "psi_component": 3.917900794999927e-06,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": -6.96381056366441
+        },
+        {
+          "current_count": 15,
+          "current_proportion": 0.000263333467879756,
+          "lower_bound": -6.96381056366441,
+          "psi_component": 3.558874211799981e-05,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": -5.275459413822315
+        },
+        {
+          "current_count": 13,
+          "current_proportion": 0.0002282223411698637,
+          "lower_bound": -5.275459413822315,
+          "psi_component": 5.310781728448404e-05,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": -3.5871082639802196
+        },
+        {
+          "current_count": 52,
+          "current_proportion": 0.0009128893120127646,
+          "lower_bound": -3.5871082639802196,
+          "psi_component": 0.00010644565972557304,
+          "reference_count": 57,
+          "reference_proportion": 0.0012508503804667974,
+          "upper_bound": -1.8987571141381245
+        },
+        {
+          "current_count": 26935,
+          "current_proportion": 0.4728590989830309,
+          "lower_bound": -1.8987571141381245,
+          "psi_component": 0.00014425744823118439,
+          "reference_count": 21173,
+          "reference_proportion": 0.464636046355058,
+          "upper_bound": -0.21040596429602942
+        },
+        {
+          "current_count": 28003,
+          "current_proportion": 0.4916084406461135,
+          "lower_bound": -0.21040596429602942,
+          "psi_component": 0.00014092432079575878,
+          "reference_count": 22783,
+          "reference_proportion": 0.49996708279752305,
+          "upper_bound": 1.4779451855460657
+        },
+        {
+          "current_count": 1866,
+          "current_proportion": 0.03275868123788514,
+          "lower_bound": 1.4779451855460657,
+          "psi_component": 3.227473322872395e-06,
+          "reference_count": 1478,
+          "reference_proportion": 0.03243433037099029,
+          "upper_bound": 3.166296335388161
+        },
+        {
+          "current_count": 58,
+          "current_proportion": 0.0010182226921424417,
+          "lower_bound": 3.166296335388161,
+          "psi_component": 3.680921231089764e-05,
+          "reference_count": 38,
+          "reference_proportion": 0.0008339002609594459,
+          "upper_bound": 4.854647485230256
+        },
+        {
+          "current_count": 14,
+          "current_proportion": 0.00024577790452480985,
+          "lower_bound": 4.854647485230256,
+          "psi_component": 7.080413767340642e-05,
+          "reference_count": 18,
+          "reference_proportion": 0.0003950053983201287,
+          "upper_bound": 6.54299863507235
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V17",
+      "kind": "feature",
+      "name": "feature:V17",
+      "psi": 0.000643342455565357,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -4.90276666632221,
+          "psi_component": 0.00011302109607154509,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": -4.009550457577914
+        },
+        {
+          "current_count": 16,
+          "current_proportion": 0.00028088903123470226,
+          "lower_bound": -4.009550457577914,
+          "psi_component": 0.00010934862212745487,
+          "reference_count": 22,
+          "reference_proportion": 0.00048278437084799217,
+          "upper_bound": -3.1163342488336196
+        },
+        {
+          "current_count": 262,
+          "current_proportion": 0.0045995576165514624,
+          "lower_bound": -3.1163342488336196,
+          "psi_component": 0.0008939716702587813,
+          "reference_count": 312,
+          "reference_proportion": 0.0068467598791180926,
+          "upper_bound": -2.2231180400893242
+        },
+        {
+          "current_count": 1941,
+          "current_proportion": 0.0340753484895061,
+          "lower_bound": -2.2231180400893242,
+          "psi_component": 0.0024112133717432787,
+          "reference_count": 1993,
+          "reference_proportion": 0.043735873083952714,
+          "upper_bound": -1.3299018313450293
+        },
+        {
+          "current_count": 11689,
+          "current_proportion": 0.20520698007352148,
+          "lower_bound": -1.3299018313450293,
+          "psi_component": 0.0002933991047918357,
+          "reference_count": 9708,
+          "reference_proportion": 0.21303956634706936,
+          "upper_bound": -0.4366856226007343
+        },
+        {
+          "current_count": 25539,
+          "current_proportion": 0.4483515325395261,
+          "lower_bound": -0.4366856226007343,
+          "psi_component": 0.00144898463686973,
+          "reference_count": 19286,
+          "reference_proportion": 0.4232263160650384,
+          "upper_bound": 0.4565305861435611
+        },
+        {
+          "current_count": 13919,
+          "current_proportion": 0.24435588635505145,
+          "lower_bound": 0.4565305861435611,
+          "psi_component": 9.339486227895156e-06,
+          "reference_count": 11204,
+          "reference_proportion": 0.2458689020724903,
+          "upper_bound": 1.3497467948878556
+        },
+        {
+          "current_count": 3210,
+          "current_proportion": 0.0563533583869328,
+          "lower_bound": 1.3497467948878556,
+          "psi_component": 0.00011253260544809305,
+          "reference_count": 2684,
+          "reference_proportion": 0.058899690588141124,
+          "upper_bound": 2.242963003632151
+        },
+        {
+          "current_count": 369,
+          "current_proportion": 0.0064780028955307035,
+          "lower_bound": 2.242963003632151,
+          "psi_component": 0.00012149997576165921,
+          "reference_count": 337,
+          "reference_proportion": 0.00739537845741724,
+          "upper_bound": 3.1361792123764456
+        },
+        {
+          "current_count": 16,
+          "current_proportion": 0.00028088903123470226,
+          "lower_bound": 3.1361792123764456,
+          "psi_component": 5.374508621344289e-05,
+          "reference_count": 19,
+          "reference_proportion": 0.0004169501414520946,
+          "upper_bound": 4.02939542112074
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V18",
+      "kind": "feature",
+      "name": "feature:V18",
+      "psi": 0.005567055655513716,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 22,
+          "current_proportion": 0.00038622241136437933,
+          "lower_bound": -4.3952829851609,
+          "psi_component": 0.00016609714120961158,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": -3.3965575439112525
+        },
+        {
+          "current_count": 191,
+          "current_proportion": 0.003353112618350284,
+          "lower_bound": -3.3965575439112525,
+          "psi_component": 0.00011207485847530085,
+          "reference_count": 182,
+          "reference_proportion": 0.00399394327196253,
+          "upper_bound": -2.3978321026616043
+        },
+        {
+          "current_count": 2059,
+          "current_proportion": 0.03614690496538975,
+          "lower_bound": -2.3978321026616043,
+          "psi_component": 0.0009111058500986071,
+          "reference_count": 1919,
+          "reference_proportion": 0.04211196209218724,
+          "upper_bound": -1.399106661411956
+        },
+        {
+          "current_count": 11119,
+          "current_proportion": 0.19520030896120213,
+          "lower_bound": -1.399106661411956,
+          "psi_component": 0.0006779468500874692,
+          "reference_count": 9427,
+          "reference_proportion": 0.20687309352698696,
+          "upper_bound": -0.40038122016230826
+        },
+        {
+          "current_count": 33551,
+          "current_proportion": 0.5890067061393549,
+          "lower_bound": -0.40038122016230826,
+          "psi_component": 0.002439394184104215,
+          "reference_count": 25141,
+          "reference_proportion": 0.5517127871026986,
+          "upper_bound": 0.5983442210873395
+        },
+        {
+          "current_count": 8434,
+          "current_proportion": 0.14806362135317166,
+          "lower_bound": 0.5983442210873395,
+          "psi_component": 0.0014119233926344838,
+          "reference_count": 7422,
+          "reference_proportion": 0.1628738835473954,
+          "upper_bound": 1.5970696623369882
+        },
+        {
+          "current_count": 1002,
+          "current_proportion": 0.017590674499211634,
+          "lower_bound": 1.5970696623369882,
+          "psi_component": 0.0005110566698519098,
+          "reference_count": 944,
+          "reference_proportion": 0.02071583753852052,
+          "upper_bound": 2.595795103586636
+        },
+        {
+          "current_count": 548,
+          "current_proportion": 0.00962044873606607,
+          "lower_bound": 2.595795103586636,
+          "psi_component": 6.442197861770102e-05,
+          "reference_count": 475,
+          "reference_proportion": 0.010423753009628528,
+          "upper_bound": 3.594520544836284
+        },
+        {
+          "current_count": 35,
+          "current_proportion": 0.0006144447349786796,
+          "lower_bound": 3.594520544836284,
+          "psi_component": 0.00023657293366017082,
+          "reference_count": 48,
+          "reference_proportion": 0.0010533476922791045,
+          "upper_bound": 4.5932459860859325
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": 4.5932459860859325,
+          "psi_component": 6.381321807335781e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": 5.59197142733558
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V19",
+      "kind": "feature",
+      "name": "feature:V19",
+      "psi": 0.006594407076812828,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -28.009635333749,
+          "psi_component": 6.381321807335781e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": -23.494566564197278
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -23.494566564197278,
+          "psi_component": 0.0003638158809886584,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": -18.97949779464556
+        },
+        {
+          "current_count": 10,
+          "current_proportion": 0.00017555565110502513,
+          "lower_bound": -18.97949779464556,
+          "psi_component": 0.00012169140486513919,
+          "reference_count": 16,
+          "reference_proportion": 0.000351115912056197,
+          "upper_bound": -14.46442902509384
+        },
+        {
+          "current_count": 11,
+          "current_proportion": 0.00019311121445997134,
+          "lower_bound": -14.46442902509384,
+          "psi_component": 0.0003711984931940199,
+          "reference_count": 25,
+          "reference_proportion": 0.0005486186002438898,
+          "upper_bound": -9.949360255542121
+        },
+        {
+          "current_count": 25,
+          "current_proportion": 0.00043888910142921787,
+          "lower_bound": -9.949360255542121,
+          "psi_component": 0.0016862620128577299,
+          "reference_count": 77,
+          "reference_proportion": 0.0016897452431061148,
+          "upper_bound": -5.4342914859904035
+        },
+        {
+          "current_count": 1068,
+          "current_proportion": 0.018749341680638087,
+          "lower_bound": -5.4342914859904035,
+          "psi_component": 0.0031971100972225577,
+          "reference_count": 1243,
+          "reference_proportion": 0.027277315734978314,
+          "upper_bound": -0.9192227164386821
+        },
+        {
+          "current_count": 55652,
+          "current_proportion": 0.9770022118470204,
+          "lower_bound": -0.9192227164386821,
+          "psi_component": 0.00013459148567575361,
+          "reference_count": 44000,
+          "reference_proportion": 0.9655686978284428,
+          "upper_bound": 3.595846053113039
+        },
+        {
+          "current_count": 174,
+          "current_proportion": 0.0030546680413161987,
+          "lower_bound": 3.595846053113039,
+          "psi_component": 0.00017982813330215028,
+          "reference_count": 175,
+          "reference_proportion": 0.0038403300700387694,
+          "upper_bound": 8.110914822664757
+        },
+        {
+          "current_count": 11,
+          "current_proportion": 0.00019311121445997134,
+          "lower_bound": 8.110914822664757,
+          "psi_component": 9.446313043032747e-05,
+          "reference_count": 16,
+          "reference_proportion": 0.000351115912056197,
+          "upper_bound": 12.625983592216475
+        },
+        {
+          "current_count": 9,
+          "current_proportion": 0.00015800008775007895,
+          "lower_bound": 12.625983592216475,
+          "psi_component": 4.8004714199553335e-06,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 17.1410523617682
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V20",
+      "kind": "feature",
+      "name": "feature:V20",
+      "psi": 0.00621757432802965,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 4,
+          "current_proportion": 7.022227097534808e-05,
+          "lower_bound": -18.6329185519133,
+          "psi_component": 5.615334821711785e-05,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": -15.0362487744842
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": -15.0362487744842,
+          "psi_component": 1.6001556312852399e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -11.439578997055099
+        },
+        {
+          "current_count": 8,
+          "current_proportion": 0.00014044452439513277,
+          "lower_bound": -11.439578997055099,
+          "psi_component": 5.4674310531641544e-05,
+          "reference_count": 11,
+          "reference_proportion": 0.00024139219639636762,
+          "upper_bound": -7.842909219625998
+        },
+        {
+          "current_count": 59,
+          "current_proportion": 0.001035778255497388,
+          "lower_bound": -7.842909219625998,
+          "psi_component": 0.0007872214454193174,
+          "reference_count": 97,
+          "reference_proportion": 0.002128640105745432,
+          "upper_bound": -4.246239442196899
+        },
+        {
+          "current_count": 1453,
+          "current_proportion": 0.025508233572292364,
+          "lower_bound": -4.246239442196899,
+          "psi_component": 0.0015461862886289623,
+          "reference_count": 1466,
+          "reference_proportion": 0.0321709934534067,
+          "upper_bound": -0.6495696647677995
+        },
+        {
+          "current_count": 55159,
+          "current_proportion": 0.968347319113032,
+          "lower_bound": -0.6495696647677995,
+          "psi_component": 7.898200650270188e-05,
+          "reference_count": 43729,
+          "reference_proportion": 0.9596216724396801,
+          "upper_bound": 2.9471001126613032
+        },
+        {
+          "current_count": 202,
+          "current_proportion": 0.0035462238152546917,
+          "lower_bound": 2.9471001126613032,
+          "psi_component": 0.00010785691386399337,
+          "reference_count": 191,
+          "reference_proportion": 0.0041914459601502235,
+          "upper_bound": 6.543769890090402
+        },
+        {
+          "current_count": 43,
+          "current_proportion": 0.000754889241818249,
+          "lower_bound": 6.543769890090402,
+          "psi_component": 8.630108998641467e-05,
+          "reference_count": 47,
+          "reference_proportion": 0.0010314029491471388,
+          "upper_bound": 10.140439667519502
+        },
+        {
+          "current_count": 15,
+          "current_proportion": 0.000263333467879756,
+          "lower_bound": 10.140439667519502,
+          "psi_component": 5.339010573461725e-05,
+          "reference_count": 18,
+          "reference_proportion": 0.0003950053983201287,
+          "upper_bound": 13.7371094449486
+        },
+        {
+          "current_count": 16,
+          "current_proportion": 0.00028088903123470226,
+          "lower_bound": 13.7371094449486,
+          "psi_component": 7.681372115047272e-05,
+          "reference_count": 7,
+          "reference_proportion": 0.0001536132238685042,
+          "upper_bound": 17.3337792223777
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V21",
+      "kind": "feature",
+      "name": "feature:V21",
+      "psi": 0.0028491793856665246,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -7.4171399013551,
+          "psi_component": 1.9589508872374403e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -5.848202612822978
+        },
+        {
+          "current_count": 14,
+          "current_proportion": 0.00024577790452480985,
+          "lower_bound": -5.848202612822978,
+          "psi_component": 2.3626131106508127e-05,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": -4.279265324290856
+        },
+        {
+          "current_count": 56,
+          "current_proportion": 0.0009831115654325494,
+          "lower_bound": -4.279265324290856,
+          "psi_component": 0.0004935078563632053,
+          "reference_count": 82,
+          "reference_proportion": 0.001799468958765944,
+          "upper_bound": -2.7103280357587334
+        },
+        {
+          "current_count": 2116,
+          "current_proportion": 0.03714757207662168,
+          "lower_bound": -2.7103280357587334,
+          "psi_component": 0.000705206106520562,
+          "reference_count": 1934,
+          "reference_proportion": 0.04244113323916673,
+          "upper_bound": -1.1413907472266116
+        },
+        {
+          "current_count": 32579,
+          "current_proportion": 0.5719426985583471,
+          "lower_bound": -1.1413907472266116,
+          "psi_component": 0.0022924420529578855,
+          "reference_count": 24439,
+          "reference_proportion": 0.5363075774240585,
+          "upper_bound": 0.4275465413055102
+        },
+        {
+          "current_count": 22054,
+          "current_proportion": 0.38717039424753863,
+          "lower_bound": 0.4275465413055102,
+          "psi_component": 0.001928356191502014,
+          "reference_count": 18910,
+          "reference_proportion": 0.4149750926474193,
+          "upper_bound": 1.9964838298376328
+        },
+        {
+          "current_count": 128,
+          "current_proportion": 0.0022471121269886742,
+          "lower_bound": 1.9964838298376328,
+          "psi_component": 0.0010950294746997634,
+          "reference_count": 186,
+          "reference_proportion": 0.0040817222444903935,
+          "upper_bound": 3.5654211183697537
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": 3.5654211183697537,
+          "psi_component": 5.876850702762412e-06,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 5.134358406901876
+        },
+        {
+          "current_count": 5,
+          "current_proportion": 8.777783433029426e-05,
+          "lower_bound": 5.134358406901876,
+          "psi_component": 9.126309320975598e-05,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": 6.703295695433999
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": 6.703295695433999,
+          "psi_component": 6.188066061585411e-06,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": 8.27223298396612
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V22",
+      "kind": "feature",
+      "name": "feature:V22",
+      "psi": 0.0066434547740112804,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -30.269720014317,
+          "psi_component": 1.9313210553710632e-05,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": -25.465901833056748
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -25.465901833056748,
+          "psi_component": 2.412986708152661e-05,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -20.6620836517965
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -20.6620836517965,
+          "psi_component": 0.00022992783394033958,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": -15.85826547053625
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": -15.85826547053625,
+          "psi_component": 3.58734311250387e-05,
+          "reference_count": 8,
+          "reference_proportion": 0.00017555796700047003,
+          "upper_bound": -11.054447289275998
+        },
+        {
+          "current_count": 33,
+          "current_proportion": 0.0005793336082687872,
+          "lower_bound": -11.054447289275998,
+          "psi_component": 0.00019730387426508287,
+          "reference_count": 44,
+          "reference_proportion": 0.0009655687197512411,
+          "upper_bound": -6.2506291080157474
+        },
+        {
+          "current_count": 324,
+          "current_proportion": 0.005688002544558125,
+          "lower_bound": -6.2506291080157474,
+          "psi_component": 0.0009535241842084036,
+          "reference_count": 376,
+          "reference_proportion": 0.008251223439563908,
+          "upper_bound": -1.4468109267555
+        },
+        {
+          "current_count": 56515,
+          "current_proportion": 0.992152663022339,
+          "lower_bound": -1.4468109267555,
+          "psi_component": 2.320906269780354e-05,
+          "reference_count": 44993,
+          "reference_proportion": 0.9873598277584849,
+          "upper_bound": 3.3570072545047545
+        },
+        {
+          "current_count": 67,
+          "current_proportion": 0.0011762227623369574,
+          "lower_bound": 3.3570072545047545,
+          "psi_component": 0.0009170134605186292,
+          "reference_count": 111,
+          "reference_proportion": 0.0024358665095929543,
+          "upper_bound": 8.160825435765002
+        },
+        {
+          "current_count": 7,
+          "current_proportion": 0.00012288896104018662,
+          "lower_bound": 8.160825435765002,
+          "psi_component": 0.0003592502678465736,
+          "reference_count": 19,
+          "reference_proportion": 0.0004169501414520946,
+          "upper_bound": 12.96464361702525
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": 12.96464361702525,
+          "psi_component": 1.821633443666521e-05,
+          "reference_count": 7,
+          "reference_proportion": 0.0001536132238685042,
+          "upper_bound": 17.7684617982855
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V23",
+      "kind": "feature",
+      "name": "feature:V23",
+      "psi": 0.0027777615266737733,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 48,
+          "current_proportion": 0.0008426670585929799,
+          "lower_bound": -2.79047932289454,
+          "psi_component": 6.91523348610438e-06,
+          "reference_count": 35,
+          "reference_proportion": 0.0007680660315635483,
+          "upper_bound": -2.154563116689596
+        },
+        {
+          "current_count": 952,
+          "current_proportion": 0.016712896331464326,
+          "lower_bound": -2.154563116689596,
+          "psi_component": 0.0030644601853172977,
+          "reference_count": 1122,
+          "reference_proportion": 0.024622001816010444,
+          "upper_bound": -1.518646910484652
+        },
+        {
+          "current_count": 4561,
+          "current_proportion": 0.0800709244794651,
+          "lower_bound": -1.518646910484652,
+          "psi_component": 0.00034172244061686166,
+          "reference_count": 3891,
+          "reference_proportion": 0.08538699554842392,
+          "upper_bound": -0.8827307042797081
+        },
+        {
+          "current_count": 12074,
+          "current_proportion": 0.21196587196517575,
+          "lower_bound": -0.8827307042797081,
+          "psi_component": 7.427686353366556e-07,
+          "reference_count": 9641,
+          "reference_proportion": 0.21156926855722766,
+          "upper_bound": -0.2468144980747642
+        },
+        {
+          "current_count": 22153,
+          "current_proportion": 0.3889083950196783,
+          "lower_bound": -0.2468144980747642,
+          "psi_component": 0.0001248960980754203,
+          "reference_count": 17406,
+          "reference_proportion": 0.3819701989769426,
+          "upper_bound": 0.3891017081301795
+        },
+        {
+          "current_count": 16234,
+          "current_proportion": 0.28499701552175183,
+          "lower_bound": 0.3891017081301795,
+          "psi_component": 9.100086403538563e-05,
+          "reference_count": 12756,
+          "reference_proportion": 0.2799271434133013,
+          "upper_bound": 1.0250179143351237
+        },
+        {
+          "current_count": 910,
+          "current_proportion": 0.015975562670556588,
+          "lower_bound": 1.0250179143351237,
+          "psi_component": 3.1547593978483086e-05,
+          "reference_count": 696,
+          "reference_proportion": 0.015273541241792985,
+          "upper_bound": 1.6609341205400678
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": 1.6609341205400678,
+          "psi_component": 2.412986708152661e-05,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": 2.2968503267450116
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 2.2968503267450116,
+          "psi_component": 9.794749538812432e-13,
+          "reference_count": 0,
+          "reference_proportion": 2.1944743131965863e-11,
+          "upper_bound": 2.9327665329499553
+        },
+        {
+          "current_count": 29,
+          "current_proportion": 0.0005091113548490026,
+          "lower_bound": 2.9327665329499553,
+          "psi_component": 1.0420603266270009e-05,
+          "reference_count": 20,
+          "reference_proportion": 0.00043889488458406046,
+          "upper_bound": 3.5686827391549
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V24",
+      "kind": "feature",
+      "name": "feature:V24",
+      "psi": 0.0036958356554721607,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": -6.42933398851298,
+          "psi_component": 1.9589508872374403e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": -5.201152232570226
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": -5.201152232570226,
+          "psi_component": 0.00011302109607154509,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": -3.9729704766274714
+        },
+        {
+          "current_count": 33,
+          "current_proportion": 0.0005793336082687872,
+          "lower_bound": -3.9729704766274714,
+          "psi_component": 1.6216795163818903e-05,
+          "reference_count": 31,
+          "reference_proportion": 0.000680287059035685,
+          "upper_bound": -2.744788720684717
+        },
+        {
+          "current_count": 717,
+          "current_proportion": 0.012587338943051975,
+          "lower_bound": -2.744788720684717,
+          "psi_component": 0.0005948468589798637,
+          "reference_count": 705,
+          "reference_proportion": 0.015471043929980678,
+          "upper_bound": -1.516606964741963
+        },
+        {
+          "current_count": 23012,
+          "current_proportion": 0.4039886239415771,
+          "lower_bound": -1.516606964741963,
+          "psi_component": 0.0027648471107115337,
+          "reference_count": 16918,
+          "reference_proportion": 0.3712611643285432,
+          "upper_bound": -0.2884252087992092
+        },
+        {
+          "current_count": 31538,
+          "current_proportion": 0.5536673571058482,
+          "lower_bound": -0.2884252087992092,
+          "psi_component": 0.0008562583416562525,
+          "reference_count": 26232,
+          "reference_proportion": 0.5756545018596733,
+          "upper_bound": 0.9397565471435456
+        },
+        {
+          "current_count": 1631,
+          "current_proportion": 0.028633123849472784,
+          "lower_bound": 0.9397565471435456,
+          "psi_component": 0.0015058751964899758,
+          "reference_count": 1621,
+          "reference_proportion": 0.03557242863886141,
+          "upper_bound": 2.1679383030862986
+        },
+        {
+          "current_count": 22,
+          "current_proportion": 0.00038622241136437933,
+          "lower_bound": 2.1679383030862986,
+          "psi_component": 0.0005644780478501873,
+          "reference_count": 45,
+          "reference_proportion": 0.000987513462883207,
+          "upper_bound": 3.3961200590290535
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": 3.3961200590290535,
+          "psi_component": 0.0001914397069886151,
+          "reference_count": 9,
+          "reference_proportion": 0.0001975027101324359,
+          "upper_bound": 4.624301814971808
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": 4.624301814971808,
+          "psi_component": 1.6001556312852399e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": 5.85248357091456
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V25",
+      "kind": "feature",
+      "name": "feature:V25",
+      "psi": 0.006610542260430314,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 30,
+          "current_proportion": 0.0005266669182039488,
+          "lower_bound": -1.8553553377608,
+          "psi_component": 2.0767093410472377e-05,
+          "reference_count": 29,
+          "reference_proportion": 0.0006363975727717532,
+          "upper_bound": -1.374535846529151
+        },
+        {
+          "current_count": 1717,
+          "current_proportion": 0.030142902297998157,
+          "lower_bound": -1.374535846529151,
+          "psi_component": 3.5268003829212285e-05,
+          "reference_count": 1327,
+          "reference_proportion": 0.029120674158063447,
+          "upper_bound": -0.893716355297502
+        },
+        {
+          "current_count": 8757,
+          "current_proportion": 0.15373406831681927,
+          "lower_bound": -0.893716355297502,
+          "psi_component": 0.0027575922951275054,
+          "reference_count": 7975,
+          "reference_proportion": 0.17500932649937254,
+          "upper_bound": -0.412896864065853
+        },
+        {
+          "current_count": 20649,
+          "current_proportion": 0.36250482773383924,
+          "lower_bound": -0.412896864065853,
+          "psi_component": 0.0007003016867156106,
+          "reference_count": 17253,
+          "reference_proportion": 0.37861265327775184,
+          "upper_bound": 0.067922627165796
+        },
+        {
+          "current_count": 19212,
+          "current_proportion": 0.33727748319278156,
+          "lower_bound": 0.067922627165796,
+          "psi_component": 0.006377725949936364,
+          "reference_count": 13329,
+          "reference_proportion": 0.29250148122791775,
+          "upper_bound": 0.548742118397445
+        },
+        {
+          "current_count": 5802,
+          "current_proportion": 0.10185737860295331,
+          "lower_bound": 0.548742118397445,
+          "psi_component": 0.0004637584166545029,
+          "reference_count": 4960,
+          "reference_proportion": 0.10884592595649543,
+          "upper_bound": 1.029561609629094
+        },
+        {
+          "current_count": 507,
+          "current_proportion": 0.008900670638513276,
+          "lower_bound": 1.029561609629094,
+          "psi_component": 0.0005634940953439934,
+          "reference_count": 514,
+          "reference_proportion": 0.011279597991775197,
+          "upper_bound": 1.510381100860743
+        },
+        {
+          "current_count": 82,
+          "current_proportion": 0.00143955621266115,
+          "lower_bound": 1.510381100860743,
+          "psi_component": 2.6515293505862175e-05,
+          "reference_count": 57,
+          "reference_proportion": 0.0012508503804667974,
+          "upper_bound": 1.991200592092392
+        },
+        {
+          "current_count": 175,
+          "current_proportion": 0.003072223604671145,
+          "lower_bound": 1.991200592092392,
+          "psi_component": 0.00019464807751697744,
+          "reference_count": 107,
+          "reference_proportion": 0.0023480875370650908,
+          "upper_bound": 2.4720200833240416
+        },
+        {
+          "current_count": 31,
+          "current_proportion": 0.000544222481558895,
+          "lower_bound": 2.4720200833240416,
+          "psi_component": 4.7817913297663225e-05,
+          "reference_count": 18,
+          "reference_proportion": 0.0003950053983201287,
+          "upper_bound": 2.95283957455569
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V26",
+      "kind": "feature",
+      "name": "feature:V26",
+      "psi": 0.011187888825338162,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 5,
+          "current_proportion": 8.777783433029426e-05,
+          "lower_bound": -9.89524404755692,
+          "psi_component": 4.897375748881175e-06,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": -8.01245576787706
+        },
+        {
+          "current_count": 16,
+          "current_proportion": 0.00028088903123470226,
+          "lower_bound": -8.01245576787706,
+          "psi_component": 5.9852201304475306e-06,
+          "reference_count": 11,
+          "reference_proportion": 0.00024139219639636762,
+          "upper_bound": -6.1296674881972
+        },
+        {
+          "current_count": 22,
+          "current_proportion": 0.00038622241136437933,
+          "lower_bound": -6.1296674881972,
+          "psi_component": 1.9749453161290288e-07,
+          "reference_count": 18,
+          "reference_proportion": 0.0003950053983201287,
+          "upper_bound": -4.24687920851734
+        },
+        {
+          "current_count": 139,
+          "current_proportion": 0.0024402233238930825,
+          "lower_bound": -4.24687920851734,
+          "psi_component": 0.0004044609699702291,
+          "reference_count": 161,
+          "reference_proportion": 0.0035331036661912472,
+          "upper_bound": -2.3640909288374807
+        },
+        {
+          "current_count": 2236,
+          "current_proportion": 0.03925423967921522,
+          "lower_bound": -2.3640909288374807,
+          "psi_component": 5.493470911371117e-06,
+          "reference_count": 1810,
+          "reference_proportion": 0.03971998509080296,
+          "upper_bound": -0.48130264915762133
+        },
+        {
+          "current_count": 54325,
+          "current_proportion": 0.9537059792750068,
+          "lower_bound": -0.48130264915762133,
+          "psi_component": 1.3346885980162484e-05,
+          "reference_count": 43297,
+          "reference_proportion": 0.9501415434066708,
+          "upper_bound": 1.4014856305222398
+        },
+        {
+          "current_count": 199,
+          "current_proportion": 0.0034935571251898533,
+          "lower_bound": 1.4014856305222398,
+          "psi_component": 0.00047187378008508213,
+          "reference_count": 223,
+          "reference_proportion": 0.004893677740373131,
+          "upper_bound": 3.2842739102020992
+        },
+        {
+          "current_count": 11,
+          "current_proportion": 0.00019311121445997134,
+          "lower_bound": 3.2842739102020992,
+          "psi_component": 0.0007474605315182761,
+          "reference_count": 34,
+          "reference_proportion": 0.0007461212884315825,
+          "upper_bound": 5.167062189881959
+        },
+        {
+          "current_count": 7,
+          "current_proportion": 0.00012288896104018662,
+          "lower_bound": 5.167062189881959,
+          "psi_component": 6.058400806000865e-07,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 7.04985046956182
+        },
+        {
+          "current_count": 2,
+          "current_proportion": 3.511114426545572e-05,
+          "lower_bound": 7.04985046956182,
+          "psi_component": 4.8259743308180604e-05,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": 8.93263874924168
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V27",
+      "kind": "feature",
+      "name": "feature:V27",
+      "psi": 0.0017025813122648432,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 5,
+          "current_proportion": 8.777783433029426e-05,
+          "lower_bound": -8.41226662836102,
+          "psi_component": 4.897375748881175e-06,
+          "reference_count": 5,
+          "reference_proportion": 0.00010972373760457247,
+          "upper_bound": -5.958079051651689
+        },
+        {
+          "current_count": 14,
+          "current_proportion": 0.00024577790452480985,
+          "lower_bound": -5.958079051651689,
+          "psi_component": 0.00013519248804426233,
+          "reference_count": 21,
+          "reference_proportion": 0.0004608396277160263,
+          "upper_bound": -3.503891474942357
+        },
+        {
+          "current_count": 324,
+          "current_proportion": 0.005688002544558125,
+          "lower_bound": -3.503891474942357,
+          "psi_component": 1.8042988385749213e-05,
+          "reference_count": 274,
+          "reference_proportion": 0.00601285964010339,
+          "upper_bound": -1.049703898233025
+        },
+        {
+          "current_count": 56543,
+          "current_proportion": 0.9926442187962774,
+          "lower_bound": -1.049703898233025,
+          "psi_component": 7.935482831355944e-06,
+          "reference_count": 45106,
+          "reference_proportion": 0.989839583732397,
+          "upper_bound": 1.404483678476307
+        },
+        {
+          "current_count": 61,
+          "current_proportion": 0.0010708893822072804,
+          "lower_bound": 1.404483678476307,
+          "psi_component": 0.0011522293338855209,
+          "reference_count": 112,
+          "reference_proportion": 0.00245781125272492,
+          "upper_bound": 3.858671255185639
+        },
+        {
+          "current_count": 9,
+          "current_proportion": 0.00015800008775007895,
+          "lower_bound": 3.858671255185639,
+          "psi_component": 0.0005297430220348922,
+          "reference_count": 26,
+          "reference_proportion": 0.0005705633433758556,
+          "upper_bound": 6.312858831894971
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 6.312858831894971,
+          "psi_component": 0.002084367982987106,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 8.767046408604305
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 8.767046408604305,
+          "psi_component": 0.002084367982987106,
+          "reference_count": 6,
+          "reference_proportion": 0.00013166848073653832,
+          "upper_bound": 11.221233985313635
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 11.221233985313635,
+          "psi_component": 0.00030807503084978973,
+          "reference_count": 1,
+          "reference_proportion": 2.1944765076708996e-05,
+          "upper_bound": 13.675421562022965
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": 13.675421562022965,
+          "psi_component": 0.0001447792482148093,
+          "reference_count": 12,
+          "reference_proportion": 0.00026333693952833347,
+          "upper_bound": 16.1296091387323
+        }
+      ],
+      "current_count": 56962,
+      "feature": "V28",
+      "kind": "feature",
+      "name": "feature:V28",
+      "psi": 0.006469630935969472,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 56259,
+          "current_proportion": 0.9876584388034727,
+          "lower_bound": 0.0,
+          "psi_component": 2.1267777506571724e-05,
+          "reference_count": 44798,
+          "reference_proportion": 0.9830806028477516,
+          "upper_bound": 836.0
+        },
+        {
+          "current_count": 531,
+          "current_proportion": 0.009322004159031986,
+          "lower_bound": 836.0,
+          "psi_component": 0.000854286185657631,
+          "reference_count": 563,
+          "reference_proportion": 0.012354890405241525,
+          "upper_bound": 1672.0
+        },
+        {
+          "current_count": 107,
+          "current_proportion": 0.0018784452965348046,
+          "lower_bound": 1672.0,
+          "psi_component": 0.0003123136467857443,
+          "reference_count": 124,
+          "reference_proportion": 0.0027211481703085104,
+          "upper_bound": 2508.0
+        },
+        {
+          "current_count": 36,
+          "current_proportion": 0.0006320002983336258,
+          "lower_bound": 2508.0,
+          "psi_component": 4.5088804453357104e-05,
+          "reference_count": 37,
+          "reference_proportion": 0.0008119555178274801,
+          "upper_bound": 3344.0
+        },
+        {
+          "current_count": 14,
+          "current_proportion": 0.00024577790452480985,
+          "lower_bound": 3344.0,
+          "psi_component": 0.00024317356271778698,
+          "reference_count": 25,
+          "reference_proportion": 0.0005486186002438898,
+          "upper_bound": 4180.0
+        },
+        {
+          "current_count": 5,
+          "current_proportion": 8.777783433029426e-05,
+          "lower_bound": 4180.0,
+          "psi_component": 8.898065222142165e-05,
+          "reference_count": 9,
+          "reference_proportion": 0.0001975027101324359,
+          "upper_bound": 5016.0
+        },
+        {
+          "current_count": 1,
+          "current_proportion": 1.7555580910509532e-05,
+          "lower_bound": 5016.0,
+          "psi_component": 0.00011302109607154509,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": 5852.0
+        },
+        {
+          "current_count": 0,
+          "current_proportion": 1.755556335494618e-11,
+          "lower_bound": 5852.0,
+          "psi_component": 0.000996551223674767,
+          "reference_count": 3,
+          "reference_proportion": 6.583425134064073e-05,
+          "upper_bound": 6688.0
+        },
+        {
+          "current_count": 3,
+          "current_proportion": 5.26667076204019e-05,
+          "lower_bound": 6688.0,
+          "psi_component": 1.6001556312852399e-06,
+          "reference_count": 2,
+          "reference_proportion": 4.388950820867486e-05,
+          "upper_bound": 7524.0
+        },
+        {
+          "current_count": 6,
+          "current_proportion": 0.00010533339768524044,
+          "lower_bound": 7524.0,
+          "psi_component": 3.2003135256200657e-06,
+          "reference_count": 4,
+          "reference_proportion": 8.77789944726066e-05,
+          "upper_bound": 8360.0
+        }
+      ],
+      "current_count": 56962,
+      "feature": "Amount",
+      "kind": "feature",
+      "name": "feature:Amount",
+      "psi": 0.00267948341824573,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    },
+    {
+      "bins": 10,
+      "buckets": [
+        {
+          "current_count": 49360,
+          "current_proportion": 0.866542607217699,
+          "lower_bound": 2.9378210247888347e-27,
+          "psi_component": 0.0033628094881107563,
+          "reference_count": 37066,
+          "reference_proportion": 0.8134038489513915,
+          "upper_bound": 0.09999999999995521
+        },
+        {
+          "current_count": 4026,
+          "current_proportion": 0.07067869808456888,
+          "lower_bound": 0.09999999999995521,
+          "psi_component": 0.006048324827918253,
+          "reference_count": 4231,
+          "reference_proportion": 0.09284820821329233,
+          "upper_bound": 0.19999999999991042
+        },
+        {
+          "current_count": 1410,
+          "current_proportion": 0.024753344348029678,
+          "lower_bound": 0.19999999999991042,
+          "psi_component": 0.006365540439758788,
+          "reference_count": 1771,
+          "reference_proportion": 0.03886414010865629,
+          "upper_bound": 0.2999999999998656
+        },
+        {
+          "current_count": 714,
+          "current_proportion": 0.012534672252987137,
+          "lower_bound": 0.2999999999998656,
+          "psi_component": 0.002464038591664597,
+          "reference_count": 852,
+          "reference_proportion": 0.01869692117037966,
+          "upper_bound": 0.39999999999982083
+        },
+        {
+          "current_count": 505,
+          "current_proportion": 0.008865559511803385,
+          "lower_bound": 0.39999999999982083,
+          "psi_component": 0.0011580318675557804,
+          "reference_count": 563,
+          "reference_proportion": 0.012354890405241525,
+          "upper_bound": 0.49999999999977607
+        },
+        {
+          "current_count": 340,
+          "current_proportion": 0.005968891558237264,
+          "lower_bound": 0.49999999999977607,
+          "psi_component": 0.0004633839970275934,
+          "reference_count": 353,
+          "reference_proportion": 0.007746494347528694,
+          "upper_bound": 0.5999999999997312
+        },
+        {
+          "current_count": 208,
+          "current_proportion": 0.0036515571953843686,
+          "lower_bound": 0.5999999999997312,
+          "psi_component": 0.000682931168704224,
+          "reference_count": 246,
+          "reference_proportion": 0.005398406832408346,
+          "upper_bound": 0.6999999999996864
+        },
+        {
+          "current_count": 133,
+          "current_proportion": 0.0023348899437634052,
+          "lower_bound": 0.6999999999996864,
+          "psi_component": 0.0008085638591078217,
+          "reference_count": 178,
+          "reference_proportion": 0.003906164299434667,
+          "upper_bound": 0.7999999999996417
+        },
+        {
+          "current_count": 94,
+          "current_proportion": 0.0016502229729205042,
+          "lower_bound": 0.7999999999996417,
+          "psi_component": 0.0007454505032199204,
+          "reference_count": 134,
+          "reference_proportion": 0.002940595601628169,
+          "upper_bound": 0.8999999999995969
+        },
+        {
+          "current_count": 172,
+          "current_proportion": 0.003019556914606306,
+          "lower_bound": 0.8999999999995969,
+          "psi_component": 0.0001973534401764113,
+          "reference_count": 175,
+          "reference_proportion": 0.0038403300700387694,
+          "upper_bound": 0.999999999999552
+        }
+      ],
+      "current_count": 56962,
+      "feature": "fraud_probability",
+      "kind": "prediction_score",
+      "name": "prediction:fraud_probability",
+      "psi": 0.022296428183244146,
+      "reference_count": 45569,
+      "statistic": "population_stability_index",
+      "status": "ok"
+    }
+  ],
+  "schema_version": 1,
+  "statistic": "population_stability_index",
+  "status": "critical",
+  "thresholds": {
+    "critical": 0.25,
+    "warning": 0.1
+  },
+  "windows": {
+    "current_rows": 56962,
+    "reference_rows": 45569
+  }
+}
