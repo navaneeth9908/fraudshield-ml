@@ -16,9 +16,11 @@ The manifest records the model name/version, expected ordered feature list (`Tim
 `fraudshield.serving.LoadedModelBundle` provides the typed scoring interface:
 
 - validates every scoring row has all required features and no unsupported extras;
-- rejects empty batches and non-finite feature values;
+- rejects empty batches, batches above 1,000 rows, repeated feature rows, duplicate transaction IDs, and non-finite feature values;
+- aggregates bounded row diagnostics and validates every row before making one model call, so malformed batches cannot produce partial predictions;
+- constructs the model frame in the manifest's exact feature order regardless of mapping insertion order;
 - requires `predict_proba` output with a fraud-probability column in `[0, 1]`;
-- returns ordered predictions with calibrated fraud probability, `review`/`approve` decision, threshold, model version, transaction ID when supplied, and reason metadata.
+- returns deterministic `schema_version: 1` output with explicit input/scored/failed row counts and ordered predictions containing calibrated fraud probability, `review`/`approve` decision, threshold, model version, transaction ID when supplied, and reason metadata.
 
 ## API runtime
 
@@ -58,7 +60,7 @@ uv run fraudshield score-batch input.csv \
   --output-json reports/predictions.json
 ```
 
-writes `schema_version`, `model_version`, and ordered prediction records for feature-only CSV input.
+writes `schema_version`, `model_version`, all-or-nothing row accounting, and ordered prediction records for feature-only CSV input. The CLI reads at most 1,001 rows to enforce the 1,000-row bound, requires the exact ordered model-feature header, rejects repeated rows, and atomically replaces the JSON destination only after validation and scoring succeed.
 
 The Docker runtime installs only the package, runs `uvicorn fraudshield.api:app`, uses a non-root `appuser`, and expects `FRAUDSHIELD_MODEL_BUNDLE` to point to a mounted/generated bundle directory. `.dockerignore` excludes local data, virtual environments, caches, and model artifacts from build context.
 

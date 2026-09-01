@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import json
 import warnings
 from pathlib import Path
@@ -40,7 +41,11 @@ from fraudshield.monitoring import (
     write_monitoring_report,
 )
 from fraudshield.profiling import generate_data_quality_report
-from fraudshield.serving import load_model_bundle
+from fraudshield.serving import (
+    BATCH_MAX_ROWS,
+    BATCH_SCORING_SCHEMA_VERSION,
+    load_model_bundle,
+)
 
 app = typer.Typer(no_args_is_help=True, help="FraudShield model-development commands.")
 
@@ -381,26 +386,52 @@ def score_batch_command(
     ],
 ) -> None:
     """Score a CSV of transaction features with a validated local model bundle."""
-    bundle = load_model_bundle(model_bundle)
-    frame = pd.read_csv(transactions_csv)
-    transactions = [
-        {column: float(row[column]) for column in FEATURE_COLUMNS}
-        for row in frame.to_dict(orient="records")
-    ]
     try:
+        bundle = load_model_bundle(model_bundle)
+        frame = _read_scoring_csv(transactions_csv)
+        transactions = cast(list[dict[str, float]], frame.to_dict(orient="records"))
         predictions = bundle.score_batch(transactions)
-    except ValueError as exc:
-        raise typer.BadParameter(str(exc)) from exc
+    except (OSError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
     payload = {
-        "schema_version": 1,
+        "schema_version": BATCH_SCORING_SCHEMA_VERSION,
         "model_version": bundle.metadata.model_version,
+        "batch": {
+            "input_rows": len(transactions),
+            "scored_rows": len(predictions),
+            "failed_rows": 0,
+        },
         "predictions": [prediction.to_dict() for prediction in predictions],
     }
     output_json.parent.mkdir(parents=True, exist_ok=True)
-    output_json.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    temporary_output = output_json.with_name(f".{output_json.name}.tmp")
+    temporary_output.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    temporary_output.replace(output_json)
 
     typer.echo(f"Scored transactions: {len(predictions)}")
     typer.echo(f"Predictions: {output_json}")
+
+
+def _read_scoring_csv(path: Path) -> pd.DataFrame:
+    """Read one bounded feature-only batch after validating its exact CSV schema."""
+    with path.open(newline="", encoding="utf-8") as file:
+        header = next(csv.reader(file), None)
+    expected = list(FEATURE_COLUMNS)
+    if header != expected:
+        observed = ",".join(header) if header else "<missing>"
+        raise ValueError(
+            "CSV header must exactly match the ordered scoring feature contract; "
+            f"expected: {','.join(expected)}; observed: {observed}"
+        )
+    frame = pd.read_csv(path, nrows=BATCH_MAX_ROWS + 1)
+    if len(frame) > BATCH_MAX_ROWS:
+        raise ValueError(f"batch size exceeds maximum {BATCH_MAX_ROWS}")
+    duplicate_mask = frame.duplicated(keep=False)
+    if duplicate_mask.any():
+        rows = ", ".join(str(index) for index in frame.index[duplicate_mask].tolist())
+        raise ValueError(f"duplicate input rows: {rows}")
+    return frame
 
 
 @app.command("monitor-drift")

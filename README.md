@@ -104,6 +104,8 @@ The serving layer exposes:
 
 Each prediction returns a calibrated fraud probability, the configured threshold, a `review` or `approve` decision, model version, and human-readable reason metadata. Malformed payloads, missing model features, unsupported extra features, and non-finite feature values fail closed with validation errors rather than tracebacks.
 
+Batch scoring uses a versioned `schema_version: 1` contract and accepts at most 1,000 transactions. The service validates the complete batch before calling the model, aggregates row-level errors, rejects repeated feature rows and duplicate transaction IDs, forces the exact model feature order, and validates the complete probability matrix before returning any predictions. Successful CLI and API responses preserve input order and report `input_rows`, `scored_rows`, and `failed_rows: 0`; failures return no partial prediction payload. The CLI additionally requires the exact ordered CSV header and writes output through an atomic replacement only after every row succeeds.
+
 The same contract is available offline through `fraudshield score-batch`, which reads a feature-only CSV and writes ordered JSON prediction evidence. Docker packaging runs the FastAPI app as a non-root user and expects `FRAUDSHIELD_MODEL_BUNDLE` to point at a mounted/generated bundle directory. See [`docs/architecture.md`](docs/architecture.md) for the serving-contract and runtime design.
 
 ## Monitoring evidence
@@ -252,7 +254,7 @@ uv run fraudshield score-batch data/processed/scoring_sample.csv \
   --output-json reports/scoring_sample_predictions.json
 ```
 
-The output JSON includes `schema_version`, `model_version`, and one ordered prediction per input row with calibrated fraud probability, decision threshold, `review`/`approve` decision, and reason metadata.
+The output JSON includes `schema_version`, `model_version`, explicit all-or-nothing batch row counts, and one ordered prediction per input row with calibrated fraud probability, decision threshold, `review`/`approve` decision, and reason metadata. Input must use the exact ordered `Time`, `V1`-`V28`, `Amount` header, contain no duplicate rows, and stay within the 1,000-row limit.
 
 To serve the same bundle locally:
 

@@ -18,6 +18,10 @@ from numpy.typing import NDArray
 from fraudshield.data import FEATURE_COLUMNS, file_sha256
 
 MODEL_BUNDLE_SCHEMA_VERSION = 1
+BATCH_SCORE_SCHEMA_VERSION = 1
+MAX_BATCH_SIZE = 1_000
+BATCH_SCORING_SCHEMA_VERSION = BATCH_SCORE_SCHEMA_VERSION
+BATCH_MAX_ROWS = MAX_BATCH_SIZE
 MODEL_ARTIFACT_NAME = "model.joblib"
 MODEL_MANIFEST_NAME = "model-bundle.json"
 
@@ -27,6 +31,23 @@ class ProbabilityModel(Protocol):
 
     def predict_proba(self, frame: pd.DataFrame) -> NDArray[np.float64]:
         """Return genuine/fraud probabilities for each row."""
+
+
+class BatchValidationError(ValueError):
+    """Fail-closed batch validation error with a versioned, bounded summary."""
+
+    schema_version = BATCH_SCORING_SCHEMA_VERSION
+
+    def __init__(self, message: str, *, issues: Sequence[str] = ()) -> None:
+        self.issues = tuple(issues)
+        self.issue_count = len(self.issues)
+        if self.issues:
+            detail = "; ".join(self.issues)
+            message = f"{message} with {self.issue_count} issues: {detail}"
+        super().__init__(message)
+
+
+BatchScoringError = BatchValidationError
 
 
 @dataclass(frozen=True)
@@ -79,6 +100,28 @@ class FraudPrediction:
 
 
 @dataclass(frozen=True)
+class BatchScoringOutput:
+    """Versioned all-or-nothing batch output with explicit row accounting."""
+
+    model_version: str
+    predictions: tuple[FraudPrediction, ...]
+    schema_version: int = BATCH_SCORE_SCHEMA_VERSION
+
+    def to_dict(self) -> dict[str, object]:
+        """Return a deterministic JSON-serializable batch response."""
+        return {
+            "schema_version": self.schema_version,
+            "model_version": self.model_version,
+            "batch": {
+                "input_rows": len(self.predictions),
+                "scored_rows": len(self.predictions),
+                "failed_rows": 0,
+            },
+            "predictions": [prediction.to_dict() for prediction in self.predictions],
+        }
+
+
+@dataclass(frozen=True)
 class LoadedModelBundle:
     """Validated model artifact plus its versioned serving contract."""
 
@@ -101,11 +144,16 @@ class LoadedModelBundle:
     ) -> tuple[FraudPrediction, ...]:
         """Score a batch of feature mappings while preserving row order."""
         if len(transactions) == 0:
-            raise ValueError("transactions must not be empty")
+            raise BatchScoringError("transactions must not be empty")
+        if len(transactions) > BATCH_MAX_ROWS:
+            raise BatchScoringError(
+                f"batch must contain at most {BATCH_MAX_ROWS} transactions "
+                f"(received {len(transactions)})"
+            )
         if transaction_ids is not None and len(transaction_ids) != len(transactions):
-            raise ValueError("transaction_ids must match transactions length")
+            raise BatchScoringError("transaction_ids must match transactions length")
         ids = transaction_ids if transaction_ids is not None else tuple(None for _ in transactions)
-        frame = _feature_frame(transactions)
+        frame = _validated_feature_frame(transactions, transaction_ids=ids)
         probabilities = _fraud_probabilities(self.model, frame)
         predictions: list[FraudPrediction] = []
         for transaction_id, probability in zip(ids, probabilities, strict=True):
@@ -126,6 +174,19 @@ class LoadedModelBundle:
                 )
             )
         return tuple(predictions)
+
+    def score_batch_output(
+        self,
+        transactions: Sequence[Mapping[str, float]],
+        *,
+        transaction_ids: Sequence[str | None] | None = None,
+    ) -> BatchScoringOutput:
+        """Score a batch into the versioned public all-or-nothing contract."""
+        predictions = self.score_batch(transactions, transaction_ids=transaction_ids)
+        return BatchScoringOutput(
+            model_version=self.metadata.model_version,
+            predictions=predictions,
+        )
 
     def model_info(self) -> dict[str, object]:
         """Return compact public model metadata without exposing artifact internals."""
@@ -255,24 +316,67 @@ def _safe_artifact_path(bundle_dir: Path, artifact_name: str) -> Path:
     return resolved
 
 
-def _feature_frame(transactions: Sequence[Mapping[str, float]]) -> pd.DataFrame:
+def _validated_feature_frame(
+    transactions: Sequence[Mapping[str, float]],
+    *,
+    transaction_ids: Sequence[str | None],
+) -> pd.DataFrame:
+    issues: list[str] = []
+    first_id_row: dict[str, int] = {}
+    for index, transaction_id in enumerate(transaction_ids):
+        if transaction_id is None:
+            continue
+        if not transaction_id.strip():
+            issues.append(f"row {index} transaction_id must not be blank")
+            continue
+        first_index = first_id_row.setdefault(transaction_id, index)
+        if first_index != index:
+            issues.append(
+                f"row {index} duplicates transaction_id {transaction_id!r} from row {first_index} "
+                f"(duplicate transaction_id {transaction_id!r} at rows {first_index}, {index})"
+            )
+
     rows: list[dict[str, float]] = []
+    fingerprints: dict[tuple[float, ...], list[int]] = {}
+    expected = set(FEATURE_COLUMNS)
     for index, transaction in enumerate(transactions):
         keys = set(transaction.keys())
-        expected = set(FEATURE_COLUMNS)
         missing = sorted(expected - keys)
         extra = sorted(keys - expected)
         if missing:
-            raise ValueError(f"row {index} missing required model features: {', '.join(missing)}")
+            issues.append(f"row {index} missing required model features: {', '.join(missing)}")
         if extra:
-            raise ValueError(f"row {index} contains unsupported model features: {', '.join(extra)}")
+            issues.append(f"row {index} contains unsupported model features: {', '.join(extra)}")
         values: dict[str, float] = {}
         for column in FEATURE_COLUMNS:
-            value = float(transaction[column])
+            if column not in transaction:
+                continue
+            raw_value = transaction[column]
+            if isinstance(raw_value, bool):
+                issues.append(f"row {index} feature {column} must be numeric")
+                continue
+            try:
+                value = float(raw_value)
+            except (TypeError, ValueError, OverflowError):
+                issues.append(f"row {index} feature {column} must be numeric")
+                continue
             if not isfinite(value):
-                raise ValueError(f"row {index} feature {column} must be finite")
+                issues.append(f"row {index} feature {column} must be finite")
+                continue
             values[column] = value
-        rows.append(values)
+        if len(values) == len(FEATURE_COLUMNS) and not extra:
+            fingerprint = tuple(values[column] for column in FEATURE_COLUMNS)
+            fingerprints.setdefault(fingerprint, []).append(index)
+            rows.append(values)
+    for indexes in fingerprints.values():
+        first_index = indexes[0]
+        for index in indexes[1:]:
+            issues.append(
+                f"row {index} duplicates row {first_index} "
+                f"(duplicate transaction features at rows {first_index}, {index})"
+            )
+    if issues:
+        raise BatchScoringError("batch validation failed", issues=issues)
     return pd.DataFrame(rows, columns=list(FEATURE_COLUMNS))
 
 

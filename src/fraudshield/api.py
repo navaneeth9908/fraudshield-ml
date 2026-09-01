@@ -4,12 +4,18 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
-from fraudshield.serving import FraudPrediction, LoadedModelBundle, load_model_bundle
+from fraudshield.serving import (
+    BATCH_MAX_ROWS,
+    BATCH_SCORING_SCHEMA_VERSION,
+    FraudPrediction,
+    LoadedModelBundle,
+    load_model_bundle,
+)
 
 DEFAULT_MODEL_BUNDLE_ENV = "FRAUDSHIELD_MODEL_BUNDLE"
 
@@ -28,7 +34,7 @@ class BatchScoreRequest(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    transactions: Annotated[list[ScoreRequest], Field(min_length=1, max_length=1_000)]
+    transactions: Annotated[list[ScoreRequest], Field(min_length=1, max_length=BATCH_MAX_ROWS)]
 
 
 class ScoreResponse(BaseModel):
@@ -44,13 +50,24 @@ class ScoreResponse(BaseModel):
     model_version: str
 
 
+class BatchScoreSummary(BaseModel):
+    """Fail-closed row accounting for a successful batch."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    input_rows: int
+    scored_rows: int
+    failed_rows: Literal[0]
+
+
 class BatchScoreResponse(BaseModel):
     """Batch public scoring response."""
 
     model_config = ConfigDict(extra="forbid")
 
-    schema_version: int
+    schema_version: Literal[1]
     model_version: str
+    batch: BatchScoreSummary
     predictions: list[ScoreResponse]
 
 
@@ -112,8 +129,13 @@ def create_app(model_bundle: Path | None = None) -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from None
         return {
-            "schema_version": 1,
+            "schema_version": BATCH_SCORING_SCHEMA_VERSION,
             "model_version": current_bundle.metadata.model_version,
+            "batch": {
+                "input_rows": len(request.transactions),
+                "scored_rows": len(predictions),
+                "failed_rows": 0,
+            },
             "predictions": [prediction.to_dict() for prediction in predictions],
         }
 

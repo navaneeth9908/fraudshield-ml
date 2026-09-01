@@ -17,7 +17,7 @@
 - Implemented: deterministic global and transaction-level explanations with model-agnostic feature perturbations
 - Implemented: versioned model card with anonymized PCA feature limitations and holdout error-analysis evidence
 - Implemented: reference/current monitoring reports with stable bins, zero-count smoothing, and explicit alert evidence
-- Batch reliability checks for scoring outputs
+- Implemented: versioned, fail-closed batch scoring with bounded size, exact schema, duplicate/non-finite row checks, deterministic ordering, artifact integrity, and explicit row accounting
 
 ## Serving and operations
 - Implemented: versioned model-bundle contract with SHA-256 artifact verification and fixed feature ordering

@@ -5,7 +5,9 @@ import json
 import warnings
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
+import pytest
 from sklearn.linear_model import LogisticRegression
 from typer.testing import CliRunner
 
@@ -185,3 +187,155 @@ def test_dockerfile_uses_secure_nonroot_api_runtime() -> None:
     assert "FRAUDSHIELD_MODEL_BUNDLE" in dockerfile
     assert "USER appuser" in dockerfile
     assert "COPY --chown=appuser:appuser" in dockerfile
+
+
+class _RecordingModel:
+    def __init__(self) -> None:
+        self.calls = 0
+        self.feature_orders: list[tuple[str, ...]] = []
+
+    def predict_proba(self, frame: pd.DataFrame) -> np.ndarray:
+        self.calls += 1
+        self.feature_orders.append(tuple(frame.columns))
+        fraud = np.linspace(0.1, 0.9, len(frame))
+        return np.column_stack((1.0 - fraud, fraud))
+
+
+def _recording_bundle(tmp_path: Path) -> tuple[object, _RecordingModel]:
+    from fraudshield.serving import LoadedModelBundle, ModelBundleMetadata
+
+    model = _RecordingModel()
+    bundle = LoadedModelBundle(
+        model=model,
+        metadata=ModelBundleMetadata(
+            model_name="recording-model",
+            model_version="2026.09-reliability",
+            decision_threshold=0.5,
+            decision_policy="review_when_probability_at_or_above_threshold",
+            training_data_sha256="0" * 64,
+        ),
+        manifest={},
+        bundle_dir=tmp_path,
+    )
+    return bundle, model
+
+
+def test_batch_scoring_fails_closed_with_bounded_aggregated_row_errors(tmp_path: Path) -> None:
+    from fraudshield.serving import MAX_BATCH_SIZE, BatchValidationError
+
+    bundle, model = _recording_bundle(tmp_path)
+    malformed = _transaction(Time=2.0)
+    malformed.pop("V1")
+    transactions = [
+        _transaction(Time=1.0),
+        malformed,
+        _transaction(Time=3.0, Amount=float("inf")),
+        _transaction(Time=1.0),
+    ]
+
+    with pytest.raises(BatchValidationError) as exc_info:
+        bundle.score_batch(
+            transactions,
+            transaction_ids=("txn-1", "txn-2", "txn-3", "txn-1"),
+        )
+
+    summary = str(exc_info.value)
+    assert "row 1 missing required model features: V1" in summary
+    assert "row 2 feature Amount must be finite" in summary
+    assert "row 3 duplicates row 0" in summary
+    assert "row 3 duplicates transaction_id 'txn-1' from row 0" in summary
+    assert model.calls == 0
+
+    with pytest.raises(BatchValidationError, match=rf"at most {MAX_BATCH_SIZE} transactions"):
+        bundle.score_batch([_transaction(Time=float(index)) for index in range(MAX_BATCH_SIZE + 1)])
+    assert model.calls == 0
+
+
+def test_batch_scoring_preserves_input_and_feature_order_deterministically(tmp_path: Path) -> None:
+    from fraudshield.serving import BATCH_SCORE_SCHEMA_VERSION
+
+    bundle, model = _recording_bundle(tmp_path)
+    transactions = [
+        dict(reversed(tuple(_transaction(Time=3.0, Amount=30.0).items()))),
+        _transaction(Time=1.0, Amount=10.0),
+        _transaction(Time=2.0, Amount=20.0),
+    ]
+    ids = ("txn-c", "txn-a", "txn-b")
+
+    first = bundle.score_batch_output(transactions, transaction_ids=ids).to_dict()
+    second = bundle.score_batch_output(transactions, transaction_ids=ids).to_dict()
+
+    assert first == second
+    assert first["schema_version"] == BATCH_SCORE_SCHEMA_VERSION == 1
+    assert [row["transaction_id"] for row in first["predictions"]] == list(ids)
+    assert model.feature_orders == [FEATURE_COLUMNS, FEATURE_COLUMNS]
+
+
+def test_batch_cli_requires_exact_ordered_schema_and_leaves_no_partial_output(
+    tmp_path: Path,
+) -> None:
+    from fraudshield.cli import app
+
+    input_csv = tmp_path / "transactions.csv"
+    output_json = tmp_path / "scores.json"
+    wrong_order = list(FEATURE_COLUMNS)
+    wrong_order[0], wrong_order[1] = wrong_order[1], wrong_order[0]
+    with input_csv.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=wrong_order)
+        writer.writeheader()
+        writer.writerow(_transaction())
+
+    result = CliRunner().invoke(
+        app,
+        [
+            "score-batch",
+            str(input_csv),
+            "--model-bundle",
+            str(_write_bundle(tmp_path)),
+            "--output-json",
+            str(output_json),
+        ],
+    )
+
+    assert result.exit_code != 0
+    assert "CSV header must exactly match the ordered scoring feature contract" in result.output
+    assert "expected: Time,V1" in result.output
+    assert not output_json.exists()
+
+
+def test_batch_api_rejects_duplicate_rows_and_oversized_batches(tmp_path: Path) -> None:
+    from fastapi.testclient import TestClient
+
+    from fraudshield.api import create_app
+    from fraudshield.serving import MAX_BATCH_SIZE
+
+    client = TestClient(create_app(_write_bundle(tmp_path)))
+    duplicate = {"transaction_id": "same", "features": _transaction(Time=1.0)}
+
+    duplicate_response = client.post("/score-batch", json={"transactions": [duplicate, duplicate]})
+    assert duplicate_response.status_code == 422
+    assert "duplicates row 0" in duplicate_response.text
+    assert "duplicates transaction_id" in duplicate_response.text
+
+    oversized_response = client.post(
+        "/score-batch",
+        json={
+            "transactions": [
+                {"transaction_id": f"txn-{index}", "features": _transaction(Time=float(index))}
+                for index in range(MAX_BATCH_SIZE + 1)
+            ]
+        },
+    )
+    assert oversized_response.status_code == 422
+    assert str(MAX_BATCH_SIZE) in oversized_response.text
+
+
+def test_model_bundle_rejects_artifact_tampering_before_deserialization(tmp_path: Path) -> None:
+    from fraudshield.serving import load_model_bundle
+
+    bundle_dir = _write_bundle(tmp_path)
+    with (bundle_dir / "model.joblib").open("ab") as artifact:
+        artifact.write(b"tampered")
+
+    with pytest.raises(ValueError, match="artifact SHA-256 does not match"):
+        load_model_bundle(bundle_dir)
