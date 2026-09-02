@@ -108,6 +108,12 @@ Batch scoring uses a versioned `schema_version: 1` contract and accepts at most 
 
 The same contract is available offline through `fraudshield score-batch`, which reads a feature-only CSV and writes ordered JSON prediction evidence. Docker packaging runs the FastAPI app as a non-root user and expects `FRAUDSHIELD_MODEL_BUNDLE` to point at a mounted/generated bundle directory. See [`docs/architecture.md`](docs/architecture.md) for the serving-contract and runtime design.
 
+## Interactive analyst dashboard
+
+`GET /dashboard` serves a self-contained local analyst console from the existing FastAPI runtime, so the project adds no browser framework or external telemetry. The responsive interface includes synthetic single-transaction presets, editable exact-schema JSON, calibrated fraud probability and review-decision presentation, minimum expected-loss threshold context, a bounded batch-evidence table, model metadata/readiness, and explicit responsible-use guardrails. Invalid JSON, unavailable models, contract violations, and service failures are shown as inline errors without injecting API output as HTML.
+
+The dashboard and API use the same validated model bundle and scoring methods. `fraudshield build-model-bundle` verifies the source CSV checksum, retrains the deterministic calibrated candidate comparison, and persists the selected model with its operating threshold and metadata. Its default destination is the ignored `artifacts/model-bundle` directory; custom `--bundle-dir` destinations must also remain untracked. Raw Kaggle rows and trained binaries remain untracked.
+
 ## Monitoring evidence
 
 FraudShield now includes a lightweight monitoring foundation for reference/current window checks. The first production-oriented report uses population stability index (PSI) with stable bins learned from the reference window, smoothing for zero-count buckets, and configurable warning/critical thresholds. It monitors both model features and calibrated prediction-score distributions without requiring labels in the current window.
@@ -124,9 +130,9 @@ The checked-in monitoring evidence compares the calibration window with the fina
 
 The critical `Time` drift is expected for this backtest because the reference and current windows are deliberately chronological and non-overlapping. The report is useful as an operational contract and alerting example, not as proof of live degradation. Machine-readable evidence is stored in [`reports/monitoring_report.json`](reports/monitoring_report.json).
 
-## Target architecture
+## Implemented architecture
 
-The baseline currently implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, cost-sensitive decision evidence, model-agnostic explanations, slice-based error analysis, versioned model bundles, offline batch scoring, FastAPI inference, a containerized API runtime, and PSI monitoring reports. The remaining analyst-dashboard component is tracked in the roadmap.
+FraudShield implements checksum-verified dataset preparation, strict schema validation, chronological evaluation, imbalance-aware logistic regression, calibrated gradient-boosting comparison, cost-sensitive decision evidence, model-agnostic explanations, slice-based error analysis, versioned model bundles, offline batch scoring, FastAPI inference, a local analyst dashboard, a containerized API runtime, and PSI monitoring reports.
 
 ```text
 Kaggle transactions
@@ -148,7 +154,8 @@ Imbalance-aware model pipeline
 Versioned model bundle
         │
         ├── offline batch scoring CLI
-        └── FastAPI scoring service
+        ├── FastAPI scoring service
+        └── local analyst dashboard
         │
         ▼
 PSI drift monitoring reports
@@ -269,7 +276,22 @@ The API provides `/health`, `/ready`, `/model-info`, `/score`, and `/score-batch
 docker build -t fraudshield-ml:local .
 ```
 
-### 10. Monitor reference/current drift
+### 10. Build and open the analyst dashboard
+
+Build a local bundle from the checksum-verified dataset. Both generated files remain under ignored `artifacts/`:
+
+```bash
+uv run fraudshield build-model-bundle data/raw/creditcard.csv \
+  --bundle-dir artifacts/model-bundle \
+  --model-version 0.1.0
+
+FRAUDSHIELD_MODEL_BUNDLE=artifacts/model-bundle \
+  uv run uvicorn fraudshield.api:app --host 127.0.0.1 --port 8000
+```
+
+Open <http://127.0.0.1:8000/dashboard>. The readiness panel stays usable when the bundle is absent or invalid and explains how to recover; scoring actions fail closed through the API. Dashboard presets are synthetic demonstrations, not known genuine/fraud labels.
+
+### 11. Monitor reference/current drift
 
 `monitor-drift` compares two scored windows. Each CSV needs the monitored feature columns plus a prediction score column:
 
@@ -285,7 +307,7 @@ uv run fraudshield monitor-drift reference_window.csv current_window.csv \
 
 The resulting JSON records reference/current row counts, per-bucket PSI components, alert statuses, thresholds, and limitations.
 
-### 11. Run quality gates
+### 12. Run quality gates
 
 ```bash
 uv run ruff format --check .
@@ -320,6 +342,6 @@ fraudshield-ml/
 
 ## Responsible-use limitations
 
-This repository is an educational portfolio system, not a production payment authorization service. The source features are PCA-anonymized, the data represents two days of European cardholder transactions from September 2013, and real deployment would require current labeled data, governance, security controls, human review, fairness analysis, and continuous monitoring tied to live operating procedures.
+This repository is an educational portfolio system, not a production payment authorization service. A dashboard `review` result is decision support for a human analyst and must not automatically block a payment. The source features are PCA-anonymized, the data represents two days of European cardholder transactions from September 2013, and real deployment would require current labeled data, governance, security controls, human review and appeals, fairness analysis, and continuous monitoring tied to live operating procedures.
 
 See [ROADMAP.md](ROADMAP.md) for the technical direction.

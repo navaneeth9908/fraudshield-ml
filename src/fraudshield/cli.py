@@ -22,6 +22,7 @@ from fraudshield.data import (
     KAGGLE_DOWNLOAD_URL,
     TARGET_COLUMN,
     DatasetSource,
+    file_sha256,
     prepare_kaggle_dataset,
     verify_dataset_file,
 )
@@ -44,7 +45,9 @@ from fraudshield.profiling import generate_data_quality_report
 from fraudshield.serving import (
     BATCH_MAX_ROWS,
     BATCH_SCORING_SCHEMA_VERSION,
+    ModelBundleMetadata,
     load_model_bundle,
+    write_model_bundle,
 )
 
 app = typer.Typer(no_args_is_help=True, help="FraudShield model-development commands.")
@@ -371,6 +374,57 @@ def explain_model(
     typer.echo(f"Explainability report: {report_path}")
     typer.echo(f"Model card: {model_card_path}")
     typer.echo(f"Selected model: {report['selected_model']}")
+
+
+@app.command("build-model-bundle")
+def build_model_bundle_command(
+    dataset: Path,
+    bundle_dir: Annotated[
+        Path,
+        typer.Option(help="Ignored output directory for model-bundle.json and model.joblib."),
+    ] = Path("artifacts/model-bundle"),
+    csv_sha256: Annotated[
+        str,
+        typer.Option(help="Expected dataset SHA-256 verified before model fitting."),
+    ] = DEFAULT_CSV_SHA256,
+    model_version: Annotated[
+        str, typer.Option(help="Human-readable version stored in serving responses.")
+    ] = "0.1.0",
+    analyst_alert_budget: Annotated[
+        int,
+        typer.Option(help="Maximum number of holdout transactions available for review."),
+    ] = 1_000,
+) -> None:
+    """Train the selected calibrated candidate and write a dashboard-ready local bundle."""
+    try:
+        verified = verify_dataset_file(dataset, expected_csv_sha256=csv_sha256)
+        comparison = compare_model_candidates(
+            pd.read_csv(dataset), analyst_alert_budget=analyst_alert_budget
+        )
+        selected = comparison.evaluation_by_name(comparison.selected_model)
+        manifest_path = write_model_bundle(
+            model=selected.model,
+            bundle_dir=bundle_dir,
+            metadata=ModelBundleMetadata(
+                model_name=selected.name,
+                model_version=model_version,
+                decision_threshold=selected.decision.chosen_threshold,
+                decision_policy=(
+                    "review_when_calibrated_probability_at_or_above_minimum_expected_loss_threshold"
+                ),
+                training_data_sha256=verified.csv_sha256,
+                calibration_method=selected.calibration_method,
+            ),
+        )
+    except (OSError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
+
+    typer.echo(f"Dashboard model bundle: {manifest_path}")
+    typer.echo(f"Selected model: {selected.name}")
+    typer.echo(f"Calibration: {selected.calibration_method}")
+    typer.echo(f"Decision threshold: {selected.decision.chosen_threshold:.6f}")
+    typer.echo(f"Training data SHA-256: {file_sha256(dataset)}")
 
 
 @app.command("score-batch")

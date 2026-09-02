@@ -42,10 +42,21 @@ jobs:
       - name: Build package
         run: uv build
 
+      - name: Smoke-test dashboard entry point
+        run: >-
+          uv run python -c "from fastapi.testclient import TestClient;
+          from fraudshield.api import create_app;
+          response = TestClient(create_app()).get('/dashboard');
+          assert response.status_code == 200;
+          assert 'FraudShield analyst console' in response.text"
+
       - name: Build container
         run: docker build -t fraudshield-ml:ci .
 
       - name: Smoke-test container package
         run: >-
           docker run --rm --entrypoint python fraudshield-ml:ci
-          -c "from fraudshield.api import app; assert app.title == 'FraudShield ML Inference API'"
+          -c "from fraudshield.api import app;
+          from fraudshield.dashboard import render_dashboard;
+          assert app.title == 'FraudShield ML Inference API';
+          assert 'FraudShield analyst console' in render_dashboard()"

@@ -9,7 +9,7 @@
 
 ## Intended use
 
-FraudShield is an educational portfolio fraud-risk scoring system for offline analysis of the Kaggle credit-card fraud dataset. It demonstrates leakage-safe model comparison, calibrated probabilities, cost-sensitive thresholding, model-agnostic explanations, holdout slice diagnostics, local serving contracts, and PSI-based monitoring evidence. It is not a live payment authorization system.
+FraudShield is an educational portfolio fraud-risk scoring system for offline analysis of the Kaggle credit-card fraud dataset. It demonstrates leakage-safe model comparison, calibrated probabilities, cost-sensitive thresholding, model-agnostic explanations, holdout slice diagnostics, local serving contracts, an interactive analyst-review console, and PSI-based monitoring evidence. It is not a live payment authorization system.
 
 ## Features and privacy context
 
@@ -55,6 +55,10 @@ Time windows:
 
 The current monitoring report compares the calibration window with the final chronological holdout using PSI warning threshold `0.10` and critical threshold `0.25`. The score distribution is stable in that smoke report (`prediction:fraud_probability` PSI `0.0223`, status `ok`), while `feature:Time` is critical (`22.1672`) because the current window is intentionally later than the reference window. This is distribution-shift evidence only; labeled current outcomes are still required to measure live precision, recall, calibration, and fairness.
 
+## Model and dashboard readiness
+
+The local bundle manifest records this model's version, exact 30-feature order, sigmoid calibration method, minimum expected-loss threshold, decision policy, training-data SHA-256, and artifact SHA-256. API/dashboard readiness means those local integrity and contract checks passed. It does **not** mean the model is approved for production, current traffic, automated payment blocking, or regulatory use. The dashboard's neutral/elevated presets are synthetic workflow demonstrations rather than labeled validation cases, and every `review` decision requires human investigation.
+
 ## Limitations and responsible use
 
 - The data represents two days of European cardholder transactions from September 2013 and is not current production traffic.
@@ -62,4 +66,5 @@ The current monitoring report compares the calibration window with the final chr
 - Perturbation explanations are practical, deterministic model-agnostic diagnostics, not causal claims.
 - Error-analysis slices use labeled holdout data and should remain evaluation evidence, not features for fitting or calibration.
 - PSI monitoring now covers reference/current feature and prediction-score drift, but it does not measure model quality without current labels.
+- Dashboard availability is not model readiness: scoring remains unavailable until a valid local bundle loads, and UI output must not be used for automatic adverse action.
 - A production deployment would require current labels, review workflows, security controls, governance, fairness evaluation, and an approved process for refreshing monitoring reference windows.

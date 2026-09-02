@@ -7,8 +7,10 @@ from pathlib import Path
 from typing import Annotated, Literal
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, ConfigDict, Field
 
+from fraudshield.dashboard import render_dashboard
 from fraudshield.serving import (
     BATCH_MAX_ROWS,
     BATCH_SCORING_SCHEMA_VERSION,
@@ -98,6 +100,11 @@ def create_app(model_bundle: Path | None = None) -> FastAPI:
     @app.get("/health")
     def health() -> dict[str, str]:
         return {"status": "ok"}
+
+    @app.get("/dashboard", response_class=HTMLResponse)
+    def dashboard() -> str:
+        """Serve the dependency-light local analyst console."""
+        return render_dashboard()
 
     @app.get("/ready")
     def ready() -> dict[str, object]:

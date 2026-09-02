@@ -34,6 +34,14 @@ The manifest records the model name/version, expected ordered feature list (`Tim
 
 Invalid payloads and scoring-contract violations return validation errors without tracebacks or secret-bearing diagnostics.
 
+## Analyst dashboard
+
+`GET /dashboard` is a self-contained HTML/CSS/JavaScript application rendered by `fraudshield.dashboard` and served by the existing FastAPI process. This is the lightest compatible local UI: it adds no frontend build chain, template engine, CDN dependency, cookie, or external data transfer. The page calls `/ready`, `/model-info`, `/score`, and `/score-batch`, so browser and programmatic consumers share one validation and decision contract.
+
+The dashboard provides synthetic single and batch presets, exact-schema JSON editors, calibrated probability and threshold-margin presentation, deterministic row-accounting evidence, model readiness/metadata, minimum expected-loss assumptions, and responsible-use limitations. Browser code writes service data with `textContent` and DOM nodes rather than `innerHTML`; malformed JSON, HTTP validation errors, missing bundles, and non-JSON service errors render as scoped analyst messages.
+
+`fraudshield.dashboard.build_decision_view` is the tested Python presentation mirror. It validates finite probability/threshold values and derives the same `review`-at-or-above-threshold decision used by `LoadedModelBundle`; it does not recalculate or override the deployed policy. The browser dashboard renders API responses with equivalent JavaScript and treats the API decision and threshold as authoritative.
+
 ## Monitoring foundation
 
 The monitoring layer compares a reference scoring window with a current scoring window using population stability index (PSI). `fraudshield.monitoring` learns fixed numeric buckets from the reference window, clips out-of-range current values into the edge buckets, smooths zero-count buckets, and classifies each feature or prediction-score signal against configurable warning and critical thresholds.
@@ -61,6 +69,8 @@ uv run fraudshield score-batch input.csv \
 ```
 
 writes `schema_version`, `model_version`, all-or-nothing row accounting, and ordered prediction records for feature-only CSV input. The CLI reads at most 1,001 rows to enforce the 1,000-row bound, requires the exact ordered model-feature header, rejects repeated rows, and atomically replaces the JSON destination only after validation and scoring succeed.
+
+`fraudshield build-model-bundle` is the local bridge from reproducible modeling to serving. It verifies the source CSV SHA-256, performs the leakage-safe calibrated candidate comparison, selects the recorded winner, and writes a checksum-bound manifest plus trained artifact under ignored `artifacts/`. The dashboard is intentionally available even without a bundle so it can present a graceful unavailable state; score and metadata endpoints still fail closed with `503` until readiness succeeds.
 
 The Docker runtime installs only the package, runs `uvicorn fraudshield.api:app`, uses a non-root `appuser`, and expects `FRAUDSHIELD_MODEL_BUNDLE` to point to a mounted/generated bundle directory. `.dockerignore` excludes local data, virtual environments, caches, and model artifacts from build context.
 
